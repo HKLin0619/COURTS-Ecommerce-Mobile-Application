@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Navigation Screens',
       initialRoute: '/',
       routes: {
-        '/': (context) => const StartPageWidget(),
+        '/': (context) => const startPage(),
       },
     );
   }
