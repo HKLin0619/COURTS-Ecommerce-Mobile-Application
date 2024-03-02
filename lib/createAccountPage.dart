@@ -489,10 +489,6 @@ class _createAccountPageState extends State<createAccountPage> {
                                             confirmPasswordController
                                         );
                                       });
-                                      // Navigator.pushNamed(
-                                      //   context,
-                                      //   '/login',
-                                      // );
                                     },
                                     child: Text(
                                       'Create Account',

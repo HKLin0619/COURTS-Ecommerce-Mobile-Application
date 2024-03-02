@@ -1,5 +1,87 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'user.dart';
+import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
+
+loginAccount(
+    BuildContext context,
+    TextEditingController usernameController,
+    TextEditingController passwordController) async{
+  try {
+    final response = await http.post(
+        Uri.parse('http://192.168.0.33/bit311Assignment/userLogin.php'),
+        body:{
+          'username': usernameController.text,
+          'password': passwordController.text,
+        }
+    );
+
+    if (response.statusCode == 200) {
+      if (response.body.contains('successfully')) {
+        Fluttertoast.showToast(
+          msg: 'Login Successfully!',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.black,
+          fontSize: 12.0,
+        );
+
+        // Navigator.pushNamed(
+        //   context,
+        //   '/login',
+        // );
+
+      } else if (response.body.contains('unsuccessfully')) {
+        Fluttertoast.showToast(
+          msg: 'Login Unsuccessfully !',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.black,
+          fontSize: 12.0,
+        );
+
+        usernameController.clear();
+        passwordController.clear();
+
+      } else if (response.body.contains('emptyInput')) {
+        Fluttertoast.showToast(
+          msg: 'Please fill in the information !',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.orangeAccent,
+          textColor: Colors.black,
+          fontSize: 12.0,
+        );
+
+      } else if (response.body.contains('invalidPassword')) {
+        Fluttertoast.showToast(
+          msg: 'Incorrect Password !',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.orangeAccent,
+          textColor: Colors.black,
+          fontSize: 12.0,
+        );
+
+        passwordController.clear();
+
+      }
+    }
+  } catch (error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('An unexpected error occurred. Please try again.'),
+      ),
+    );
+  }
+}
 
 class loginPage extends StatefulWidget {
 
@@ -12,6 +94,17 @@ class loginPage extends StatefulWidget {
 class _loginPageState extends State<loginPage> {
 
   bool _isPasswordVisible = false;
+
+  Future<user>? _futureUser;
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +198,7 @@ class _loginPageState extends State<loginPage> {
                                 child: Container(
                                   width: double.infinity,
                                   child: TextFormField(
+                                    controller: usernameController,
                                     autofocus: false,
                                     autofillHints: [AutofillHints.username],
                                     obscureText: false,
@@ -163,6 +257,7 @@ class _loginPageState extends State<loginPage> {
                                 child: Container(
                                   width: double.infinity,
                                   child: TextFormField(
+                                    controller: passwordController,
                                     autofocus: false,
                                     autofillHints: [AutofillHints.password],
                                     obscureText: !_isPasswordVisible,
@@ -236,7 +331,12 @@ class _loginPageState extends State<loginPage> {
                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      print('Sign In button pressed ...');
+                                      setState(() {
+                                        loginAccount(context,
+                                            usernameController,
+                                            passwordController,
+                                        );
+                                      });
                                     },
                                     child: Text(
                                       'Sign In',
