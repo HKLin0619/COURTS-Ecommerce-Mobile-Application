@@ -1,5 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'user.dart';
+import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
+
+
+createAccount(BuildContext context, String username, String email, String password) async{
+  try {
+    final response = await http.post(
+        Uri.parse('http://192.168.0.33/bit311Assignment/createAccount.php'),
+        body:{
+          'username': username,
+          'email': email,
+          'password': password,
+        }
+    );
+
+    if (response.statusCode == 200) {
+      if (response.body.contains('Create Successfully')) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Registration successful!'),
+          ),
+        );
+      }
+    }
+  } catch (error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('An unexpected error occurred. Please try again.'),
+      ),
+    );
+  }
+}
 
 class createAccountPage extends StatefulWidget {
 
@@ -13,6 +46,21 @@ class _createAccountPageState extends State<createAccountPage> {
 
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
+
+  Future<user>? _futureUser;
+  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +146,8 @@ class _createAccountPageState extends State<createAccountPage> {
                                   child: Container(
                                     width: 250,
                                     child: TextFormField(
-                                      autofocus: true,
+                                      controller: usernameController,
+                                      autofocus: false,
                                       autofillHints: [AutofillHints.username],
                                       obscureText: false,
                                       decoration: InputDecoration(
@@ -156,7 +205,8 @@ class _createAccountPageState extends State<createAccountPage> {
                                   child: Container(
                                     width: 250,
                                     child: TextFormField(
-                                      autofocus: true,
+                                      controller: emailController,
+                                      autofocus: false,
                                       autofillHints: [AutofillHints.email],
                                       obscureText: false,
                                       decoration: InputDecoration(
@@ -214,7 +264,8 @@ class _createAccountPageState extends State<createAccountPage> {
                                   child: Container(
                                     width: 250,
                                     child: TextFormField(
-                                      autofocus: true,
+                                      controller: passwordController,
+                                      autofocus: false,
                                       autofillHints: [AutofillHints.password],
                                       obscureText: !_isPasswordVisible,
                                       decoration: InputDecoration(
@@ -286,7 +337,8 @@ class _createAccountPageState extends State<createAccountPage> {
                                   child: Container(
                                     width: 250,
                                     child: TextFormField(
-                                      autofocus: true,
+                                      controller: confirmPasswordController,
+                                      autofocus: false,
                                       autofillHints: [AutofillHints.password],
                                       obscureText: !_isConfirmPasswordVisible,
                                       decoration: InputDecoration(
@@ -357,10 +409,28 @@ class _createAccountPageState extends State<createAccountPage> {
                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      print('Sign In button pressed ...');
+                                      if (passwordController == confirmPasswordController) {
+                                        setState(() {
+                                          createAccount(context,
+                                              usernameController.text,
+                                              emailController.text,
+                                              passwordController.text
+                                          );
+                                        });
+                                      } else {
+                                        Fluttertoast.showToast(
+                                          msg: 'Registration successful!',
+                                          toastLength: Toast.LENGTH_LONG,
+                                          gravity: ToastGravity.BOTTOM,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.green,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0,
+                                        );
+                                      }
                                     },
                                     child: Text(
-                                      'Sign In',
+                                      'Create Account',
                                       style: TextStyle(
                                         fontFamily: 'Plus Jakarta Sans',
                                         color: Colors.black,

@@ -105,7 +105,7 @@ class _loginPageState extends State<loginPage> {
                                 child: Container(
                                   width: double.infinity,
                                   child: TextFormField(
-                                    autofocus: true,
+                                    autofocus: false,
                                     autofillHints: [AutofillHints.username],
                                     obscureText: false,
                                     decoration: InputDecoration(
@@ -163,7 +163,7 @@ class _loginPageState extends State<loginPage> {
                                 child: Container(
                                   width: double.infinity,
                                   child: TextFormField(
-                                    autofocus: true,
+                                    autofocus: false,
                                     autofillHints: [AutofillHints.password],
                                     obscureText: !_isPasswordVisible,
                                     decoration: InputDecoration(
