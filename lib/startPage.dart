@@ -42,8 +42,8 @@ class _startPageState extends State<startPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: 100,
-                        height: 100,
+                        width: 80,
+                        height: 80,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(16),
@@ -52,9 +52,9 @@ class _startPageState extends State<startPage> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(16),
                           child: Image.network(
-                            'https://logo.lusha.co/d/company_6437019_logo.jpg',
-                            width: 100,
-                            height: 100,
+                            'https://www.static-src.com/wcsstore/Indraprastha/images/brandlogo//BR-M036969-16050/courts-logo.jpeg',
+                            width: 80,
+                            height: 80,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -64,10 +64,10 @@ class _startPageState extends State<startPage> {
                         child: Text(
                           'Welcome!',
                           style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 21,
                             fontWeight: FontWeight.w600,
                             fontFamily: 'Plus Jakarta Sans',
-                            color: Color(0xFF101213),
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -77,10 +77,10 @@ class _startPageState extends State<startPage> {
                           'Thanks for joining! Access or create your account below, and get started on your journey!',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 12,
                             fontWeight: FontWeight.w500,
                             fontFamily: 'Plus Jakarta Sans',
-                            color: Color(0xFF57636C),
+                            color: Colors.black38,
                           ),
                         ),
                       ),
@@ -101,27 +101,32 @@ class _startPageState extends State<startPage> {
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 16),
                         child: ElevatedButton(
                           onPressed: () {
-                            print('Button pressed ...');
+                            Navigator.pushNamed(
+                              context,
+                              '/signUp',
+                            );
                           },
-                          child: Text('Get Started'),
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
-                              padding: EdgeInsets.zero,
-                            textStyle: TextStyle(
+                          child: Text(
+                            'Create Account',
+                            style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
-                              color: Color(0xFF101213),
-                              fontSize: 16,
                               fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                              color: Colors.black, // Use theme color
                             ),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.lightBlueAccent,
+                            padding: EdgeInsets.zero,
                             elevation: 8,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
                             side: BorderSide(
                               color: Colors.black,
-                              width: 2,
+                              width: 1,
                             ),
-                            fixedSize: Size(230, 52),
+                            fixedSize: Size(140, 50),
                           ),
                         ),
                       ),
@@ -134,19 +139,22 @@ class _startPageState extends State<startPage> {
                         padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 16),
                         child: ElevatedButton(
                           onPressed: () {
-                            print('My Account button pressed ...');
+                            Navigator.pushNamed(
+                              context,
+                              '/login',
+                            );
                           },
                           child: Text(
                             'My Account',
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
                               fontWeight: FontWeight.w500,
-                              fontSize: 16,
+                              fontSize: 14,
                               color: Colors.black, // Use theme color
                             ),
                           ),
                           style: ElevatedButton.styleFrom(
-                            primary: Theme.of(context).secondaryHeaderColor, // Use theme color
+                            backgroundColor: Colors.lightBlueAccent,
                             padding: EdgeInsets.zero,
                             elevation: 8,
                             shape: RoundedRectangleBorder(
@@ -154,9 +162,9 @@ class _startPageState extends State<startPage> {
                             ),
                             side: BorderSide(
                               color: Colors.black,
-                              width: 2,
+                              width: 1,
                             ),
-                            fixedSize: Size(230, 52),
+                            fixedSize: Size(140, 50),
                           ),
                         ),
                       ),
