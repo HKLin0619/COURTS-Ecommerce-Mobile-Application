@@ -5,23 +5,95 @@ import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 
 
-createAccount(BuildContext context, String username, String email, String password) async{
+createAccount(
+    BuildContext context,
+    TextEditingController usernameController,
+    TextEditingController emailController,
+    TextEditingController passwordController,
+    TextEditingController confirmPasswordController) async{
   try {
     final response = await http.post(
         Uri.parse('http://192.168.0.33/bit311Assignment/createAccount.php'),
         body:{
-          'username': username,
-          'email': email,
-          'password': password,
+          'username': usernameController.text,
+          'email': emailController.text,
+          'password': passwordController.text,
+          'confirmPassword': confirmPasswordController.text,
         }
     );
 
     if (response.statusCode == 200) {
-      if (response.body.contains('Create Successfully')) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Registration successful!'),
-          ),
+      if (response.body.contains('successfully')) {
+        Fluttertoast.showToast(
+          msg: 'Registration successfully!',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.black,
+          fontSize: 12.0,
+        );
+
+        Navigator.pushNamed(
+          context,
+          '/login',
+        );
+
+      } else if (response.body.contains('unsuccessfully')) {
+        Fluttertoast.showToast(
+          msg: 'Register Unsuccessfully !',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.black,
+          fontSize: 12.0,
+        );
+
+        usernameController.clear();
+        emailController.clear();
+        passwordController.clear();
+        confirmPasswordController.clear();
+
+      } else if (response.body.contains('invalidUsername')) {
+        Fluttertoast.showToast(
+          msg: 'Username Unavailable !',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.orangeAccent,
+          textColor: Colors.black,
+          fontSize: 12.0,
+        );
+
+        usernameController.clear();
+        emailController.clear();
+        passwordController.clear();
+        confirmPasswordController.clear();
+
+      } else if (response.body.contains('invalidPassword')) {
+        Fluttertoast.showToast(
+          msg: 'Invalid password confirmation !',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.orangeAccent,
+          textColor: Colors.black,
+          fontSize: 12.0,
+        );
+
+        passwordController.clear();
+        confirmPasswordController.clear();
+
+      } else if (response.body.contains('emptyInput')) {
+        Fluttertoast.showToast(
+          msg: 'Please fill in the information !',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.orangeAccent,
+          textColor: Colors.black,
+          fontSize: 12.0,
         );
       }
     }
@@ -409,25 +481,18 @@ class _createAccountPageState extends State<createAccountPage> {
                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      if (passwordController == confirmPasswordController) {
-                                        setState(() {
-                                          createAccount(context,
-                                              usernameController.text,
-                                              emailController.text,
-                                              passwordController.text
-                                          );
-                                        });
-                                      } else {
-                                        Fluttertoast.showToast(
-                                          msg: 'Registration successful!',
-                                          toastLength: Toast.LENGTH_LONG,
-                                          gravity: ToastGravity.BOTTOM,
-                                          timeInSecForIosWeb: 1,
-                                          backgroundColor: Colors.green,
-                                          textColor: Colors.white,
-                                          fontSize: 16.0,
+                                      setState(() {
+                                        createAccount(context,
+                                            usernameController,
+                                            emailController,
+                                            passwordController,
+                                            confirmPasswordController
                                         );
-                                      }
+                                      });
+                                      // Navigator.pushNamed(
+                                      //   context,
+                                      //   '/login',
+                                      // );
                                     },
                                     child: Text(
                                       'Create Account',
