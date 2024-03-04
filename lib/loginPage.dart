@@ -18,25 +18,27 @@ loginAccount(
     );
 
     if (response.statusCode == 200) {
-      if (response.body.contains('successfully')) {
-        Fluttertoast.showToast(
-          msg: 'Login Successfully!',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green,
-          textColor: Colors.black,
-          fontSize: 12.0,
-        );
+      if (response.body.contains('success')) {
 
-        // Navigator.pushNamed(
-        //   context,
-        //   '/login',
-        // );
+        if (usernameController.text == 'admin' && passwordController.text == 'admin123') {
 
-      } else if (response.body.contains('unsuccessfully')) {
+          Navigator.pushNamed(
+            context,
+            '/admin',
+          );
+
+        } else {
+
+          // Navigator.pushNamed(
+          //   context,
+          //   '/login',
+          // );
+
+        }
+
+      } else if (response.body.contains('userNotFound')) {
         Fluttertoast.showToast(
-          msg: 'Login Unsuccessfully !',
+          msg: 'User not found !',
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,
@@ -95,7 +97,7 @@ class _loginPageState extends State<loginPage> {
 
   bool _isPasswordVisible = false;
 
-  Future<user>? _futureUser;
+  //Future<user>? _futureUser;
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
