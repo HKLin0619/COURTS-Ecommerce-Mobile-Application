@@ -89,7 +89,7 @@ class _adminPageState extends State<adminPage> {
                 DefaultTabController(
                   length: 2,
                   child: SizedBox(
-                    height: 390,
+                    height: MediaQuery.of(context).size.height,
                     child: Column(
                       children: [
                         Align(
