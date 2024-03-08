@@ -89,7 +89,7 @@ class _adminPageState extends State<adminPage> {
                 DefaultTabController(
                   length: 2,
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height,
+                    height: 390,
                     child: Column(
                       children: [
                         Align(
@@ -149,13 +149,13 @@ class _adminPageState extends State<adminPage> {
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Container(
-                                                width: 289,
+                                                width: 215,
                                                 height: 100,
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
                                                 ),
                                                 child: Padding(
-                                                  padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                                                  padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                                                   child: Column(
                                                     mainAxisSize: MainAxisSize.max,
                                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -174,8 +174,8 @@ class _adminPageState extends State<adminPage> {
                                                         'Description',
                                                         style: TextStyle(
                                                           fontFamily: 'Plus Jakarta Sans',
-                                                          fontWeight: FontWeight.w600,
-                                                          fontSize: 12,
+                                                          fontWeight: FontWeight.w500,
+                                                          fontSize: 10,
                                                           color: Colors.black,
                                                         ),
                                                       ),
@@ -186,7 +186,7 @@ class _adminPageState extends State<adminPage> {
                                               IconButton(
                                                 icon: Icon(
                                                   Icons.add_rounded,
-                                                  color: Theme.of(context).textTheme.bodyText1?.color,
+                                                  color: Colors.red, // 设置图标颜色为白色
                                                   size: 24,
                                                 ),
                                                 onPressed: () {
@@ -206,8 +206,7 @@ class _adminPageState extends State<adminPage> {
                                             padding:
                                             EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
                                             child: Card(
-                                              clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
+                                              clipBehavior: Clip.antiAliasWithSaveLayer,
                                               color: Colors.white,
                                               elevation: 4,
                                               shape: RoundedRectangleBorder(
@@ -222,7 +221,7 @@ class _adminPageState extends State<adminPage> {
                                                     child: VerticalDivider(
                                                       width: 5,
                                                       thickness: 5,
-                                                      color: Color(0xFFf1f4f8),
+                                                      color: Colors.green,
                                                     ),
                                                   ),
                                                   Padding(
@@ -242,11 +241,8 @@ class _adminPageState extends State<adminPage> {
                                                   Padding(
                                                     padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                                                     child: Container(
-                                                      width: 206,
+                                                      width: 136,
                                                       height: 100,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                      ),
                                                       child: Column(
                                                         mainAxisSize:
                                                         MainAxisSize.max,
@@ -316,11 +312,11 @@ class _adminPageState extends State<adminPage> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Padding(
-                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
                                           child: Container(
                                             width:
                                             MediaQuery.sizeOf(context).width,
-                                            height: 440,
+                                            height: 240,
                                             decoration: BoxDecoration(
                                               color: Colors.white,
                                               borderRadius:
@@ -333,7 +329,7 @@ class _adminPageState extends State<adminPage> {
                                         ),
                                         Container(
                                           width: MediaQuery.sizeOf(context).width,
-                                          height: 80,
+                                          height: 40,
                                           decoration: BoxDecoration(
                                             color: Colors.white,
                                           ),
@@ -343,46 +339,51 @@ class _adminPageState extends State<adminPage> {
                                             MainAxisAlignment.center,
                                             children: [
                                               Padding(
-                                                padding: EdgeInsets.all(16),
+                                                padding: EdgeInsets.all(6),
                                                 child: ElevatedButton(
                                                   onPressed: () {
                                                     print('Button pressed ...');
                                                   },
                                                   style: ElevatedButton.styleFrom(
-                                                    backgroundColor: Color(0xFFf1f4f8),
-                                                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                                                    backgroundColor: Colors.black,
+                                                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
                                                     elevation: 3,
                                                     shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(8),
+                                                      borderRadius: BorderRadius.circular(6),
                                                     ),
                                                   ),
                                                   child: Text(
                                                     'Button',
-                                                    style: Theme.of(context).textTheme.headline6?.copyWith(
-                                                      color: Colors.white,
+                                                    style: TextStyle(
+                                                      fontFamily: 'Plus Jakarta Sans',
+                                                      fontWeight: FontWeight.w600,
+                                                      fontSize: 16,
+                                                      color: Colors.white, // Use theme color
                                                     ),
                                                   ),
                                                 ),
                                               ),
                                               Padding(
-                                                padding: EdgeInsets.all(16),
+                                                padding: EdgeInsets.all(6),
                                                 child: ElevatedButton(
                                                   onPressed: () {
                                                     print('Button pressed ...');
                                                   },
                                                   style: ElevatedButton.styleFrom(
-                                                    backgroundColor: Color(0xFFf1f4f8),
-                                                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                                                    backgroundColor: Colors.black,
+                                                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
                                                     elevation: 3,
                                                     shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(8),
+                                                      borderRadius: BorderRadius.circular(6),
                                                     ),
                                                   ),
                                                   child: Text(
                                                     'Button',
-                                                    style: Theme.of(context).textTheme.headline6?.copyWith(
-                                                      fontFamily: 'Readex Pro',
-                                                      color: Colors.white,
+                                                    style: TextStyle(
+                                                      fontFamily: 'Plus Jakarta Sans',
+                                                      fontWeight: FontWeight.w600,
+                                                      fontSize: 16,
+                                                      color: Colors.white, // Use theme color
                                                     ),
                                                   ),
                                                 ),
