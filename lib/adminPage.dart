@@ -15,7 +15,7 @@ class _adminPageState extends State<adminPage> {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Scaffold(
-        backgroundColor: Color(0xFFf1f4f8),
+        backgroundColor: Colors.white,
         body: SafeArea(
           top: true,
           child: Padding(
@@ -23,28 +23,57 @@ class _adminPageState extends State<adminPage> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Padding(
-                  padding: EdgeInsets.all(8),
-                  child: Container(
-                    width: MediaQuery.sizeOf(context).width,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 4,
-                          color: Color(0x33000000),
-                          offset: Offset(0, 0),
-                          spreadRadius: 2,
-                        )
-                      ],
-                      borderRadius: BorderRadius.circular(12),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(20, 20, 0, 0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Welcome',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontFamily: 'Plus Jakarta Sans',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              color: Colors.black, // Use theme color
+                            ),
+                          ),
+                          Text(
+                            'Admin',
+                            style: TextStyle(
+                              fontFamily: 'Plus Jakarta Sans',
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                              color: Colors.black, // Use theme color
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(21, 0, 26, 0),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0,20, 20, 0),
+                      child: Material(
+                        color: Colors.transparent,
+                        elevation: 5,
+                        shape: const CircleBorder(),
+                        child: Container(
+                          width: 55,
+                          height: 55,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1,
+                            ),
+                          ),
                           child: Container(
                             width: 55,
                             height: 55,
@@ -52,219 +81,223 @@ class _adminPageState extends State<adminPage> {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                             ),
-                            child: Image.network('https://t3.ftcdn.net/jpg/06/04/79/52/360_F_604795233_5zIpEvhWizTN7bUxSADUdrQQFGj315G3.jpg',
+                            child: Image.network(
+                              'https://t4.ftcdn.net/jpg/05/09/59/75/360_F_509597532_RKUuYsERhODmkxkZd82pSHnFtDAtgbzJ.jpg',
                               fit: BoxFit.cover,
                             ),
                           ),
                         ),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Welcome',
-                              style: TextStyle(
-                                fontFamily: 'Plus Jakarta Sans',
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              'Admin',
-                              style: TextStyle(
-                                fontFamily: 'Plus Jakarta Sans',
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-                DefaultTabController(
-                  length: 2,
-                  child: SizedBox(
-                    height: 390,
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment(0, 0),
-                          child: TabBar(
-                            padding: EdgeInsets.all(4),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                  child: Container(
+                    width: MediaQuery.sizeOf(context).width,
+                    height: MediaQuery.sizeOf(context).height * 0.73,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(0),
+                        bottomRight: Radius.circular(0),
+                        topLeft: Radius.circular(0),
+                        topRight: Radius.circular(0),
+                      ),
+                    ),
+                    child: DefaultTabController(
+                      length: 2,
+                      child: Column(
+                        children: [
+                          TabBar(
+                            labelColor: Colors.black,
+                            unselectedLabelColor: Color(0xFF808080),
+                            labelStyle: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Plus Jakarta Sans',
+                            ),
+                            unselectedLabelStyle: TextStyle(),
+                            indicatorColor: Colors.black,
                             tabs: [
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.shopping_cart_sharp,),
-                                  Tab(text: 'Furniture',),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                                    child: Icon(
+                                      Icons.chair,
+                                      color: Colors.black,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  Tab(
+                                    text: 'Furniture',
+                                  ),
                                 ],
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.analytics,),
-                                  Tab(text: 'Analyze ',),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                                    child: Icon(
+                                      Icons.analytics,
+                                      color: Colors.black,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  Tab(
+                                    text: 'Analyze',
+                                  ),
                                 ],
                               ),
                             ],
                           ),
-                        ),
-                        Expanded(
-                          child: TabBarView(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.all(8),
-                                child: Container(
-                                  width: 100,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        blurRadius: 4,
-                                        color: Color(0x33000000),
-                                        offset: Offset(0, 0),
-                                        spreadRadius: 2,
-                                      )
-                                    ],
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
-                                        child: Container(
-                                          width: MediaQuery.sizeOf(context).width,
-                                          height: 50,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                          ),
-                                          child: Row(
+                          Expanded(
+                            child: TabBarView(
+                              children: [
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
                                             mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Container(
-                                                width: 215,
-                                                height: 100,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                ),
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                                                  child: Column(
-                                                    mainAxisSize: MainAxisSize.max,
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        'Management Furniture',
-                                                        style: TextStyle(
-                                                          fontFamily: 'Plus Jakarta Sans',
-                                                          fontWeight: FontWeight.w600,
-                                                          fontSize: 12,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        'Description',
-                                                        style: TextStyle(
-                                                          fontFamily: 'Plus Jakarta Sans',
-                                                          fontWeight: FontWeight.w500,
-                                                          fontSize: 10,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
+                                              Text(
+                                                'Management Furniture',
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                  fontFamily: 'Plus Jakarta Sans',
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 12,
+                                                  color: Colors.black, // Use theme color
                                                 ),
                                               ),
-                                              IconButton(
-                                                icon: Icon(
-                                                  Icons.add_rounded,
-                                                  color: Colors.red, // 设置图标颜色为白色
-                                                  size: 24,
+                                              Text(
+                                                'Edit or Delete Products',
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                  fontFamily: 'Plus Jakarta Sans',
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 10,
+                                                  color: Colors.black, // Use theme color
                                                 ),
-                                                onPressed: () {
-                                                  print('IconButton pressed ...');
-                                                },
-                                              )
+                                              ),
                                             ],
                                           ),
-                                        ),
+                                          InkWell(
+                                            onTap: () {
+                                              print('Custom button pressed ...');
+                                            },
+                                            borderRadius: BorderRadius.circular(10),
+                                            splashColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            child: Container(
+                                              width: 31,
+                                              height: 31,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(color: Colors.lightGreenAccent, width: 2),
+                                                borderRadius: BorderRadius.circular(10),
+                                                color: Colors.black,
+                                              ),
+                                              child: Center(
+                                                child: Icon(
+                                                  Icons.add,
+                                                  color: Colors.white,
+                                                  size: 24,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      ListView(
+                                    ),
+                                    Expanded(
+                                      child: ListView(
                                         padding: EdgeInsets.zero,
                                         shrinkWrap: true,
                                         scrollDirection: Axis.vertical,
                                         children: [
-                                          Padding(
-                                            padding:
-                                            EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
-                                            child: Card(
-                                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                                              color: Colors.white,
-                                              elevation: 4,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                BorderRadius.circular(8),
+                                          Card(
+                                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                                            color: Colors.white,
+                                            elevation: 4,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(8),
+                                            ),
+                                            child: Container(
+                                              width: 100,
+                                              height: 80,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
                                               ),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   SizedBox(
                                                     height: 100,
+                                                    width: 5,
                                                     child: VerticalDivider(
-                                                      width: 5,
-                                                      thickness: 5,
-                                                      color: Colors.green,
+                                                      thickness: 15,
+                                                      color:
+                                                      Color(0xFF00FF23),
                                                     ),
                                                   ),
-                                                  Padding(
-                                                    padding: EdgeInsets.all(10),
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                      BorderRadius.circular(
-                                                          8),
-                                                      child: Image.network(
-                                                        'https://picsum.photos/seed/473/600',
-                                                        width: 80,
-                                                        height: 80,
-                                                        fit: BoxFit.cover,
+                                                  Container(
+                                                    width: 80,
+                                                    height: 80,
+                                                    decoration:
+                                                    BoxDecoration(
+                                                      color: Colors.white,
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                      EdgeInsets.all(5),
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                        BorderRadius.circular(8),
+                                                        child:
+                                                        Image.network(
+                                                          'https://picsum.photos/seed/53/600',
+                                                          fit: BoxFit.cover,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                  Padding(
-                                                    padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                                                    child: Container(
-                                                      width: 136,
-                                                      height: 100,
+                                                  Expanded(
+                                                    child: Padding(
+                                                      padding:
+                                                      EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
                                                       child: Column(
-                                                        mainAxisSize:
-                                                        MainAxisSize.max,
+                                                        mainAxisSize: MainAxisSize.max,
                                                         mainAxisAlignment: MainAxisAlignment.center,
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
                                                           Text(
-                                                            'Product Name',
+                                                            'Hello World',
                                                             style: TextStyle(
                                                               fontFamily: 'Plus Jakarta Sans',
                                                               fontWeight: FontWeight.w600,
-                                                              fontSize: 12,
-                                                              color: Colors.black,
+                                                              fontSize: 14,
+                                                              color: Colors.black, // Use theme color
                                                             ),
                                                           ),
                                                           Text(
-                                                            'Price',
+                                                            'Hello World',
                                                             style: TextStyle(
                                                               fontFamily: 'Plus Jakarta Sans',
-                                                              fontWeight: FontWeight.w600,
+                                                              fontWeight: FontWeight.w500,
                                                               fontSize: 12,
-                                                              color: Colors.black,
+                                                              color: Colors.black, // Use theme color
                                                             ),
                                                           ),
                                                         ],
@@ -273,10 +306,11 @@ class _adminPageState extends State<adminPage> {
                                                   ),
                                                   SizedBox(
                                                     height: 100,
+                                                    width: 5,
                                                     child: VerticalDivider(
-                                                      width: 5,
-                                                      thickness: 5,
-                                                      color: Colors.red,
+                                                      thickness: 15,
+                                                      color:
+                                                      Color(0xFFFF0206),
                                                     ),
                                                   ),
                                                 ],
@@ -285,125 +319,17 @@ class _adminPageState extends State<adminPage> {
                                           ),
                                         ],
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(8),
-                                child: Container(
-                                  width: 100,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        blurRadius: 4,
-                                        color: Color(0x33000000),
-                                        offset: Offset(0, 0),
-                                        spreadRadius: 2,
-                                      )
-                                    ],
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                                          child: Container(
-                                            width:
-                                            MediaQuery.sizeOf(context).width,
-                                            height: 240,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                              BorderRadius.circular(10),
-                                              border: Border.all(
-                                                width: 1,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: MediaQuery.sizeOf(context).width,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                          ),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsets.all(6),
-                                                child: ElevatedButton(
-                                                  onPressed: () {
-                                                    print('Button pressed ...');
-                                                  },
-                                                  style: ElevatedButton.styleFrom(
-                                                    backgroundColor: Colors.black,
-                                                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                                                    elevation: 3,
-                                                    shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(6),
-                                                    ),
-                                                  ),
-                                                  child: Text(
-                                                    'Button',
-                                                    style: TextStyle(
-                                                      fontFamily: 'Plus Jakarta Sans',
-                                                      fontWeight: FontWeight.w600,
-                                                      fontSize: 16,
-                                                      color: Colors.white, // Use theme color
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsets.all(6),
-                                                child: ElevatedButton(
-                                                  onPressed: () {
-                                                    print('Button pressed ...');
-                                                  },
-                                                  style: ElevatedButton.styleFrom(
-                                                    backgroundColor: Colors.black,
-                                                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                                                    elevation: 3,
-                                                    shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(6),
-                                                    ),
-                                                  ),
-                                                  child: Text(
-                                                    'Button',
-                                                    style: TextStyle(
-                                                      fontFamily: 'Plus Jakarta Sans',
-                                                      fontWeight: FontWeight.w600,
-                                                      fontSize: 16,
-                                                      color: Colors.white, // Use theme color
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ],
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
