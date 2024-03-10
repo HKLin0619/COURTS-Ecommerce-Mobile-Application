@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'user.dart';
 
 class adminPage extends StatefulWidget {
 
@@ -13,6 +14,9 @@ class _adminPageState extends State<adminPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final userData = ModalRoute.of(context)!.settings.arguments as user;
+
     return GestureDetector(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -46,7 +50,8 @@ class _adminPageState extends State<adminPage> {
                             ),
                           ),
                           Text(
-                            'Admin',
+                            '${userData.username}',
+                            // 'admin',
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
                               fontWeight: FontWeight.w500,

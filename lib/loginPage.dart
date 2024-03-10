@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'user.dart';
@@ -5,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 
 loginAccount(
+
     BuildContext context,
     TextEditingController usernameController,
     TextEditingController passwordController) async{
@@ -18,13 +20,19 @@ loginAccount(
     );
 
     if (response.statusCode == 200) {
-      if (response.body.contains('success')) {
+
+      final jsonData = json.decode(response.body);
+
+      if (jsonData['status'] == 'success') {
+
+        final userData = user.fromJson(jsonData['data']);
 
         if (usernameController.text == 'admin' && passwordController.text == 'admin123') {
 
           Navigator.pushNamed(
             context,
             '/admin',
+            arguments: userData,
           );
 
         } else {
@@ -36,13 +44,13 @@ loginAccount(
 
         }
 
-      } else if (response.body.contains('userNotFound')) {
+      } else if (jsonData['status'] == 'userNotFound') {
         Fluttertoast.showToast(
           msg: 'User not found !',
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.orangeAccent,
           textColor: Colors.black,
           fontSize: 12.0,
         );
@@ -50,7 +58,7 @@ loginAccount(
         usernameController.clear();
         passwordController.clear();
 
-      } else if (response.body.contains('emptyInput')) {
+      } else if (jsonData['status'] == 'emptyInput') {
         Fluttertoast.showToast(
           msg: 'Please fill in the information !',
           toastLength: Toast.LENGTH_LONG,
@@ -61,7 +69,7 @@ loginAccount(
           fontSize: 12.0,
         );
 
-      } else if (response.body.contains('invalidPassword')) {
+      } else if (jsonData['status'] == 'invalidPassword') {
         Fluttertoast.showToast(
           msg: 'Incorrect Password !',
           toastLength: Toast.LENGTH_LONG,
@@ -97,7 +105,7 @@ class _loginPageState extends State<loginPage> {
 
   bool _isPasswordVisible = false;
 
-  //Future<user>? _futureUser;
+  //\Future<user>? _futureUser;
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
