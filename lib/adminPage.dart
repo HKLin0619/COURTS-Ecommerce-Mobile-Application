@@ -40,12 +40,12 @@ class _adminPageState extends State<adminPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Welcome',
+                            'Welcome,',
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
                               fontWeight: FontWeight.w600,
-                              fontSize: 16,
+                              fontSize: 18,
                               color: Colors.black, // Use theme color
                             ),
                           ),
@@ -55,7 +55,7 @@ class _adminPageState extends State<adminPage> {
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
                               fontWeight: FontWeight.w500,
-                              fontSize: 12,
+                              fontSize: 14,
                               color: Colors.black, // Use theme color
                             ),
                           ),
@@ -200,7 +200,10 @@ class _adminPageState extends State<adminPage> {
                                           ),
                                           InkWell(
                                             onTap: () {
-                                              print('Custom button pressed ...');
+                                              Navigator.pushNamed(
+                                                context,
+                                                '/addFurniture',
+                                              );
                                             },
                                             borderRadius: BorderRadius.circular(10),
                                             splashColor: Colors.transparent,

@@ -3,6 +3,7 @@ import 'startPage.dart';
 import 'loginPage.dart';
 import 'createAccountPage.dart';
 import 'adminPage.dart';
+import 'addFurniture.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,12 +17,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Navigation Screens',
-      initialRoute: '/',
+      initialRoute: '/login',
       routes: {
         '/': (context) => const startPage(),
         '/login': (context) => const loginPage(),
         '/signUp': (context) => const createAccountPage(),
         '/admin': (context) => const adminPage(),
+        '/addFurniture': (context) => const addFurniturePage(),
       },
     );
   }
