@@ -3,6 +3,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'product.dart';
+import 'dart:io';
+
 
 createAccount(
     BuildContext context,
@@ -12,7 +14,7 @@ createAccount(
     TextEditingController confirmPasswordController) async{
   try {
     final response = await http.post(
-        Uri.parse('http://192.168.0.33/bit311Assignment/addProduct.php'),
+        Uri.parse('http://192.168.0.33/bit311Assignment/aaaddProduct.php'),
         body:{
           'username': usernameController.text,
           'email': emailController.text,
@@ -117,13 +119,16 @@ class _addFurniturePageState extends State<addFurniturePage> {
 
   String? _selectedValue;
 
+  final ImagePicker _imagePicker = ImagePicker();
+
   Future<product>? _futureEmployee;
   final productNameController = TextEditingController();
   final productPriceController = TextEditingController();
   final productCategoryController = TextEditingController();
   final productDescriptionController = TextEditingController();
   final productLocationController = TextEditingController();
-  //final productDescriptionController = TextEditingController();
+
+  final TextEditingController _imageController = TextEditingController();
 
   @override
   void dispose() {
@@ -132,8 +137,20 @@ class _addFurniturePageState extends State<addFurniturePage> {
     productCategoryController.dispose();
     productDescriptionController.dispose();
     productLocationController.dispose();
-    //productDescriptionController.dispose();
+
+    _imageController.dispose();
+
     super.dispose();
+  }
+
+  void _pickImage() async {
+    final XFile? pickedFile = await _imagePicker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _imageController.text = pickedFile.path;
+      });
+    }
   }
 
   @override
@@ -489,18 +506,36 @@ class _addFurniturePageState extends State<addFurniturePage> {
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(
-                                      Icons.add_photo_alternate,
-                                      color: Color(0xFF808080),
-                                      size: 42,
-                                    ),
-                                    Text(
-                                      'Upload Your Image',
-                                      style: TextStyle(
-                                        fontFamily: 'Plus Jakarta Sans',
-                                        color: Color(0xFF808080),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
+                                    _imageController.text.isEmpty
+                                        ? Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.add_photo_alternate,
+                                          color: Color(0xFF808080),
+                                          size: 42,
+                                        ),
+                                        Text(
+                                          'Upload Your Image',
+                                          style: TextStyle(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color: Color(0xFF808080),
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ) : Padding(
+                                      padding: EdgeInsets.all(1),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.file(
+                                          File(_imageController.text),
+                                          width: MediaQuery.of(context).size.width,
+                                          height: MediaQuery.of(context).size.height * 0.29,
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -509,9 +544,9 @@ class _addFurniturePageState extends State<addFurniturePage> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                                 child: ElevatedButton(
-                                  onPressed: () {
-                                    print('Button pressed ...');
-                                  },
+
+                                  onPressed: _pickImage,
+
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.red,
                                     elevation: 4,
