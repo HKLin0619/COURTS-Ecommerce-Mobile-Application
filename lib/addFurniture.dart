@@ -1,4 +1,109 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
+import 'product.dart';
+
+createAccount(
+    BuildContext context,
+    TextEditingController usernameController,
+    TextEditingController emailController,
+    TextEditingController passwordController,
+    TextEditingController confirmPasswordController) async{
+  try {
+    final response = await http.post(
+        Uri.parse('http://192.168.0.33/bit311Assignment/addProduct.php'),
+        body:{
+          'username': usernameController.text,
+          'email': emailController.text,
+          'password': passwordController.text,
+          'confirmPassword': confirmPasswordController.text,
+        }
+    );
+
+    if (response.statusCode == 200) {
+      if (response.body.contains('successfully')) {
+        Fluttertoast.showToast(
+          msg: 'Registration successfully!',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.black,
+          fontSize: 12.0,
+        );
+
+        Navigator.pushNamed(
+          context,
+          '/login',
+        );
+
+      } else if (response.body.contains('unsuccessfully')) {
+        Fluttertoast.showToast(
+          msg: 'Register Unsuccessfully !',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.black,
+          fontSize: 12.0,
+        );
+
+        usernameController.clear();
+        emailController.clear();
+        passwordController.clear();
+        confirmPasswordController.clear();
+
+      } else if (response.body.contains('invalidUsername')) {
+        Fluttertoast.showToast(
+          msg: 'Username Unavailable !',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.orangeAccent,
+          textColor: Colors.black,
+          fontSize: 12.0,
+        );
+
+        usernameController.clear();
+        emailController.clear();
+        passwordController.clear();
+        confirmPasswordController.clear();
+
+      } else if (response.body.contains('invalidPassword')) {
+        Fluttertoast.showToast(
+          msg: 'Invalid password confirmation !',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.orangeAccent,
+          textColor: Colors.black,
+          fontSize: 12.0,
+        );
+
+        passwordController.clear();
+        confirmPasswordController.clear();
+
+      } else if (response.body.contains('emptyInput')) {
+        Fluttertoast.showToast(
+          msg: 'Please fill in the information !',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.orangeAccent,
+          textColor: Colors.black,
+          fontSize: 12.0,
+        );
+      }
+    }
+  } catch (error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('An unexpected error occurred. Please try again.'),
+      ),
+    );
+  }
+}
 
 class addFurniturePage extends StatefulWidget {
 
@@ -10,7 +115,26 @@ class addFurniturePage extends StatefulWidget {
 
 class _addFurniturePageState extends State<addFurniturePage> {
 
-  String _selectedValue = 'Option 1';
+  String? _selectedValue;
+
+  Future<product>? _futureEmployee;
+  final productNameController = TextEditingController();
+  final productPriceController = TextEditingController();
+  final productCategoryController = TextEditingController();
+  final productDescriptionController = TextEditingController();
+  final productLocationController = TextEditingController();
+  //final productDescriptionController = TextEditingController();
+
+  @override
+  void dispose() {
+    productNameController.dispose();
+    productPriceController.dispose();
+    productCategoryController.dispose();
+    productDescriptionController.dispose();
+    productLocationController.dispose();
+    //productDescriptionController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +172,7 @@ class _addFurniturePageState extends State<addFurniturePage> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
+                            controller: productNameController,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -106,6 +231,7 @@ class _addFurniturePageState extends State<addFurniturePage> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
+                            controller: productPriceController,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -145,8 +271,13 @@ class _addFurniturePageState extends State<addFurniturePage> {
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              contentPadding:
-                              EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                              contentPadding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                              prefix: Text(
+                                'RM ',
+                                style: TextStyle(
+                                  color: Colors.black, // 设置字体颜色为黑色
+                                ),
+                              ),
                             ),
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
@@ -155,22 +286,14 @@ class _addFurniturePageState extends State<addFurniturePage> {
                               fontWeight: FontWeight.w500,
                             ),
                             cursorColor: Colors.black,
-                            keyboardType: TextInputType.text,
+                            keyboardType: TextInputType.number,
                           ),
                         ),
                       ),
-
-
-
-
-
-
-
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
-
                         child: Container(
-                          padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(15, 0, 10, 0),
                           decoration: BoxDecoration(
                             border: Border.all(width: 1),
                             borderRadius: BorderRadius.circular(10),
@@ -180,9 +303,15 @@ class _addFurniturePageState extends State<addFurniturePage> {
                             onChanged: (String? val) {
                               setState(() {
                                 _selectedValue = val!;
+                                productCategoryController.text = val!;
                               });
                             },
-                            items: ['Option 1', 'Option 2', 'Option 3']
+                            items: [
+                              'Dining & Kitchen',
+                              'Home Furnishings',
+                              'Home Office',
+                              'Living Rooms'
+                            ]
                                 .map<DropdownMenuItem<String>>(
                                   (String value) => DropdownMenuItem<String>(
                                 value: value,
@@ -196,48 +325,34 @@ class _addFurniturePageState extends State<addFurniturePage> {
                                   ),
                                 ),
                               ),
-                            )
-                                .toList(),
+                            ).toList(),
                             icon: Icon(
                               Icons.keyboard_arrow_down_rounded,
                               color: Colors.black,
                               size: 21,
                             ),
                             hint: Text(
-                              'Category',
+                              'Product Category',
                               style: TextStyle(
                                 fontFamily: 'Readex Pro',
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
+                                color: Color(0xFF808080),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                             isExpanded: true,
-                            style: TextStyle(
-                              fontFamily: 'Readex Pro',
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
                             underline: Container(
                               height: 0,
                             ),
                           ),
                         ),
-
                       ),
-
-
-
-
-
-
-
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
+                            controller: productDescriptionController,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -297,6 +412,7 @@ class _addFurniturePageState extends State<addFurniturePage> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
+                            controller: productLocationController,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -359,46 +475,69 @@ class _addFurniturePageState extends State<addFurniturePage> {
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.network(
-                                  'https://picsum.photos/seed/233/600',
-                                  width: MediaQuery.sizeOf(context).width,
-                                  height:
-                                  MediaQuery.sizeOf(context).height * 0.3,
-                                  fit: BoxFit.fill,
+                              Container(
+                                width: MediaQuery.sizeOf(context).width,
+                                height: MediaQuery.sizeOf(context).height * 0.3,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.add_photo_alternate,
+                                      color: Color(0xFF808080),
+                                      size: 42,
+                                    ),
+                                    Text(
+                                      'Upload Your Image',
+                                      style: TextStyle(
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        color: Color(0xFF808080),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                                child: Container(
-                                  width: double.infinity,
-                                  constraints: BoxConstraints(
-                                    maxWidth: 500,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    print('Button pressed ...');
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.red,
+                                    elevation: 4,
+                                    side: BorderSide(
                                       color: Colors.black,
                                       width: 1,
                                     ),
+                                    padding: EdgeInsets.all(0),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsets.all(8),
+                                    padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Icon(
                                           Icons.upload,
                                           color: Colors.black,
-                                          size: 24,
+                                          size: 19,
                                         ),
                                         Padding(
-                                          padding:
-                                          EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                                          padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
                                           child: Text(
-                                            'Upload Product Picture',
+                                            'Upload',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontFamily: 'Plus Jakarta Sans',

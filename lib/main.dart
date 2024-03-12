@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'startPage.dart';
 import 'loginPage.dart';
 import 'createAccountPage.dart';
 import 'adminPage.dart';
@@ -19,7 +18,6 @@ class MyApp extends StatelessWidget {
       title: 'Navigation Screens',
       initialRoute: '/login',
       routes: {
-        '/': (context) => const startPage(),
         '/login': (context) => const loginPage(),
         '/signUp': (context) => const createAccountPage(),
         '/admin': (context) => const adminPage(),
