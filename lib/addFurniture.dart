@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -6,87 +8,78 @@ import 'product.dart';
 import 'dart:io';
 
 
-createAccount(
+addProduct(
     BuildContext context,
-    TextEditingController usernameController,
-    TextEditingController emailController,
-    TextEditingController passwordController,
-    TextEditingController confirmPasswordController) async{
+    TextEditingController productNameController,
+    TextEditingController productPriceController,
+    TextEditingController productCategoryController,
+    TextEditingController productDescriptionController,
+    TextEditingController productLocationController,
+    TextEditingController productImgVideoController,
+    ) async{
   try {
     final response = await http.post(
-        Uri.parse('http://192.168.0.33/bit311Assignment/aaaddProduct.php'),
+        Uri.parse('http://192.168.0.33/bit311Assignment/addProduct.php'),
         body:{
-          'username': usernameController.text,
-          'email': emailController.text,
-          'password': passwordController.text,
-          'confirmPassword': confirmPasswordController.text,
+          'productName': productNameController.text,
+          'productPrice': productPriceController.text,
+          'productCategory': productCategoryController.text,
+          'productDescription': productDescriptionController.text,
+          'productLocation': productLocationController.text,
+          'productImgVideo': productImgVideoController.text,
         }
     );
 
     if (response.statusCode == 200) {
-      if (response.body.contains('successfully')) {
-        Fluttertoast.showToast(
-          msg: 'Registration successfully!',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green,
-          textColor: Colors.black,
-          fontSize: 12.0,
+
+      final jsonData = json.decode(response.body);
+
+      // Your existing code...
+
+      if (jsonData['status'] == 'success') {
+
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              backgroundColor: Colors.white,
+              content: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.done,
+                    color: Colors.lightGreenAccent,
+                    size: 60,
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                    child: Text(
+                      'Successfully !',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Plus Jakarta Sans',
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('OK'),
+                )
+              ],
+            );
+          },
         );
 
-        Navigator.pushNamed(
-          context,
-          '/login',
-        );
-
-      } else if (response.body.contains('unsuccessfully')) {
-        Fluttertoast.showToast(
-          msg: 'Register Unsuccessfully !',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.black,
-          fontSize: 12.0,
-        );
-
-        usernameController.clear();
-        emailController.clear();
-        passwordController.clear();
-        confirmPasswordController.clear();
-
-      } else if (response.body.contains('invalidUsername')) {
-        Fluttertoast.showToast(
-          msg: 'Username Unavailable !',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.orangeAccent,
-          textColor: Colors.black,
-          fontSize: 12.0,
-        );
-
-        usernameController.clear();
-        emailController.clear();
-        passwordController.clear();
-        confirmPasswordController.clear();
-
-      } else if (response.body.contains('invalidPassword')) {
-        Fluttertoast.showToast(
-          msg: 'Invalid password confirmation !',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.orangeAccent,
-          textColor: Colors.black,
-          fontSize: 12.0,
-        );
-
-        passwordController.clear();
-        confirmPasswordController.clear();
-
-      } else if (response.body.contains('emptyInput')) {
+      } else if (jsonData['status'] == 'emptyInput') {
         Fluttertoast.showToast(
           msg: 'Please fill in the information !',
           toastLength: Toast.LENGTH_LONG,
@@ -96,6 +89,25 @@ createAccount(
           textColor: Colors.black,
           fontSize: 12.0,
         );
+
+      } else if (jsonData['status'] == 'unsuccess') {
+        Fluttertoast.showToast(
+          msg: 'Non-compliant Product Information !',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.orangeAccent,
+          textColor: Colors.black,
+          fontSize: 12.0,
+        );
+
+        productNameController.clear();
+        productPriceController.clear();
+        productCategoryController.clear();
+        productDescriptionController.clear();
+        productLocationController.clear();
+        productImgVideoController.clear();
+
       }
     }
   } catch (error) {
@@ -118,7 +130,6 @@ class addFurniturePage extends StatefulWidget {
 class _addFurniturePageState extends State<addFurniturePage> {
 
   String? _selectedValue;
-
   final ImagePicker _imagePicker = ImagePicker();
 
   Future<product>? _futureEmployee;
@@ -127,7 +138,6 @@ class _addFurniturePageState extends State<addFurniturePage> {
   final productCategoryController = TextEditingController();
   final productDescriptionController = TextEditingController();
   final productLocationController = TextEditingController();
-
   final TextEditingController _imageController = TextEditingController();
 
   @override
@@ -137,9 +147,7 @@ class _addFurniturePageState extends State<addFurniturePage> {
     productCategoryController.dispose();
     productDescriptionController.dispose();
     productLocationController.dispose();
-
     _imageController.dispose();
-
     super.dispose();
   }
 
@@ -185,7 +193,7 @@ class _addFurniturePageState extends State<addFurniturePage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
@@ -597,7 +605,16 @@ class _addFurniturePageState extends State<addFurniturePage> {
                     padding: EdgeInsetsDirectional.fromSTEB(10, 5, 10, 15),
                     child: ElevatedButton(
                       onPressed: () {
-                        print('Button pressed ...');
+                        setState(() {
+                          addProduct(context,
+                              productNameController,
+                              productPriceController,
+                              productCategoryController,
+                              productDescriptionController,
+                              productLocationController,
+                              _imageController,
+                          );
+                        });
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,

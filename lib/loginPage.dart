@@ -29,7 +29,7 @@ loginAccount(
 
         if (usernameController.text == 'admin' && passwordController.text == 'admin123') {
 
-          Navigator.pushNamed(
+          Navigator.pushReplacementNamed(
             context,
             '/admin',
             arguments: userData,
