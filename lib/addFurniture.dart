@@ -10,6 +10,8 @@ class addFurniturePage extends StatefulWidget {
 
 class _addFurniturePageState extends State<addFurniturePage> {
 
+  String _selectedValue = 'Option 1';
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -166,62 +168,66 @@ class _addFurniturePageState extends State<addFurniturePage> {
 
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+
                         child: Container(
-                          width: MediaQuery.sizeOf(context).width,
-                          child: TextFormField(
-                            autofocus: false,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'Product Price',
-                              labelStyle: TextStyle(
-                                fontFamily: 'Plus Jakarta Sans',
-                                color: Color(0xFF808080),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              alignLabelWithHint: false,
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.black,
-                                  width: 1,
+                          padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child:  DropdownButton<String>(
+                            value: _selectedValue,
+                            onChanged: (String? val) {
+                              setState(() {
+                                _selectedValue = val!;
+                              });
+                            },
+                            items: ['Option 1', 'Option 2', 'Option 3']
+                                .map<DropdownMenuItem<String>>(
+                                  (String value) => DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: TextStyle(
+                                    fontFamily: 'Plus Jakarta Sans',
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.circular(10),
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0xFF4B39EF),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0xFFFF5963),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0xFFFF5963),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              contentPadding:
-                              EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                            ),
-                            style: TextStyle(
-                              fontFamily: 'Plus Jakarta Sans',
+                            )
+                                .toList(),
+                            icon: Icon(
+                              Icons.keyboard_arrow_down_rounded,
                               color: Colors.black,
-                              fontSize: 12,
+                              size: 21,
+                            ),
+                            hint: Text(
+                              'Category',
+                              style: TextStyle(
+                                fontFamily: 'Readex Pro',
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            isExpanded: true,
+                            style: TextStyle(
+                              fontFamily: 'Readex Pro',
+                              color: Colors.black,
+                              fontSize: 16,
                               fontWeight: FontWeight.w500,
                             ),
-                            cursorColor: Colors.black,
-                            keyboardType: TextInputType.text,
+                            underline: Container(
+                              height: 0,
+                            ),
                           ),
                         ),
+
                       ),
+
+
 
 
 
@@ -445,9 +451,8 @@ class _addFurniturePageState extends State<addFurniturePage> {
                           ),
                         ],
                       ),
-                    )
-
-                  )
+                    ),
+                  ),
                 ],
               ),
             ),
