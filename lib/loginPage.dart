@@ -28,12 +28,12 @@ loginAccount(
         final userData = user.fromJson(jsonData['data']);
 
         if (usernameController.text == 'admin' && passwordController.text == 'admin123') {
-
           Navigator.pushReplacementNamed(
             context,
             '/admin',
             arguments: userData,
           );
+
 
         } else {
 

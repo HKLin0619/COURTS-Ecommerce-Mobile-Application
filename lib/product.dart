@@ -21,7 +21,7 @@ class product{
     return product(
       productID: json['productID'],
       productName: json['productName'],
-      productPrice: json['productPrice'],
+      productPrice: double.parse(json['productPrice']),
       productDescription: json['productDescription'],
       productImgVideo: json['productImgVideo'],
       productCategory: json['productCategory'],

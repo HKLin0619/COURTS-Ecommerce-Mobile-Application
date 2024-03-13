@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'user.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -33,8 +33,7 @@ addProduct(
     if (response.statusCode == 200) {
 
       final jsonData = json.decode(response.body);
-
-      // Your existing code...
+      final userData = ModalRoute.of(context)!.settings.arguments as user;
 
       if (jsonData['status'] == 'success') {
 
@@ -70,7 +69,11 @@ addProduct(
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.pushReplacementNamed(
+                      context,
+                      '/admin',
+                      arguments: userData,
+                    );
                   },
                   child: Text('OK'),
                 )
@@ -78,7 +81,55 @@ addProduct(
             );
           },
         );
-
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              backgroundColor: Colors.white,
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Center(
+                    child: Icon(
+                      Icons.done,
+                      color: Colors.lightGreenAccent,
+                      size: 60,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
+                    child: Center(
+                      child: Text(
+                        'Successfully!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'Plus Jakarta Sans',
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              actions: <Widget>[
+                Center(
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(
+                        context,
+                        '/admin',
+                        arguments: userData,
+                      );
+                    },
+                    child: Text('OK'),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
       } else if (jsonData['status'] == 'emptyInput') {
         Fluttertoast.showToast(
           msg: 'Please fill in the information !',
