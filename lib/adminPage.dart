@@ -298,7 +298,7 @@ class _adminPageState extends State<adminPage> {
                                                     ),
                                                     child: Card(
                                                       clipBehavior: Clip.antiAliasWithSaveLayer,
-                                                      color: Colors.white,
+                                                      color: Colors.red,
                                                       elevation: 4,
                                                       shape: RoundedRectangleBorder(
                                                         borderRadius: BorderRadius.circular(8),
