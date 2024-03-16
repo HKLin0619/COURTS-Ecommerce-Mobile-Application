@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'user.dart';
 import 'product.dart';
 import 'package:http/http.dart' as http;
@@ -20,6 +21,38 @@ Future<List<product>> fetchData() async {
 
   }
 
+}
+
+deleteProduct(String productID) async {
+
+  try {
+    final response = await http.post(
+      Uri.parse('http://192.168.0.33/bit311Assignment/deleteProduct.php'),
+      body: {
+        'productID': productID
+      },
+    );
+
+    if (response.statusCode == 200) {
+
+      final jsonData = json.decode(response.body);
+
+      if (jsonData['status'] == 'success') {
+        Fluttertoast.showToast(
+          msg: 'Delete successfully!',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.black,
+          fontSize: 12.0,
+        );
+
+      }
+    }
+  } catch (error) {
+    print('An unexpected error occurred. Please try again.');
+  }
 }
 
 class adminPage extends StatefulWidget {
@@ -271,33 +304,54 @@ class _adminPageState extends State<adminPage> {
                                                 scrollDirection: Axis.vertical,
                                                 itemCount: data?.length,
                                                 itemBuilder: (BuildContext context, int index) {
+                                                  final item = data?[index];
                                                   return Dismissible(
                                                     key: UniqueKey(),
+                                                    direction: DismissDirection.endToStart,
                                                     onDismissed: (direction) {
-
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext context) {
+                                                          return AlertDialog(
+                                                            title: Text("Note !"),
+                                                            content: Text("Are you sure you want to delete this product ?"),
+                                                            actions: <Widget>[
+                                                              TextButton(
+                                                                onPressed: () {
+                                                                  Navigator.of(context).pop();
+                                                                },
+                                                                child: Text("Cancel"),
+                                                              ),
+                                                              TextButton(
+                                                                onPressed: () {
+                                                                  Navigator.of(context).pop();
+                                                                  setState(() {
+                                                                    data?.removeAt(index);
+                                                                    deleteProduct(item!.getId());
+                                                                  });
+                                                                },
+                                                                child: Text("Delete"),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
                                                     },
                                                     background: Card(
-                                                      color: Color(0xFF00FF23),
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(0),
+                                                      ),
+                                                      color: Color(0xFFFF0206),
                                                       child: Padding(
-                                                        padding: const EdgeInsets.all(15.0),
+                                                        padding: const EdgeInsets.all(15),
                                                         child: Icon(
                                                           Icons.delete,
                                                           color: Colors.white,
                                                         ),
                                                       ),
                                                     ),
-                                                    secondaryBackground: Card(
-                                                      color: Color(0xFFFF0206),
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.all(15.0),
-                                                        child: Icon(
-                                                          Icons.archive,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
                                                     child: Card(
-                                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                                      clipBehavior: Clip.none,
                                                       color: Colors.red,
                                                       elevation: 4,
                                                       shape: RoundedRectangleBorder(
@@ -313,15 +367,6 @@ class _adminPageState extends State<adminPage> {
                                                           mainAxisSize: MainAxisSize.max,
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
-                                                            SizedBox(
-                                                              height: 100,
-                                                              width: 5,
-                                                              child: VerticalDivider(
-                                                                thickness: 15,
-                                                                color:
-                                                                Color(0xFF00FF23),
-                                                              ),
-                                                            ),
                                                             Container(
                                                               width: 80,
                                                               height: 80,

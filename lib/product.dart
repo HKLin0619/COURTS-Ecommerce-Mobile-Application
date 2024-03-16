@@ -17,6 +17,10 @@ class product{
     required this.productLocation
   });
 
+  String getId() {
+    return this.productID;
+  }
+
   factory product.fromJson(Map<String, dynamic> json){
     return product(
       productID: json['productID'],
