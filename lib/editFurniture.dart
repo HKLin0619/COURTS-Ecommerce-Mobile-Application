@@ -6,179 +6,17 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'product.dart';
 import 'dart:io';
+import 'user.dart';
 
+class editFurniturePage extends StatefulWidget {
 
-addProduct(
-    BuildContext context,
-    TextEditingController productNameController,
-    TextEditingController productPriceController,
-    TextEditingController productCategoryController,
-    TextEditingController productDescriptionController,
-    TextEditingController productLocationController,
-    TextEditingController productImgVideoController,
-    ) async{
-  try {
-    final response = await http.post(
-        Uri.parse('http://192.168.0.33/bit311Assignment/addProduct.php'),
-        body:{
-          'productName': productNameController.text,
-          'productPrice': productPriceController.text,
-          'productCategory': productCategoryController.text,
-          'productDescription': productDescriptionController.text,
-          'productLocation': productLocationController.text,
-          'productImgVideo': productImgVideoController.text,
-        }
-    );
-
-    if (response.statusCode == 200) {
-
-      final jsonData = json.decode(response.body);
-      final userData = ModalRoute.of(context)!.settings.arguments as user;
-
-      if (jsonData['status'] == 'success') {
-
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              backgroundColor: Colors.white,
-              content: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.done,
-                    color: Colors.lightGreenAccent,
-                    size: 60,
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                    child: Text(
-                      'Successfully !',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Plus Jakarta Sans',
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(
-                      context,
-                      '/admin',
-                      arguments: userData,
-                    );
-                  },
-                  child: Text('OK'),
-                )
-              ],
-            );
-          },
-        );
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              backgroundColor: Colors.white,
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Center(
-                    child: Icon(
-                      Icons.done,
-                      color: Colors.lightGreenAccent,
-                      size: 60,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
-                    child: Center(
-                      child: Text(
-                        'Successfully!',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Plus Jakarta Sans',
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              actions: <Widget>[
-                Center(
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(
-                        context,
-                        '/admin',
-                        arguments: userData,
-                      );
-                    },
-                    child: Text('OK'),
-                  ),
-                ),
-              ],
-            );
-          },
-        );
-      } else if (jsonData['status'] == 'emptyInput') {
-        Fluttertoast.showToast(
-          msg: 'Please fill in the information !',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.orangeAccent,
-          textColor: Colors.black,
-          fontSize: 12.0,
-        );
-
-      } else if (jsonData['status'] == 'unsuccess') {
-        Fluttertoast.showToast(
-          msg: 'Non-compliant Product Information !',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.orangeAccent,
-          textColor: Colors.black,
-          fontSize: 12.0,
-        );
-
-        productNameController.clear();
-        productPriceController.clear();
-        productCategoryController.clear();
-        productDescriptionController.clear();
-        productLocationController.clear();
-        productImgVideoController.clear();
-
-      }
-    }
-  } catch (error) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('An unexpected error occurred. Please try again.'),
-      ),
-    );
-  }
-}
-
-class addFurniturePage extends StatefulWidget {
-
-  const addFurniturePage({Key? key}) : super(key: key);
+  const editFurniturePage({Key? key}) : super(key: key);
 
   @override
-  _addFurniturePageState createState() => _addFurniturePageState();
+  _editFurniturePageState createState() => _editFurniturePageState();
 }
 
-class _addFurniturePageState extends State<addFurniturePage> {
+class _editFurniturePageState extends State<editFurniturePage> {
 
   String? _selectedValue;
   final ImagePicker _imagePicker = ImagePicker();
@@ -214,13 +52,47 @@ class _addFurniturePageState extends State<addFurniturePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final Map<String, dynamic>? arguments = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
+
+    final user userData = arguments?['userData'] ?? '';
+    final String productID = arguments?['productID'] ?? '';
+    final String productName = arguments?['productName'] ?? '';
+    final double productPrice = arguments?['productPrice'] ?? '';
+    final String productCategory = arguments?['productCategory'] ?? '';
+    final String productDescription = arguments?['productDescription'] ?? '';
+    final String productLocation = arguments?['productLocation'] ?? '';
+    final String productImgVideo = arguments?['productImgVideo'] ?? '';
+
+    String? productNameFromDatabase = productName;
+    double? productPriceFromDatabase = productPrice;
+    String? productCategoryFromDatabase = productCategory;
+    String? productDescriptionFromDatabase = productDescription;
+    String? productLocationFromDatabase = productLocation;
+    String? productImgVideoFromDatabase = productImgVideo;
+
     return GestureDetector(
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: Colors.black,
+              size: 30,
+            ),
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                '/admin',
+                arguments: userData,
+              );
+
+            },
+          ),
           title: Text(
-            'Add Furniture ',
+            'Edit Furniture ',
             style: TextStyle(
               fontFamily: 'Plus Jakarta Sans',
               fontWeight: FontWeight.w600,
@@ -248,7 +120,8 @@ class _addFurniturePageState extends State<addFurniturePage> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
-                            controller: productNameController,
+                            //controller: productNameController,
+                            initialValue: productNameFromDatabase,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -307,7 +180,8 @@ class _addFurniturePageState extends State<addFurniturePage> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
-                            controller: productPriceController,
+                            //controller: productPriceController,
+                            initialValue: productPriceFromDatabase.toStringAsFixed(2),
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -379,7 +253,7 @@ class _addFurniturePageState extends State<addFurniturePage> {
                             onChanged: (String? val) {
                               setState(() {
                                 _selectedValue = val!;
-                                productCategoryController.text = val!;
+                                //productCategoryController.text = val!;
                               });
                             },
                             items: [
@@ -408,10 +282,10 @@ class _addFurniturePageState extends State<addFurniturePage> {
                               size: 21,
                             ),
                             hint: Text(
-                              'Product Category',
+                              productCategoryFromDatabase,
                               style: TextStyle(
                                 fontFamily: 'Readex Pro',
-                                color: Color(0xFF808080),
+                                color: Colors.black,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -428,7 +302,8 @@ class _addFurniturePageState extends State<addFurniturePage> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
-                            controller: productDescriptionController,
+                            //controller: productDescriptionController,
+                            initialValue: productDescriptionFromDatabase,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -488,7 +363,8 @@ class _addFurniturePageState extends State<addFurniturePage> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
-                            controller: productLocationController,
+                           //controller: productLocationController,
+                            initialValue: productLocationFromDatabase,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -566,26 +442,15 @@ class _addFurniturePageState extends State<addFurniturePage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     _imageController.text.isEmpty
-                                        ? Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.add_photo_alternate,
-                                          color: Color(0xFF808080),
-                                          size: 42,
+                                    ? ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.file(
+                                          File(productImgVideoFromDatabase),
+                                          width: MediaQuery.of(context).size.width,
+                                          height: MediaQuery.of(context).size.height * 0.29,
+                                          fit: BoxFit.fill,
                                         ),
-                                        Text(
-                                          'Upload Your Image',
-                                          style: TextStyle(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: Color(0xFF808080),
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ],
-                                    ) : Padding(
+                                      ) : Padding(
                                       padding: EdgeInsets.all(1),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
@@ -603,9 +468,7 @@ class _addFurniturePageState extends State<addFurniturePage> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                                 child: ElevatedButton(
-
                                   onPressed: _pickImage,
-
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.red,
                                     elevation: 4,
@@ -656,16 +519,16 @@ class _addFurniturePageState extends State<addFurniturePage> {
                     padding: EdgeInsetsDirectional.fromSTEB(10, 5, 10, 15),
                     child: ElevatedButton(
                       onPressed: () {
-                        setState(() {
-                          addProduct(context,
-                              productNameController,
-                              productPriceController,
-                              productCategoryController,
-                              productDescriptionController,
-                              productLocationController,
-                              _imageController,
-                          );
-                        });
+                        // setState(() {
+                        //   addProduct(context,
+                        //     productNameController,
+                        //     productPriceController,
+                        //     productCategoryController,
+                        //     productDescriptionController,
+                        //     productLocationController,
+                        //     _imageController,
+                        //   );
+                        // });
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,

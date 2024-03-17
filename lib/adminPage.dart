@@ -74,10 +74,12 @@ class _adminPageState extends State<adminPage> {
     futureData = fetchData();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
 
-    final userData = ModalRoute.of(context)!.settings.arguments as user;
+    final user userData = ModalRoute.of(context)!.settings.arguments as user;
 
     return GestureDetector(
       child: Scaffold(
@@ -350,85 +352,103 @@ class _adminPageState extends State<adminPage> {
                                                         ),
                                                       ),
                                                     ),
-                                                    child: Card(
-                                                      clipBehavior: Clip.none,
-                                                      color: Colors.red,
-                                                      elevation: 4,
-                                                      shape: RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                      ),
-                                                      child: Container(
-                                                        width: MediaQuery.of(context).size.width,
-                                                        height: 80,
-                                                        decoration: BoxDecoration(
-                                                          color: Colors.white,
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        Navigator.pushReplacementNamed(
+                                                          context,
+                                                          '/editFurniture',
+                                                          arguments: {
+                                                            'userData': userData,
+                                                            'productID': data![index].productID,
+                                                            'productName': data![index].productName,
+                                                            'productPrice': data![index].productPrice,
+                                                            'productCategory': data![index].productCategory,
+                                                            'productDescription': data![index].productDescription,
+                                                            'productLocation': data![index].productLocation,
+                                                            'productImgVideo': data![index].productImgVideo,
+                                                          },
+                                                        );
+                                                      },
+                                                      child: Card(
+                                                        clipBehavior: Clip.none,
+                                                        color: Colors.white,
+                                                        elevation: 4,
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(8),
                                                         ),
-                                                        child: Row(
-                                                          mainAxisSize: MainAxisSize.max,
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                          children: [
-                                                            Container(
-                                                              width: 80,
-                                                              height: 80,
-                                                              decoration:
-                                                              BoxDecoration(
-                                                                color: Colors.white,
-                                                              ),
-                                                              child: Padding(
-                                                                padding:
-                                                                EdgeInsets.all(5),
-                                                                child: ClipRRect(
-                                                                  borderRadius:
-                                                                  BorderRadius.circular(8),
-                                                                  child:
-                                                                  Image.file(
-                                                                    File(data![index].productImgVideo),
-                                                                    fit: BoxFit.cover,
+                                                        child: Container(
+                                                          width: MediaQuery.of(context).size.width,
+                                                          height: 80,
+                                                          decoration: BoxDecoration(
+                                                            color: Colors.white,
+                                                          ),
+                                                          child: Row(
+                                                            mainAxisSize: MainAxisSize.max,
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                              Container(
+                                                                width: 80,
+                                                                height: 80,
+                                                                decoration:
+                                                                BoxDecoration(
+                                                                  color: Colors.white,
+                                                                ),
+                                                                child: Padding(
+                                                                  padding:
+                                                                  EdgeInsets.all(5),
+                                                                  child: ClipRRect(
+                                                                    borderRadius:
+                                                                    BorderRadius.circular(8),
+                                                                    child:
+                                                                    Image.file(
+                                                                      File(data![index].productImgVideo),
+                                                                      fit: BoxFit.cover,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                            Expanded(
-                                                              child: Padding(
-                                                                padding:
-                                                                EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                                                                child: Column(
-                                                                  mainAxisSize: MainAxisSize.max,
-                                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                  children: [
-                                                                    Text(
-                                                                      data![index].productName,
-                                                                      style: TextStyle(
-                                                                        fontFamily: 'Plus Jakarta Sans',
-                                                                        fontWeight: FontWeight.w600,
-                                                                        fontSize: 12,
-                                                                        color: Colors.black, // Use theme color
+                                                              Expanded(
+                                                                child: Padding(
+                                                                  padding:
+                                                                  EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                                                                  child: Column(
+                                                                    mainAxisSize: MainAxisSize.max,
+                                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      Text(
+                                                                        data![index].productName,
+                                                                        style: TextStyle(
+                                                                          fontFamily: 'Plus Jakarta Sans',
+                                                                          fontWeight: FontWeight.w600,
+                                                                          fontSize: 12,
+                                                                          color: Colors.black, // Use theme color
+                                                                        ),
                                                                       ),
-                                                                    ),
-                                                                    Text(
-                                                                      "RM ${data![index].productPrice.toStringAsFixed(2)}",
-                                                                      style: TextStyle(
-                                                                        fontFamily: 'Plus Jakarta Sans',
-                                                                        fontWeight: FontWeight.w500,
-                                                                        fontSize: 10,
-                                                                        color: Colors.black, // Use theme color
+                                                                      Text(
+                                                                        "RM ${data![index].productPrice.toStringAsFixed(2)}",
+                                                                        style: TextStyle(
+                                                                          fontFamily: 'Plus Jakarta Sans',
+                                                                          fontWeight: FontWeight.w500,
+                                                                          fontSize: 10,
+                                                                          color: Colors.black, // Use theme color
+                                                                        ),
                                                                       ),
-                                                                    ),
-                                                                  ],
+                                                                    ],
+                                                                  ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                            SizedBox(
-                                                              height: 100,
-                                                              width: 5,
-                                                              child: VerticalDivider(
-                                                                thickness: 15,
-                                                                color:
-                                                                Color(0xFFFF0206),
+                                                              SizedBox(
+                                                                height: 100,
+                                                                width: 5,
+                                                                child: VerticalDivider(
+                                                                  thickness: 15,
+                                                                  color:
+                                                                  Color(0xFFFF0206),
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ],
+                                                            ],
+                                                          ),
                                                         ),
                                                       ),
                                                     ),

@@ -3,6 +3,7 @@ import 'loginPage.dart';
 import 'createAccountPage.dart';
 import 'adminPage.dart';
 import 'addFurniture.dart';
+import 'editFurniture.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         '/signUp': (context) => const createAccountPage(),
         '/admin': (context) => const adminPage(),
         '/addFurniture': (context) => const addFurniturePage(),
+        '/editFurniture': (context) => const editFurniturePage(),
       },
     );
   }
