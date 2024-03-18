@@ -43,50 +43,6 @@ addProduct(
             return AlertDialog(
               backgroundColor: Colors.white,
               content: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.done,
-                    color: Colors.lightGreenAccent,
-                    size: 60,
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                    child: Text(
-                      'Successfully !',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Plus Jakarta Sans',
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(
-                      context,
-                      '/admin',
-                      arguments: userData,
-                    );
-                  },
-                  child: Text('OK'),
-                )
-              ],
-            );
-          },
-        );
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              backgroundColor: Colors.white,
-              content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Center(

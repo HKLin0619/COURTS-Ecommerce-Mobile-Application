@@ -21,63 +21,73 @@ class _editFurniturePageState extends State<editFurniturePage> {
   String? _selectedValue;
   final ImagePicker _imagePicker = ImagePicker();
 
-  Future<product>? _futureProduct;
-  final productNameController = TextEditingController();
-  final productPriceController = TextEditingController();
-  final productCategoryController = TextEditingController();
-  final productDescriptionController = TextEditingController();
-  final productLocationController = TextEditingController();
-  final TextEditingController _imageController = TextEditingController();
+  late String _productName;
+  late double _productPrice;
+  late String _productCategory;
+  late String _productDescription;
+  late String _productLocation;
+  late String _productImgVideo;
+
+  late TextEditingController _productNameController;
+  late TextEditingController _productPriceController;
+  late TextEditingController _productCategoryController;
+  late TextEditingController _productDescriptionController;
+  late TextEditingController _productLocationController;
+  late TextEditingController _productImgVideoController;
+
+  @override
+  void initState() {
+    super.initState();
+    _productNameController = TextEditingController();
+    _productPriceController = TextEditingController();
+    _productCategoryController = TextEditingController();
+    _productDescriptionController = TextEditingController();
+    _productLocationController = TextEditingController();
+    _productImgVideoController = TextEditingController();
+  }
 
   @override
   void dispose() {
-    productNameController.dispose();
-    productPriceController.dispose();
-    productCategoryController.dispose();
-    productDescriptionController.dispose();
-    productLocationController.dispose();
-    _imageController.dispose();
+    _productNameController.dispose();
+    _productPriceController.dispose();
+    _productCategoryController.dispose();
+    _productDescriptionController.dispose();
+    _productLocationController.dispose();
+    _productImgVideoController.dispose();
     super.dispose();
-  }
-
-  void _pickImage() async {
-    final XFile? pickedFile = await _imagePicker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      setState(() {
-        _imageController.text = pickedFile.path;
-      });
-    }
   }
 
 
   @override
   Widget build(BuildContext context) {
 
-    final Map<String, dynamic>? arguments = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
+    final Map<String, dynamic> args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
-    final user userData = arguments?['userData'] ?? '';
-    final String productID = arguments?['productID'] ?? '';
-    final String productName = arguments?['productName'] ?? '';
-    final double productPrice = arguments?['productPrice'] ?? '';
-    final String productCategory = arguments?['productCategory'] ?? '';
-    final String productDescription = arguments?['productDescription'] ?? '';
-    final String productLocation = arguments?['productLocation'] ?? '';
-    final String productImgVideo = arguments?['productImgVideo'] ?? '';
+    final user userData = args['userData'];
 
-    String? productNameFromDatabase = productName;
-    double? productPriceFromDatabase = productPrice;
-    String? productCategoryFromDatabase = productCategory;
-    String? productDescriptionFromDatabase = productDescription;
-    String? productLocationFromDatabase = productLocation;
-    String? productImgVideoFromDatabase = productImgVideo;
+    _productName = args['initialProductName'] ?? '';
+    _productPrice = args['initialProductPrice'] ?? '';
+    _productCategory = args['initialProductCategory'] ?? '';
+    _productDescription = args['initialProductDescription'] ?? '';
+    _productLocation = args['initialProductLocation'] ?? '';
+    _productImgVideo = args['initialProductImgVideo'] ?? '';
 
-    productNameController.text = productNameFromDatabase ?? '';
-    productPriceController.text = productPriceFromDatabase?.toString() ?? '';
-    productCategoryController.text = productCategoryFromDatabase ?? '';
-    productDescriptionController.text = productDescriptionFromDatabase ?? '';
-    productLocationController.text = productLocationFromDatabase ?? '';
-    _imageController.text = productImgVideoFromDatabase ?? '';
+    _productNameController.text = _productName;
+    _productPriceController.text = _productPrice.toStringAsFixed(2);
+    _productCategoryController.text = _productCategory;
+    _productDescriptionController.text = _productDescription;
+    _productLocationController.text = _productLocation;
+    _productImgVideoController.text = _productImgVideo;
+
+    void _pickImage() async {
+      final XFile? pickedFile = await _imagePicker.pickImage(source: ImageSource.gallery);
+
+      if (pickedFile != null) {
+        setState(() {
+          _productImgVideoController.text = pickedFile.path;
+        });
+      }
+    }
 
     return GestureDetector(
       child: Scaffold(
@@ -128,7 +138,7 @@ class _editFurniturePageState extends State<editFurniturePage> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
-                            controller: productNameController,
+                            controller: _productNameController,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -187,7 +197,7 @@ class _editFurniturePageState extends State<editFurniturePage> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
-                            controller: productPriceController,
+                            controller: _productPriceController,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -259,7 +269,7 @@ class _editFurniturePageState extends State<editFurniturePage> {
                             onChanged: (String? val) {
                               setState(() {
                                 _selectedValue = val!;
-                                productCategoryController.text = val!;
+                                _productCategoryController.text = val!;
                               });
                             },
                             items: [
@@ -288,7 +298,7 @@ class _editFurniturePageState extends State<editFurniturePage> {
                               size: 21,
                             ),
                             hint: Text(
-                              productCategoryController.text,
+                              _productCategoryController.text,
                               style: TextStyle(
                                 fontFamily: 'Readex Pro',
                                 color: Colors.black,
@@ -308,7 +318,7 @@ class _editFurniturePageState extends State<editFurniturePage> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
-                            controller: productDescriptionController,
+                            controller: _productDescriptionController,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -368,7 +378,7 @@ class _editFurniturePageState extends State<editFurniturePage> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
-                           controller: productLocationController,
+                           controller: _productLocationController,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -445,25 +455,13 @@ class _editFurniturePageState extends State<editFurniturePage> {
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    _imageController.text.isEmpty
-                                    ? ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: Image.file(
-                                          File(_imageController.text),
-                                          width: MediaQuery.of(context).size.width,
-                                          height: MediaQuery.of(context).size.height * 0.29,
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ) : Padding(
-                                      padding: EdgeInsets.all(1),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: Image.file(
-                                          File(_imageController.text),
-                                          width: MediaQuery.of(context).size.width,
-                                          height: MediaQuery.of(context).size.height * 0.29,
-                                          fit: BoxFit.fill,
-                                        ),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.file(
+                                        File(_productImgVideoController.text),
+                                        width: MediaQuery.of(context).size.width,
+                                        height: MediaQuery.of(context).size.height * 0.29,
+                                        fit: BoxFit.fill,
                                       ),
                                     ),
                                   ],
@@ -550,7 +548,7 @@ class _editFurniturePageState extends State<editFurniturePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Add',
+                            'Update',
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
                               color: Colors.white,

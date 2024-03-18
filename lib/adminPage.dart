@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:courts_ecommerce/editFurniture.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'user.dart';
@@ -354,18 +355,17 @@ class _adminPageState extends State<adminPage> {
                                                     ),
                                                     child: InkWell(
                                                       onTap: () {
-                                                        Navigator.pushReplacementNamed(
+                                                        Navigator.pushNamed(
                                                           context,
                                                           '/editFurniture',
                                                           arguments: {
                                                             'userData': userData,
-                                                            'productID': data![index].productID,
-                                                            'productName': data![index].productName,
-                                                            'productPrice': data![index].productPrice,
-                                                            'productCategory': data![index].productCategory,
-                                                            'productDescription': data![index].productDescription,
-                                                            'productLocation': data![index].productLocation,
-                                                            'productImgVideo': data![index].productImgVideo,
+                                                            'initialProductName': data![index].productName,
+                                                            'initialProductPrice': data![index].productPrice,
+                                                            'initialProductCategory': data![index].productCategory,
+                                                            'initialProductDescription': data![index].productDescription,
+                                                            'initialProductLocation': data![index].productLocation,
+                                                            'initialProductImgVideo': data![index].productImgVideo,
                                                           },
                                                         );
                                                       },
