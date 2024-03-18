@@ -50,6 +50,7 @@ class _editFurniturePageState extends State<editFurniturePage> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
 
@@ -70,6 +71,13 @@ class _editFurniturePageState extends State<editFurniturePage> {
     String? productDescriptionFromDatabase = productDescription;
     String? productLocationFromDatabase = productLocation;
     String? productImgVideoFromDatabase = productImgVideo;
+
+    productNameController.text = productNameFromDatabase ?? '';
+    productPriceController.text = productPriceFromDatabase?.toString() ?? '';
+    productCategoryController.text = productCategoryFromDatabase ?? '';
+    productDescriptionController.text = productDescriptionFromDatabase ?? '';
+    productLocationController.text = productLocationFromDatabase ?? '';
+    _imageController.text = productImgVideoFromDatabase ?? '';
 
     return GestureDetector(
       child: Scaffold(
@@ -120,8 +128,7 @@ class _editFurniturePageState extends State<editFurniturePage> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
-                            //controller: productNameController,
-                            initialValue: productNameFromDatabase,
+                            controller: productNameController,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -180,8 +187,7 @@ class _editFurniturePageState extends State<editFurniturePage> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
-                            //controller: productPriceController,
-                            initialValue: productPriceFromDatabase.toStringAsFixed(2),
+                            controller: productPriceController,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -253,7 +259,7 @@ class _editFurniturePageState extends State<editFurniturePage> {
                             onChanged: (String? val) {
                               setState(() {
                                 _selectedValue = val!;
-                                //productCategoryController.text = val!;
+                                productCategoryController.text = val!;
                               });
                             },
                             items: [
@@ -282,7 +288,7 @@ class _editFurniturePageState extends State<editFurniturePage> {
                               size: 21,
                             ),
                             hint: Text(
-                              productCategoryFromDatabase,
+                              productCategoryController.text,
                               style: TextStyle(
                                 fontFamily: 'Readex Pro',
                                 color: Colors.black,
@@ -302,8 +308,7 @@ class _editFurniturePageState extends State<editFurniturePage> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
-                            //controller: productDescriptionController,
-                            initialValue: productDescriptionFromDatabase,
+                            controller: productDescriptionController,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -363,8 +368,7 @@ class _editFurniturePageState extends State<editFurniturePage> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
-                           //controller: productLocationController,
-                            initialValue: productLocationFromDatabase,
+                           controller: productLocationController,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -445,7 +449,7 @@ class _editFurniturePageState extends State<editFurniturePage> {
                                     ? ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
                                         child: Image.file(
-                                          File(productImgVideoFromDatabase),
+                                          File(_imageController.text),
                                           width: MediaQuery.of(context).size.width,
                                           height: MediaQuery.of(context).size.height * 0.29,
                                           fit: BoxFit.fill,
