@@ -1,5 +1,10 @@
+import 'package:courts_ecommerce/providers/user_provider.dart';
+import 'package:courts_ecommerce/services/product_service.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
+
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class AddProductScreen extends StatefulWidget {
 
@@ -12,9 +17,32 @@ class AddProductScreen extends StatefulWidget {
 class _addProductScreenPageState extends State<AddProductScreen> {
 
   String? _selectedValue;
+  final ImagePicker _imagePicker = ImagePicker();
+
+  final TextEditingController _productNameController = TextEditingController();
+  final TextEditingController _productPriceController = TextEditingController();
+  final TextEditingController _productCategoryController = TextEditingController();
+  final TextEditingController _productDescriptionController = TextEditingController();
+  final TextEditingController _productLocationController = TextEditingController();
+  final TextEditingController _productImgVideoController = TextEditingController();
+
+  ProductService _productService = ProductService();
+
+  void _pickImage() async {
+    final XFile? pickedFile = await _imagePicker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _productImgVideoController.text = pickedFile.path;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    final user = Provider.of<UserProvider>(context).user!;
+
     return GestureDetector(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -49,7 +77,7 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
-                            // controller: productNameController,
+                            controller: _productNameController,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -108,7 +136,7 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
-                            // controller: productPriceController,
+                            controller: _productPriceController,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -180,7 +208,7 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                             onChanged: (String? val) {
                               setState(() {
                                 _selectedValue = val!;
-                                // productCategoryController.text = val!;
+                                _productCategoryController.text = val!;
                               });
                             },
                             items: [
@@ -229,7 +257,7 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
-                            // controller: productDescriptionController,
+                            controller: _productDescriptionController,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -289,7 +317,7 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
-                            // controller: productLocationController,
+                            controller: _productLocationController,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -366,8 +394,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    // _imageController.text.isEmpty ?
-                                         Column(
+                                    _productImgVideoController.text.isEmpty
+                                        ? Column(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
@@ -386,28 +414,25 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                                           ),
                                         ),
                                       ],
-                                    // ) : Padding(
-                                    //   padding: EdgeInsets.all(1),
-                                    //   child: ClipRRect(
-                                    //     borderRadius: BorderRadius.circular(10),
-                                    //     child: Image.file(
-                                    //       File(_imageController.text),
-                                    //       width: MediaQuery.of(context).size.width,
-                                    //       height: MediaQuery.of(context).size.height * 0.29,
-                                    //       fit: BoxFit.fill,
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                         ),
+                                    ) : Padding(
+                                      padding: EdgeInsets.all(1),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.file(
+                                          File(_productImgVideoController.text),
+                                          width: MediaQuery.of(context).size.width,
+                                          height: MediaQuery.of(context).size.height * 0.29,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                                 child: ElevatedButton(
-
-                                  onPressed: (){},
-
+                                  onPressed: _pickImage,
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.red,
                                     elevation: 4,
@@ -457,17 +482,72 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(10, 5, 10, 15),
                     child: ElevatedButton(
-                      onPressed: () {
-                        // setState(() {
-                        //   addProduct(context,
-                        //     productNameController,
-                        //     productPriceController,
-                        //     productCategoryController,
-                        //     productDescriptionController,
-                        //     productLocationController,
-                        //     _imageController,
-                        //   );
-                        // });
+                      onPressed: () async {
+                        try {
+                          bool success = await _productService.addProduct(
+                            productNameController: _productNameController,
+                            productPriceController: _productPriceController,
+                            productCategoryController: _productCategoryController,
+                            productDescriptionController: _productDescriptionController,
+                            productLocationController: _productLocationController,
+                            productImgVideoController: _productImgVideoController,
+                          );
+
+                          if (success) {
+
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  backgroundColor: Colors.white,
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Center(
+                                        child: Icon(
+                                          Icons.done,
+                                          color: Colors.lightGreenAccent,
+                                          size: 60,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
+                                        child: Center(
+                                          child: Text(
+                                            'Successfully!',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              color: Colors.black,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  actions: <Widget>[
+                                    Center(
+                                      child: TextButton(
+                                        onPressed: () {
+                                          Navigator.pushNamed(
+                                              context,
+                                              '/home',
+                                               arguments: '${user.username}',
+                                          );
+                                        },
+                                        child: Text('OK'),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
+                        } catch (e) {
+                            print("Error occurred: $e");
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,

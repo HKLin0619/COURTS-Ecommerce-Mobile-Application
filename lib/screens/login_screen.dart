@@ -310,10 +310,7 @@ class _loginScreenState extends State<LoginScreen > {
                                             fontWeight: FontWeight.w600,
                                           ),
                                           recognizer: TapGestureRecognizer()..onTap = () {
-                                            Navigator.pushNamed(
-                                              context,
-                                              '/signUp',
-                                            );
+                                            Navigator.pushNamed(context, '/createAccount');
                                           },
                                         ),
                                       ],
