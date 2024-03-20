@@ -1,160 +1,25 @@
-import 'dart:convert';
-import 'package:courts_ecommerce/user.dart';
+import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'user.dart';
-import 'package:http/http.dart' as http;
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
+class LoginScreen  extends StatefulWidget {
 
-loginAccount(
-
-    BuildContext context,
-    TextEditingController usernameController,
-    TextEditingController passwordController) async{
-  try {
-    final response = await http.post(
-        Uri.parse('http://192.168.0.33/bit311Assignment/userLogin.php'),
-        body:{
-          'username': usernameController.text,
-          'password': passwordController.text,
-        }
-    );
-
-    if (response.statusCode == 200) {
-
-      final jsonData = json.decode(response.body);
-
-      if (jsonData['status'] == 'success') {
-
-        final userData = user.fromJson(jsonData['data']);
-
-        if (usernameController.text == 'admin' && passwordController.text == 'admin123') {
-          Navigator.pushReplacementNamed(
-            context,
-            '/admin',
-            arguments: userData,
-          );
-
-
-        } else {
-
-          // Navigator.pushNamed(
-          //   context,
-          //   '/login',
-          // );
-
-        }
-
-      } else if (jsonData['status'] == 'userNotFound') {
-        Fluttertoast.showToast(
-          msg: 'User not found !',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.orangeAccent,
-          textColor: Colors.black,
-          fontSize: 12.0,
-        );
-
-        usernameController.clear();
-        passwordController.clear();
-
-      } else if (jsonData['status'] == 'emptyInput') {
-        Fluttertoast.showToast(
-          msg: 'Please fill in the information !',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.orangeAccent,
-          textColor: Colors.black,
-          fontSize: 12.0,
-        );
-
-      } else if (jsonData['status'] == 'invalidPassword') {
-        Fluttertoast.showToast(
-          msg: 'Incorrect Password !',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.orangeAccent,
-          textColor: Colors.black,
-          fontSize: 12.0,
-        );
-
-        passwordController.clear();
-
-      }
-    }
-  } catch (error) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('An unexpected error occurred. Please try again.'),
-      ),
-    );
-  }
-}
-
-class UserProvider with ChangeNotifier {
-
-  user? _user;
-
-  user? get user => _user;
-
-  Future<void> login(String username, String password) async {
-
-    try {
-      final response = await http.post(
-          Uri.parse('http://192.168.0.33/bit311Assignment/userLogin.php'),
-          body:{
-            'username': username,
-            'password': password,
-          }
-      );
-
-      if (response.statusCode == 200) {
-        final jsonData = json.decode(response.body);
-        if (jsonData['status'] == 'success') {
-          _user = user.fromJson(jsonData['data']);
-          notifyListeners();
-        }
-      }
-    } catch (error) {
-      print('An unexpected error occurred: $error');
-    }
-  }
-}
-
-class loginPage extends StatefulWidget {
-
-  const loginPage({Key? key}) : super(key: key);
+  const LoginScreen ({Key? key}) : super(key: key);
 
   @override
-  _loginPageState createState() => _loginPageState();
+  _loginScreenState createState() => _loginScreenState();
 }
 
-class _loginPageState extends State<loginPage> {
+class _loginScreenState extends State<LoginScreen > {
 
   bool _isPasswordVisible = false;
-
-  // //\Future<user>? _futureUser;
-  // final usernameController = TextEditingController();
-  // final passwordController = TextEditingController();
-  //
-  // @override
-  // void dispose() {
-  //   usernameController.dispose();
-  //   passwordController.dispose();
-  //   super.dispose();
-  // }
 
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-
-    final userProvider = Provider.of<UserProvider>(context);
 
     return GestureDetector(
       child: Scaffold(
@@ -378,13 +243,27 @@ class _loginPageState extends State<loginPage> {
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                                   child: ElevatedButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        loginAccount(context,
-                                            usernameController,
-                                            passwordController,
-                                        );
-                                      });
+                                    onPressed: () async {
+                                      try {
+                                        await Provider.of<UserProvider>(context, listen: false).login(usernameController.text, passwordController.text);
+                                        Navigator.pushReplacementNamed(context, '/home');
+                                      } catch (e) {
+
+                                        if (e.toString().contains('Failed to login: Invalid Password')) {
+
+                                          passwordController.clear();
+
+                                        } else if (e.toString().contains('Failed to login: User Not Found')) {
+
+                                          usernameController.clear();
+                                          passwordController.clear();
+
+                                        } else {
+
+                                          print("Error occurred: $e");
+
+                                        }
+                                      }
                                     },
                                     child: Text(
                                       'Sign In',
