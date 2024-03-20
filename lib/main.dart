@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
                 ? AdminScreen()
                 : CustomerScreen();
           },
+          '/addProduct': (context) => LoginScreen(),
         },
       ),
     );

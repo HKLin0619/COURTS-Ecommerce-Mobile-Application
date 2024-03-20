@@ -4,8 +4,6 @@ import 'dart:convert';
 
 class ProductService {
 
-
-
   Future<List<Product>> fetchData() async {
 
     final response = await http.get(

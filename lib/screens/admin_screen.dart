@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:courts_ecommerce/models/product.dart';
 import 'package:courts_ecommerce/providers/user_provider.dart';
+import 'package:courts_ecommerce/services/product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +16,15 @@ class AdminScreen extends StatefulWidget {
 }
 
 class _adminScreenState extends State<AdminScreen> {
+
+  late Future<List<Product>> _productListFuture;
+  final ProductService _productService = ProductService();
+
+  @override
+  void initState() {
+    super.initState();
+    _productListFuture = _productService.fetchData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -201,7 +214,7 @@ class _adminScreenState extends State<AdminScreen> {
                                           ),
                                           InkWell(
                                             onTap: () {
-
+                                              Navigator.pushNamed(context, '/addProduct');
                                             },
                                             borderRadius: BorderRadius.circular(10),
                                             splashColor: Colors.transparent,
@@ -226,174 +239,176 @@ class _adminScreenState extends State<AdminScreen> {
                                         ],
                                       ),
                                     ),
-                                    // Expanded(
-                                    //   child: FutureBuilder <List<product>> (
-                                    //     future: futureData,
-                                    //     builder: (context, snapshot) {
-                                    //       if (snapshot.hasData) {
-                                    //         List<product>? data = snapshot.data;
-                                    //         return
-                                    //           ListView.builder(
-                                    //             padding: EdgeInsets.zero,
-                                    //             shrinkWrap: true,
-                                    //             scrollDirection: Axis.vertical,
-                                    //             itemCount: data?.length,
-                                    //             itemBuilder: (BuildContext context, int index) {
-                                    //               final item = data?[index];
-                                    //               return Dismissible(
-                                    //                 key: UniqueKey(),
-                                    //                 direction: DismissDirection.endToStart,
-                                    //                 onDismissed: (direction) {
-                                    //                   showDialog(
-                                    //                     context: context,
-                                    //                     builder: (BuildContext context) {
-                                    //                       return AlertDialog(
-                                    //                         title: Text("Note !"),
-                                    //                         content: Text("Are you sure you want to delete this product ?"),
-                                    //                         actions: <Widget>[
-                                    //                           TextButton(
-                                    //                             onPressed: () {
-                                    //                               Navigator.of(context).pop();
-                                    //                             },
-                                    //                             child: Text("Cancel"),
-                                    //                           ),
-                                    //                           TextButton(
-                                    //                             onPressed: () {
-                                    //                               Navigator.of(context).pop();
-                                    //                               setState(() {
-                                    //                                 data?.removeAt(index);
-                                    //                                 deleteProduct(item!.getId());
-                                    //                               });
-                                    //                             },
-                                    //                             child: Text("Delete"),
-                                    //                           ),
-                                    //                         ],
-                                    //                       );
-                                    //                     },
-                                    //                   );
-                                    //                 },
-                                    //                 background: Card(
-                                    //                   shape: RoundedRectangleBorder(
-                                    //                     borderRadius: BorderRadius.circular(0),
-                                    //                   ),
-                                    //                   color: Color(0xFFFF0206),
-                                    //                   child: Padding(
-                                    //                     padding: const EdgeInsets.all(15),
-                                    //                     child: Icon(
-                                    //                       Icons.delete,
-                                    //                       color: Colors.white,
-                                    //                     ),
-                                    //                   ),
-                                    //                 ),
-                                    //                 child: InkWell(
-                                    //                   onTap: () {
-                                    //                     Navigator.pushNamed(
-                                    //                       context,
-                                    //                       '/editFurniture',
-                                    //                       arguments: {
-                                    //                         'userData': userData,
-                                    //                         'initialProductName': data![index].productName,
-                                    //                         'initialProductPrice': data![index].productPrice,
-                                    //                         'initialProductCategory': data![index].productCategory,
-                                    //                         'initialProductDescription': data![index].productDescription,
-                                    //                         'initialProductLocation': data![index].productLocation,
-                                    //                         'initialProductImgVideo': data![index].productImgVideo,
-                                    //                       },
-                                    //                     );
-                                    //                   },
-                                    //                   child: Card(
-                                    //                     clipBehavior: Clip.none,
-                                    //                     color: Colors.white,
-                                    //                     elevation: 4,
-                                    //                     shape: RoundedRectangleBorder(
-                                    //                       borderRadius: BorderRadius.circular(8),
-                                    //                     ),
-                                    //                     child: Container(
-                                    //                       width: MediaQuery.of(context).size.width,
-                                    //                       height: 80,
-                                    //                       decoration: BoxDecoration(
-                                    //                         color: Colors.white,
-                                    //                       ),
-                                    //                       child: Row(
-                                    //                         mainAxisSize: MainAxisSize.max,
-                                    //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    //                         children: [
-                                    //                           Container(
-                                    //                             width: 80,
-                                    //                             height: 80,
-                                    //                             decoration:
-                                    //                             BoxDecoration(
-                                    //                               color: Colors.white,
-                                    //                             ),
-                                    //                             child: Padding(
-                                    //                               padding:
-                                    //                               EdgeInsets.all(5),
-                                    //                               child: ClipRRect(
-                                    //                                 borderRadius:
-                                    //                                 BorderRadius.circular(8),
-                                    //                                 child:
-                                    //                                 Image.file(
-                                    //                                   File(data![index].productImgVideo),
-                                    //                                   fit: BoxFit.cover,
-                                    //                                 ),
-                                    //                               ),
-                                    //                             ),
-                                    //                           ),
-                                    //                           Expanded(
-                                    //                             child: Padding(
-                                    //                               padding:
-                                    //                               EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                                    //                               child: Column(
-                                    //                                 mainAxisSize: MainAxisSize.max,
-                                    //                                 mainAxisAlignment: MainAxisAlignment.center,
-                                    //                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                    //                                 children: [
-                                    //                                   Text(
-                                    //                                     data![index].productName,
-                                    //                                     style: TextStyle(
-                                    //                                       fontFamily: 'Plus Jakarta Sans',
-                                    //                                       fontWeight: FontWeight.w600,
-                                    //                                       fontSize: 12,
-                                    //                                       color: Colors.black, // Use theme color
-                                    //                                     ),
-                                    //                                   ),
-                                    //                                   Text(
-                                    //                                     "RM ${data![index].productPrice.toStringAsFixed(2)}",
-                                    //                                     style: TextStyle(
-                                    //                                       fontFamily: 'Plus Jakarta Sans',
-                                    //                                       fontWeight: FontWeight.w500,
-                                    //                                       fontSize: 10,
-                                    //                                       color: Colors.black, // Use theme color
-                                    //                                     ),
-                                    //                                   ),
-                                    //                                 ],
-                                    //                               ),
-                                    //                             ),
-                                    //                           ),
-                                    //                           SizedBox(
-                                    //                             height: 100,
-                                    //                             width: 5,
-                                    //                             child: VerticalDivider(
-                                    //                               thickness: 15,
-                                    //                               color:
-                                    //                               Color(0xFFFF0206),
-                                    //                             ),
-                                    //                           ),
-                                    //                         ],
-                                    //                       ),
-                                    //                     ),
-                                    //                   ),
-                                    //                 ),
-                                    //               );
-                                    //             },
-                                    //           );
-                                    //       } else if (snapshot.hasError) {
-                                    //         return Text("${snapshot.error}");
-                                    //       }
-                                    //       return CircularProgressIndicator();
-                                    //     },
-                                    //   ),
-                                    // ),
+                                    Expanded(
+                                      child: FutureBuilder <List<Product>> (
+                                        future: _productListFuture,
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasData) {
+                                            List<Product> productList = snapshot.data!;
+                                            return
+                                              ListView.builder(
+                                                padding: EdgeInsets.zero,
+                                                shrinkWrap: true,
+                                                scrollDirection: Axis.vertical,
+                                                itemCount: productList?.length,
+                                                itemBuilder: (context, index) {
+                                                  Product product = productList[index];
+                                                  return Dismissible(
+                                                    key: UniqueKey(),
+                                                    direction: DismissDirection.endToStart,
+                                                    onDismissed: (direction) {
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext context) {
+                                                          return AlertDialog(
+                                                            title: Text("Note !"),
+                                                            content: Text("Are you sure you want to delete this product ?"),
+                                                            actions: <Widget>[
+                                                              TextButton(
+                                                                onPressed: () {
+                                                                  Navigator.of(context).pop();
+                                                                },
+                                                                child: Text("Cancel"),
+                                                              ),
+                                                              TextButton(
+                                                                onPressed: () {
+                                                                  // Navigator.of(context).pop();
+                                                                  // setState(() {
+                                                                  //   data?.removeAt(index);
+                                                                  //   deleteProduct(item!.getId());
+                                                                  // });
+                                                                },
+                                                                child: Text("Delete"),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
+                                                    },
+                                                    background: Card(
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(0),
+                                                      ),
+                                                      color: Color(0xFFFF0206),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.all(15),
+                                                        child: Icon(
+                                                          Icons.delete,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        // Navigator.pushNamed(
+                                                        //   context,
+                                                        //   '/editFurniture',
+                                                        //   arguments: {
+                                                        //     'userData': userData,
+                                                        //     'initialProductName': data![index].productName,
+                                                        //     'initialProductPrice': data![index].productPrice,
+                                                        //     'initialProductCategory': data![index].productCategory,
+                                                        //     'initialProductDescription': data![index].productDescription,
+                                                        //     'initialProductLocation': data![index].productLocation,
+                                                        //     'initialProductImgVideo': data![index].productImgVideo,
+                                                        //   },
+                                                        // );
+                                                      },
+                                                      child: Card(
+                                                        clipBehavior: Clip.none,
+                                                        color: Colors.white,
+                                                        elevation: 4,
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(8),
+                                                        ),
+                                                        child: Container(
+                                                          width: MediaQuery.of(context).size.width,
+                                                          height: 80,
+                                                          decoration: BoxDecoration(
+                                                            color: Colors.white,
+                                                          ),
+                                                          child: Row(
+                                                            mainAxisSize: MainAxisSize.max,
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                              Container(
+                                                                width: 80,
+                                                                height: 80,
+                                                                decoration:
+                                                                BoxDecoration(
+                                                                  color: Colors.white,
+                                                                ),
+                                                                child: Padding(
+                                                                  padding:
+                                                                  EdgeInsets.all(5),
+                                                                  child: ClipRRect(
+                                                                    borderRadius:
+                                                                    BorderRadius.circular(8),
+                                                                    child:
+                                                                    Image.file(
+                                                                      File('${product.productImgVideo}'),
+                                                                      fit: BoxFit.cover,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Expanded(
+                                                                child: Padding(
+                                                                  padding:
+                                                                  EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                                                                  child: Column(
+                                                                    mainAxisSize: MainAxisSize.max,
+                                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      Text(
+                                                                        '${product.productName}',
+                                                                        style: TextStyle(
+                                                                          fontFamily: 'Plus Jakarta Sans',
+                                                                          fontWeight: FontWeight.w600,
+                                                                          fontSize: 12,
+                                                                          color: Colors.black, // Use theme color
+                                                                        ),
+                                                                      ),
+                                                                      Text(
+                                                                        '${product.productPrice.toStringAsFixed(2)}',
+                                                                        style: TextStyle(
+                                                                          fontFamily: 'Plus Jakarta Sans',
+                                                                          fontWeight: FontWeight.w500,
+                                                                          fontSize: 10,
+                                                                          color: Colors.black, // Use theme color
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 100,
+                                                                width: 5,
+                                                                child: VerticalDivider(
+                                                                  thickness: 15,
+                                                                  color:
+                                                                  Color(0xFFFF0206),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                          } else if (snapshot.hasError) {
+                                            return Text("${snapshot.error}");
+                                          }
+                                          return CircularProgressIndicator();
+                                        },
+                                      ),
+                                    ),
+
+
                                   ],
                                 ),
                               ],
