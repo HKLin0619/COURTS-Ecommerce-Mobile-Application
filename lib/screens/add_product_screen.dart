@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 
-class addFurniturePage extends StatefulWidget {
+class AddProductScreen extends StatefulWidget {
 
-  const addFurniturePage({Key? key}) : super(key: key);
+  const AddProductScreen({Key? key}) : super(key: key);
 
   @override
-  _addFurniturePageState createState() => _addFurniturePageState();
+  _addProductScreenPageState createState() => _addProductScreenPageState();
 }
 
-class _addFurniturePageState extends State<addFurniturePage> {
+class _addProductScreenPageState extends State<AddProductScreen> {
 
   String? _selectedValue;
 

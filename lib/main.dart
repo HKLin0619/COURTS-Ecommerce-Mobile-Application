@@ -1,3 +1,4 @@
+import 'package:courts_ecommerce/screens/add_product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:courts_ecommerce/providers/user_provider.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
                 ? AdminScreen()
                 : CustomerScreen();
           },
-          '/addProduct': (context) => LoginScreen(),
+          '/addProduct': (context) => AddProductScreen(),
         },
       ),
     );
