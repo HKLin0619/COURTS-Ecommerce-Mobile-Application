@@ -1,16 +1,19 @@
 import 'package:courts_ecommerce/models/product.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ProductService {
 
+  var url = '${dotenv.env['URL']}';
+
   Future<List<Product>> fetchData() async {
 
     final response = await http.get(
 
-        Uri.parse('http://192.168.0.33/bit311Assignment/listProduct.php')
+        Uri.parse('$url/listProduct.php')
 
     );
 
@@ -50,7 +53,7 @@ class ProductService {
   }) async {
     try {
       final response = await http.post(
-          Uri.parse('http://192.168.0.33/bit311Assignment/addProduct.php'),
+          Uri.parse('$url/addProduct.php'),
           body:{
             'productName': productNameController.text,
             'productPrice': productPriceController.text,
@@ -106,6 +109,51 @@ class ProductService {
       } else {
 
         throw Exception('Failed to add product');
+
+      }
+
+    } catch (error) {
+
+      throw Exception('An unexpected error occurred: $error');
+
+    }
+
+  }
+
+  Future<void> deleteProduct(String productID) async  {
+    try {
+      final response = await http.post(
+          Uri.parse('$url/deleteProduct.php'),
+          body:{'productID': productID},
+      );
+
+      if (response.statusCode == 200) {
+
+        final jsonData = json.decode(response.body);
+
+        if (jsonData['status'] == 'success') {
+
+          Fluttertoast.showToast(
+              msg: 'Delete successfully!',
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.TOP,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.green,
+              textColor: Colors.black,
+              fontSize: 12.0,
+          );
+
+          throw Exception('Success to delete product');
+
+        }  else {
+
+          throw Exception('Unexpected status: ${jsonData['status']}');
+
+        }
+
+      } else {
+
+        throw Exception('Failed to delete product');
 
       }
 

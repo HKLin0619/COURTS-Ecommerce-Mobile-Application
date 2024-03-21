@@ -1,3 +1,4 @@
+import 'package:courts_ecommerce/providers/product_provider.dart';
 import 'package:courts_ecommerce/screens/add_product_screen.dart';
 import 'package:courts_ecommerce/screens/create_account_screen.dart';
 import 'package:flutter/material.dart';
@@ -6,16 +7,27 @@ import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:courts_ecommerce/screens/admin_screen.dart';
 import 'package:courts_ecommerce/screens/customer_screen.dart';
 import 'package:courts_ecommerce/screens/login_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+void main() async {
+
+  try {
+    await dotenv.load(fileName: ".env");
+  } catch (e) {
+    print("Failed to load .env file: $e");
+  }
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => UserProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => ProductProvider()),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(

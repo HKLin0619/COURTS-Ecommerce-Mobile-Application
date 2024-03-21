@@ -1,16 +1,19 @@
 import 'package:courts_ecommerce/models/user.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class AuthService {
 
+  var url = '${dotenv.env['URL']}';
+
   Future<User?> login(String username, String password) async {
 
     final response = await http.post(
 
-      Uri.parse('http://192.168.0.33/bit311Assignment/userLogin.php'),
+      Uri.parse('$url/userLogin.php'),
       body: {'username': username, 'password': password},
 
     );

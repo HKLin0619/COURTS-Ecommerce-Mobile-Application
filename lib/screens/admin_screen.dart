@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:courts_ecommerce/models/product.dart';
+import 'package:courts_ecommerce/providers/product_provider.dart';
 import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:courts_ecommerce/services/product_service.dart';
 import 'package:flutter/material.dart';
@@ -271,13 +273,10 @@ class _adminScreenState extends State<AdminScreen> {
                                                                 child: Text("Cancel"),
                                                               ),
                                                               TextButton(
-                                                                onPressed: () {
-                                                                  // Navigator.of(context).pop();
-                                                                  // setState(() {
-                                                                  //   data?.removeAt(index);
-                                                                  //   deleteProduct(item!.getId());
-                                                                  // });
-                                                                },
+                                                                onPressed: () async {
+                                                                  await Provider.of<ProductProvider>(context, listen: false).deleteProduct('${product.productID}',);
+                                                                  Navigator.of(context).pop();
+                                                                  },
                                                                 child: Text("Delete"),
                                                               ),
                                                             ],
@@ -345,8 +344,8 @@ class _adminScreenState extends State<AdminScreen> {
                                                                     borderRadius:
                                                                     BorderRadius.circular(8),
                                                                     child:
-                                                                    Image.file(
-                                                                      File('${product.productImgVideo}'),
+                                                                    Image.memory(
+                                                                      base64Decode('${product.productImgVideo}'),
                                                                       fit: BoxFit.cover,
                                                                     ),
                                                                   ),
@@ -371,7 +370,7 @@ class _adminScreenState extends State<AdminScreen> {
                                                                         ),
                                                                       ),
                                                                       Text(
-                                                                        '${product.productPrice.toStringAsFixed(2)}',
+                                                                        'RM ${product.productPrice.toStringAsFixed(2)}',
                                                                         style: TextStyle(
                                                                           fontFamily: 'Plus Jakarta Sans',
                                                                           fontWeight: FontWeight.w500,

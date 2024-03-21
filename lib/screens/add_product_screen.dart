@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:courts_ecommerce/services/product_service.dart';
 import 'package:flutter/material.dart';
@@ -32,11 +34,14 @@ class _addProductScreenPageState extends State<AddProductScreen> {
     final XFile? pickedFile = await _imagePicker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
+      final imageBytes = await pickedFile.readAsBytes();
+
       setState(() {
-        _productImgVideoController.text = pickedFile.path;
+        _productImgVideoController.text = base64Encode(imageBytes);
       });
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -418,8 +423,9 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                                       padding: EdgeInsets.all(1),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
-                                        child: Image.file(
-                                          File(_productImgVideoController.text),
+                                        child:
+                                        Image.memory(
+                                          base64Decode(_productImgVideoController.text),
                                           width: MediaQuery.of(context).size.width,
                                           height: MediaQuery.of(context).size.height * 0.29,
                                           fit: BoxFit.fill,
