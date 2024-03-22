@@ -10,17 +10,11 @@ class ProductService {
   var url = '${dotenv.env['URL']}';
 
   Future<List<Product>> fetchData() async {
-
     final response = await http.get(
-
         Uri.parse('$url/listProduct.php')
-
     );
-
       if (response.statusCode == 200) {
-
         final jsonData = json.decode(response.body);
-
         List<Product> productList = [];
         for (var item in jsonData) {
           productList.add(Product(
@@ -33,13 +27,9 @@ class ProductService {
             productLocation: item['productLocation'],
           ));
         }
-
         return productList;
-
     } else {
-
       throw Exception('Unexpected error occured !');
-
     }
   }
 
@@ -52,7 +42,6 @@ class ProductService {
     required TextEditingController productImgVideoController,
   }) async {
     try {
-
       final response = await http.post(
           Uri.parse('$url/addProduct.php'),
           body:{
@@ -64,17 +53,11 @@ class ProductService {
             'productImgVideo': productImgVideoController.text,
           }
       );
-
       if (response.statusCode == 200) {
-
         final jsonData = json.decode(response.body);
-
         if (jsonData['status'] == 'success') {
-
           return true;
-
         } else if (jsonData['status'] == 'emptyInput') {
-
           Fluttertoast.showToast(
             msg: 'Please fill in the information !',
             toastLength: Toast.LENGTH_LONG,
@@ -84,11 +67,8 @@ class ProductService {
             textColor: Colors.black,
             fontSize: 12.0,
           );
-
           throw Exception('Failed to add product: Empty input');
-
         } else if (jsonData['status'] == 'unsuccess') {
-
           Fluttertoast.showToast(
             msg: 'Non-compliant Product Information !',
             toastLength: Toast.LENGTH_LONG,
@@ -98,27 +78,16 @@ class ProductService {
             textColor: Colors.black,
             fontSize: 12.0,
           );
-
           throw Exception('Failed to add product: Unsuccess');
-
         } else {
-
           throw Exception('Unexpected status: ${jsonData['status']}');
-
         }
-
       } else {
-
         throw Exception('Failed to add product');
-
       }
-
     } catch (error) {
-
       throw Exception('An unexpected error occurred: $error');
-
     }
-
   }
 
   Future<void> deleteProduct(String productID) async  {
@@ -127,13 +96,9 @@ class ProductService {
           Uri.parse('$url/deleteProduct.php'),
           body:{'productID': productID},
       );
-
       if (response.statusCode == 200) {
-
         final jsonData = json.decode(response.body);
-
         if (jsonData['status'] == 'success') {
-
           Fluttertoast.showToast(
               msg: 'Delete successfully!',
               toastLength: Toast.LENGTH_LONG,
@@ -143,27 +108,40 @@ class ProductService {
               textColor: Colors.black,
               fontSize: 12.0,
           );
-
           throw Exception('Success to delete product');
-
         }  else {
-
           throw Exception('Unexpected status: ${jsonData['status']}');
-
         }
-
       } else {
-
         throw Exception('Failed to delete product');
-
       }
-
     } catch (error) {
-
       throw Exception('An unexpected error occurred: $error');
-
     }
+  }
 
+  Future<Product> getProductById(String productID) async {
+    final response = await http.post(
+      Uri.parse('$url/getProductById.php'),
+      body: {'productID': productID},
+    );
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      final productData = jsonData['data'];
+      return Product(
+        productID: productData['productID'],
+        productName: productData['productName'],
+        productPrice: productData['productPrice'],
+        productDescription: productData['productDescription'],
+        productImgVideo: productData['productImgVideo'],
+        productCategory: productData['productCategory'],
+        productLocation: productData['productLocation'],
+      );
+    } else {
+      throw Exception('Product Not Found');
+    }
   }
 
 }
+
+

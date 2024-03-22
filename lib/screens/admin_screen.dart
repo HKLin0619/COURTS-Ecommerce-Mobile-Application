@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:courts_ecommerce/models/product.dart';
 import 'package:courts_ecommerce/providers/product_provider.dart';
 import 'package:courts_ecommerce/providers/user_provider.dart';
+import 'package:courts_ecommerce/screens/edit_product_screen.dart';
 import 'package:courts_ecommerce/services/product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -306,19 +307,10 @@ class _adminScreenState extends State<AdminScreen> {
                                                     ),
                                                     child: InkWell(
                                                       onTap: () {
-                                                        // Navigator.pushNamed(
-                                                        //   context,
-                                                        //   '/editFurniture',
-                                                        //   arguments: {
-                                                        //     'userData': userData,
-                                                        //     'initialProductName': data![index].productName,
-                                                        //     'initialProductPrice': data![index].productPrice,
-                                                        //     'initialProductCategory': data![index].productCategory,
-                                                        //     'initialProductDescription': data![index].productDescription,
-                                                        //     'initialProductLocation': data![index].productLocation,
-                                                        //     'initialProductImgVideo': data![index].productImgVideo,
-                                                        //   },
-                                                        // );
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(builder: (context) => EditProductScreen(productID: product.productID)),
+                                                        );
                                                       },
                                                       child: Card(
                                                         clipBehavior: Clip.none,
