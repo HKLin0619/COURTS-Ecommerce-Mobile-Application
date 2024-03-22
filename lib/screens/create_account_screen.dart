@@ -1,3 +1,4 @@
+import 'package:courts_ecommerce/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 
@@ -13,6 +14,13 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
 
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
+
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _userEmailController = TextEditingController();
+  final TextEditingController _userPasswordController = TextEditingController();
+  final TextEditingController _userConfirmPasswordController = TextEditingController();
+
+  AuthService _userService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +106,7 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                   child: Container(
                                     width: 250,
                                     child: TextFormField(
-                                      //controller: usernameController,
+                                      controller: _usernameController,
                                       autofocus: false,
                                       autofillHints: [AutofillHints.username],
                                       obscureText: false,
@@ -157,7 +165,7 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                   child: Container(
                                     width: 250,
                                     child: TextFormField(
-                                      //controller: emailController,
+                                      controller: _userEmailController,
                                       autofocus: false,
                                       autofillHints: [AutofillHints.email],
                                       obscureText: false,
@@ -216,7 +224,7 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                   child: Container(
                                     width: 250,
                                     child: TextFormField(
-                                      //controller: passwordController,
+                                      controller: _userPasswordController,
                                       autofocus: false,
                                       autofillHints: [AutofillHints.password],
                                       obscureText: !_isPasswordVisible,
@@ -289,7 +297,7 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                   child: Container(
                                     width: 250,
                                     child: TextFormField(
-                                      //controller: confirmPasswordController,
+                                      controller: _userConfirmPasswordController,
                                       autofocus: false,
                                       autofillHints: [AutofillHints.password],
                                       obscureText: !_isConfirmPasswordVisible,
@@ -360,15 +368,85 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                                   child: ElevatedButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        // createAccount(context,
-                                        //     usernameController,
-                                        //     emailController,
-                                        //     passwordController,
-                                        //     confirmPasswordController
-                                        // );
-                                      });
+                                    onPressed: () async {
+                                      try {
+                                        bool success = await _userService.register(
+                                          usernameController: _usernameController,
+                                          userEmailController: _userEmailController,
+                                          userPasswordController: _userPasswordController,
+                                          userConfirmPasswordController: _userConfirmPasswordController,
+                                        );
+
+                                        if (success) {
+
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                backgroundColor: Colors.white,
+                                                content: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    Center(
+                                                      child: Icon(
+                                                        Icons.done,
+                                                        color: Colors.lightGreenAccent,
+                                                        size: 60,
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
+                                                      child: Center(
+                                                        child: Text(
+                                                          'Successfully!',
+                                                          textAlign: TextAlign.center,
+                                                          style: TextStyle(
+                                                            fontFamily: 'Plus Jakarta Sans',
+                                                            color: Colors.black,
+                                                            fontSize: 20,
+                                                            fontWeight: FontWeight.w600,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                actions: <Widget>[
+                                                  Center(
+                                                    child: TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pushNamed(
+                                                          context,
+                                                          '/',
+                                                        );
+                                                      },
+                                                      child: Text('OK'),
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        }
+                                      } catch(e) {
+                                        if (e.toString().contains('Failed to register: Invalid password')) {
+
+                                          _userPasswordController.clear();
+                                          _userConfirmPasswordController.clear();
+
+                                        } else if (e.toString().contains('Failed to register: invalid username')) {
+
+                                          _usernameController.clear();
+                                          _userEmailController.clear();
+                                          _userPasswordController.clear();
+                                          _userConfirmPasswordController.clear();
+
+                                        } else {
+
+                                          print("Error occurred: $e");
+
+                                        }
+                                      };
                                     },
                                     child: Text(
                                       'Create Account',

@@ -258,8 +258,8 @@ class _adminScreenState extends State<AdminScreen> {
                                                   return Dismissible(
                                                     key: UniqueKey(),
                                                     direction: DismissDirection.endToStart,
-                                                    onDismissed: (direction) {
-                                                      showDialog(
+                                                    onDismissed: (direction) async  {
+                                                      final result = await showDialog(
                                                         context: context,
                                                         builder: (BuildContext context) {
                                                           return AlertDialog(
@@ -268,21 +268,28 @@ class _adminScreenState extends State<AdminScreen> {
                                                             actions: <Widget>[
                                                               TextButton(
                                                                 onPressed: () {
-                                                                  Navigator.of(context).pop();
+                                                                  Navigator.of(context).pop(false);
                                                                 },
                                                                 child: Text("Cancel"),
                                                               ),
                                                               TextButton(
                                                                 onPressed: () async {
                                                                   await Provider.of<ProductProvider>(context, listen: false).deleteProduct('${product.productID}',);
-                                                                  Navigator.of(context).pop();
-                                                                  },
+                                                                  Navigator.of(context).pop(true);
+                                                                },
                                                                 child: Text("Delete"),
                                                               ),
                                                             ],
                                                           );
                                                         },
                                                       );
+                                                      if (result == false) {
+                                                        setState(() {});
+                                                        return;
+                                                      }
+                                                      setState(() {
+                                                        productList.removeAt(index);
+                                                      });
                                                     },
                                                     background: Card(
                                                       shape: RoundedRectangleBorder(
@@ -406,8 +413,6 @@ class _adminScreenState extends State<AdminScreen> {
                                         },
                                       ),
                                     ),
-
-
                                   ],
                                 ),
                               ],

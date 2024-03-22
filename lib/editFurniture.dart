@@ -1,116 +1,57 @@
 import 'dart:convert';
-import 'user.dart';
+import 'package:courts_ecommerce/providers/user_provider.dart';
+import 'package:courts_ecommerce/services/product_service.dart';
 import 'package:flutter/material.dart';
+
 import 'package:image_picker/image_picker.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
-import 'product.dart';
-import 'dart:io';
-import 'user.dart';
+import 'package:provider/provider.dart';
 
-class editFurniturePage extends StatefulWidget {
+class AddProductScreen extends StatefulWidget {
 
-  const editFurniturePage({Key? key}) : super(key: key);
+  const AddProductScreen({Key? key}) : super(key: key);
 
   @override
-  _editFurniturePageState createState() => _editFurniturePageState();
+  _addProductScreenPageState createState() => _addProductScreenPageState();
 }
 
-class _editFurniturePageState extends State<editFurniturePage> {
+class _addProductScreenPageState extends State<AddProductScreen> {
 
   String? _selectedValue;
   final ImagePicker _imagePicker = ImagePicker();
 
-  late String _productName;
-  late double _productPrice;
-  late String _productCategory;
-  late String _productDescription;
-  late String _productLocation;
-  late String _productImgVideo;
+  final TextEditingController _productNameController = TextEditingController();
+  final TextEditingController _productPriceController = TextEditingController();
+  final TextEditingController _productCategoryController = TextEditingController();
+  final TextEditingController _productDescriptionController = TextEditingController();
+  final TextEditingController _productLocationController = TextEditingController();
+  final TextEditingController _productImgVideoController = TextEditingController();
 
-  late TextEditingController _productNameController;
-  late TextEditingController _productPriceController;
-  late TextEditingController _productCategoryController;
-  late TextEditingController _productDescriptionController;
-  late TextEditingController _productLocationController;
-  late TextEditingController _productImgVideoController;
+  ProductService _productService = ProductService();
 
-  @override
-  void initState() {
-    super.initState();
-    _productNameController = TextEditingController();
-    _productPriceController = TextEditingController();
-    _productCategoryController = TextEditingController();
-    _productDescriptionController = TextEditingController();
-    _productLocationController = TextEditingController();
-    _productImgVideoController = TextEditingController();
+  void _pickImage() async {
+    final XFile? pickedFile = await _imagePicker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      final imageBytes = await pickedFile.readAsBytes();
+
+      setState(() {
+        _productImgVideoController.text = base64Encode(imageBytes);
+      });
+    }
   }
-
-  @override
-  void dispose() {
-    _productNameController.dispose();
-    _productPriceController.dispose();
-    _productCategoryController.dispose();
-    _productDescriptionController.dispose();
-    _productLocationController.dispose();
-    _productImgVideoController.dispose();
-    super.dispose();
-  }
-
 
   @override
   Widget build(BuildContext context) {
 
-    final Map<String, dynamic> args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-
-    final user userData = args['userData'];
-
-    _productName = args['initialProductName'] ?? '';
-    _productPrice = args['initialProductPrice'] ?? '';
-    _productCategory = args['initialProductCategory'] ?? '';
-    _productDescription = args['initialProductDescription'] ?? '';
-    _productLocation = args['initialProductLocation'] ?? '';
-    _productImgVideo = args['initialProductImgVideo'] ?? '';
-
-    _productNameController.text = _productName;
-    _productPriceController.text = _productPrice.toStringAsFixed(2);
-    _productCategoryController.text = _productCategory;
-    _productDescriptionController.text = _productDescription;
-    _productLocationController.text = _productLocation;
-    _productImgVideoController.text = _productImgVideo;
-
-    void _pickImage() async {
-      final XFile? pickedFile = await _imagePicker.pickImage(source: ImageSource.gallery);
-
-      if (pickedFile != null) {
-        setState(() {
-          _productImgVideoController.text = pickedFile.path;
-        });
-      }
-    }
+    final user = Provider.of<UserProvider>(context).user!;
 
     return GestureDetector(
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: Colors.black,
-              size: 30,
-            ),
-            onPressed: () {
-              Navigator.pushNamed(
-                context,
-                '/admin',
-                arguments: userData,
-              );
-
-            },
-          ),
           title: Text(
-            'Edit Furniture ',
+            'Add Furniture ',
             style: TextStyle(
               fontFamily: 'Plus Jakarta Sans',
               fontWeight: FontWeight.w600,
@@ -298,10 +239,10 @@ class _editFurniturePageState extends State<editFurniturePage> {
                               size: 21,
                             ),
                             hint: Text(
-                              _productCategoryController.text,
+                              'Product Category',
                               style: TextStyle(
                                 fontFamily: 'Readex Pro',
-                                color: Colors.black,
+                                color: Color(0xFF808080),
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -378,7 +319,7 @@ class _editFurniturePageState extends State<editFurniturePage> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
-                           controller: _productLocationController,
+                            controller: _productLocationController,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -455,13 +396,37 @@ class _editFurniturePageState extends State<editFurniturePage> {
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Image.file(
-                                        File(_productImgVideoController.text),
-                                        width: MediaQuery.of(context).size.width,
-                                        height: MediaQuery.of(context).size.height * 0.29,
-                                        fit: BoxFit.fill,
+                                    _productImgVideoController.text.isEmpty
+                                        ? Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.add_photo_alternate,
+                                          color: Color(0xFF808080),
+                                          size: 42,
+                                        ),
+                                        Text(
+                                          'Upload Your Image',
+                                          style: TextStyle(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color: Color(0xFF808080),
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ) : Padding(
+                                      padding: EdgeInsets.all(1),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child:
+                                        Image.memory(
+                                          base64Decode(_productImgVideoController.text),
+                                          width: MediaQuery.of(context).size.width,
+                                          height: MediaQuery.of(context).size.height * 0.29,
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -520,17 +485,72 @@ class _editFurniturePageState extends State<editFurniturePage> {
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(10, 5, 10, 15),
                     child: ElevatedButton(
-                      onPressed: () {
-                        // setState(() {
-                        //   addProduct(context,
-                        //     productNameController,
-                        //     productPriceController,
-                        //     productCategoryController,
-                        //     productDescriptionController,
-                        //     productLocationController,
-                        //     _imageController,
-                        //   );
-                        // });
+                      onPressed: () async {
+                        try {
+                          bool success = await _productService.addProduct(
+                            productNameController: _productNameController,
+                            productPriceController: _productPriceController,
+                            productCategoryController: _productCategoryController,
+                            productDescriptionController: _productDescriptionController,
+                            productLocationController: _productLocationController,
+                            productImgVideoController: _productImgVideoController,
+                          );
+
+                          if (success) {
+
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  backgroundColor: Colors.white,
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Center(
+                                        child: Icon(
+                                          Icons.done,
+                                          color: Colors.lightGreenAccent,
+                                          size: 60,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
+                                        child: Center(
+                                          child: Text(
+                                            'Successfully!',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              color: Colors.black,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  actions: <Widget>[
+                                    Center(
+                                      child: TextButton(
+                                        onPressed: () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            '/home',
+                                            arguments: '${user.username}',
+                                          );
+                                        },
+                                        child: Text('OK'),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
+                        } catch (e) {
+                          print("Error occurred: $e");
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,
@@ -548,7 +568,7 @@ class _editFurniturePageState extends State<editFurniturePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Update',
+                            'Add',
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
                               color: Colors.white,

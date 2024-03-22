@@ -52,6 +52,7 @@ class ProductService {
     required TextEditingController productImgVideoController,
   }) async {
     try {
+
       final response = await http.post(
           Uri.parse('$url/addProduct.php'),
           body:{
