@@ -94,7 +94,9 @@ class ProductService {
     try {
       final response = await http.post(
           Uri.parse('$url/deleteProduct.php'),
-          body:{'productID': productID},
+          body:{
+            'productID': productID
+          },
       );
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body);
@@ -121,24 +123,74 @@ class ProductService {
   }
 
   Future<Product> getProductById(String productID) async {
+
     final response = await http.post(
       Uri.parse('$url/getProductById.php'),
       body: {'productID': productID},
     );
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
-      final productData = jsonData['data'];
+      final productData = jsonData['productData'];
+
       return Product(
-        productID: productData['productID'],
+        productID: productData['productID'].toString(),
         productName: productData['productName'],
-        productPrice: productData['productPrice'],
+        productPrice: double.parse(productData['productPrice']),
         productDescription: productData['productDescription'],
         productImgVideo: productData['productImgVideo'],
         productCategory: productData['productCategory'],
         productLocation: productData['productLocation'],
       );
+
     } else {
       throw Exception('Product Not Found');
+    }
+  }
+
+  Future<bool> editProduct({
+    required String productID,
+    required TextEditingController productNameController,
+    required TextEditingController productPriceController,
+    required TextEditingController productCategoryController,
+    required TextEditingController productDescriptionController,
+    required TextEditingController productLocationController,
+    required TextEditingController productImgVideoController
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$url/editProduct.php'),
+        body: {
+          'productID': productID,
+          'productName': productNameController.text,
+          'productPrice': productPriceController.text,
+          'productCategory': productCategoryController.text,
+          'productDescription': productDescriptionController.text,
+          'productLocation': productLocationController.text,
+          'productImgVideo': productImgVideoController.text,},
+      );
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body);
+        if (jsonData['status'] == 'success') {
+          return true;
+        } else if (jsonData['status'] == 'unsuccess') {
+          Fluttertoast.showToast(
+            msg: 'Non-compliant Product Information !',
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.orangeAccent,
+            textColor: Colors.black,
+            fontSize: 12.0,
+          );
+          throw Exception('Failed to update product: Unsuccess');
+        } else {
+          throw Exception('Unexpected status: ${jsonData['status']}');
+        }
+      } else {
+        throw Exception('Failed to update product');
+      }
+    } catch (error) {
+      throw Exception('An unexpected error occurred: $error');
     }
   }
 

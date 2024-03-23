@@ -18,9 +18,4 @@ class ProductProvider with ChangeNotifier {
     }
   }
 
-  Future<void> loadProductById(String productID) async {
-    _currentProduct = await _productService.getProductById(productID);
-    notifyListeners();
-  }
-
 }

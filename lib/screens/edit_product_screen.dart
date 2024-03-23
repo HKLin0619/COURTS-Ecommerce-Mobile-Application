@@ -1,4 +1,8 @@
+import 'package:courts_ecommerce/models/product.dart';
+import 'package:courts_ecommerce/providers/product_provider.dart';
+import 'package:courts_ecommerce/services/product_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class EditProductScreen extends StatefulWidget {
 
@@ -11,8 +15,57 @@ class EditProductScreen extends StatefulWidget {
 
 class _editProductScreenState extends State<EditProductScreen> {
 
-
   String? _selectedValue;
+  late ProductService _productService;
+
+  late String productID;
+  late TextEditingController _productNameController;
+  late TextEditingController _productPriceController;
+  late TextEditingController _productCategoryController;
+  late TextEditingController _productDescriptionController;
+  late TextEditingController _productLocationController;
+  late TextEditingController _productImgVideoController;
+
+  @override
+  void initState() {
+    super.initState();
+    _productNameController = TextEditingController();
+    _productPriceController = TextEditingController();
+    _productCategoryController =  TextEditingController();
+    _productDescriptionController = TextEditingController();
+    _productLocationController = TextEditingController();
+    _productImgVideoController = TextEditingController();
+    _productService = ProductService();
+    _loadProduct();
+  }
+
+  @override
+  void dispose() {
+    _productNameController.dispose();
+    _productPriceController.dispose();
+    _productCategoryController.dispose();
+    _productDescriptionController.dispose();
+    _productLocationController.dispose();
+    _productImgVideoController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadProduct() async {
+    try {
+
+      Product product = await _productService.getProductById(widget.productID);
+      _productNameController.text = product.productName;
+      _productPriceController.text = product.productPrice.toString();
+      _productCategoryController.text = product.productCategory;
+      // _productDescriptionController = product.productDescription;
+      // _productLocationController = product.productLocation;
+      // _productImgVideoController = product.productImgVideo;
+
+    } catch (e) {
+
+      print('Error loading product: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +103,7 @@ class _editProductScreenState extends State<EditProductScreen> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
-                            // controller: _productNameController,
+                            controller: _productNameController,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
@@ -104,70 +157,70 @@ class _editProductScreenState extends State<EditProductScreen> {
                           ),
                         ),
                       ),
-                      // Padding(
-                      //   padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
-                      //   child: Container(
-                      //     width: MediaQuery.sizeOf(context).width,
-                      //     child: TextFormField(
-                      //       // controller: _productPriceController,
-                      //       autofocus: false,
-                      //       obscureText: false,
-                      //       decoration: InputDecoration(
-                      //         labelText: 'Product Price',
-                      //         labelStyle: TextStyle(
-                      //           fontFamily: 'Plus Jakarta Sans',
-                      //           color: Color(0xFF808080),
-                      //           fontSize: 12,
-                      //           fontWeight: FontWeight.w600,
-                      //         ),
-                      //         alignLabelWithHint: false,
-                      //         enabledBorder: OutlineInputBorder(
-                      //           borderSide: BorderSide(
-                      //             color: Colors.black,
-                      //             width: 1,
-                      //           ),
-                      //           borderRadius: BorderRadius.circular(10),
-                      //         ),
-                      //         focusedBorder: OutlineInputBorder(
-                      //           borderSide: BorderSide(
-                      //             color: Color(0xFF4B39EF),
-                      //             width: 1,
-                      //           ),
-                      //           borderRadius: BorderRadius.circular(10),
-                      //         ),
-                      //         errorBorder: OutlineInputBorder(
-                      //           borderSide: BorderSide(
-                      //             color: Color(0xFFFF5963),
-                      //             width: 1,
-                      //           ),
-                      //           borderRadius: BorderRadius.circular(10),
-                      //         ),
-                      //         focusedErrorBorder: OutlineInputBorder(
-                      //           borderSide: BorderSide(
-                      //             color: Color(0xFFFF5963),
-                      //             width: 1,
-                      //           ),
-                      //           borderRadius: BorderRadius.circular(10),
-                      //         ),
-                      //         contentPadding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                      //         prefix: Text(
-                      //           'RM ',
-                      //           style: TextStyle(
-                      //             color: Colors.black, // 设置字体颜色为黑色
-                      //           ),
-                      //         ),
-                      //       ),
-                      //       style: TextStyle(
-                      //         fontFamily: 'Plus Jakarta Sans',
-                      //         color: Colors.black,
-                      //         fontSize: 12,
-                      //         fontWeight: FontWeight.w500,
-                      //       ),
-                      //       cursorColor: Colors.black,
-                      //       keyboardType: TextInputType.number,
-                      //     ),
-                      //   ),
-                      // ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                        child: Container(
+                          width: MediaQuery.sizeOf(context).width,
+                          child: TextFormField(
+                            controller: _productPriceController,
+                            autofocus: false,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              labelText: 'Product Price',
+                              labelStyle: TextStyle(
+                                fontFamily: 'Plus Jakarta Sans',
+                                color: Color(0xFF808080),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              alignLabelWithHint: false,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.black,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFF4B39EF),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFFFF5963),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFFFF5963),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              contentPadding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                              prefix: Text(
+                                'RM ',
+                                style: TextStyle(
+                                  color: Colors.black, // 设置字体颜色为黑色
+                                ),
+                              ),
+                            ),
+                            style: TextStyle(
+                              fontFamily: 'Plus Jakarta Sans',
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            cursorColor: Colors.black,
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
+                      ),
                       // Padding(
                       //   padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
                       //   child: Container(
@@ -181,7 +234,7 @@ class _editProductScreenState extends State<EditProductScreen> {
                       //       onChanged: (String? val) {
                       //         setState(() {
                       //           _selectedValue = val!;
-                      //           // _productCategoryController.text = val!;
+                      //           _productCategoryController.text = val!;
                       //         });
                       //       },
                       //       items: [
@@ -458,71 +511,72 @@ class _editProductScreenState extends State<EditProductScreen> {
                     padding: EdgeInsetsDirectional.fromSTEB(10, 5, 10, 15),
                     child: ElevatedButton(
                       onPressed: () async {
-                        // try {
-                        //   bool success = await _productService.addProduct(
-                        //     productNameController: _productNameController,
-                        //     productPriceController: _productPriceController,
-                        //     productCategoryController: _productCategoryController,
-                        //     productDescriptionController: _productDescriptionController,
-                        //     productLocationController: _productLocationController,
-                        //     productImgVideoController: _productImgVideoController,
-                        //   );
-                        //
-                        //   if (success) {
-                        //
-                        //     showDialog(
-                        //       context: context,
-                        //       builder: (BuildContext context) {
-                        //         return AlertDialog(
-                        //           backgroundColor: Colors.white,
-                        //           content: Column(
-                        //             mainAxisSize: MainAxisSize.min,
-                        //             children: [
-                        //               Center(
-                        //                 child: Icon(
-                        //                   Icons.done,
-                        //                   color: Colors.lightGreenAccent,
-                        //                   size: 60,
-                        //                 ),
-                        //               ),
-                        //               Padding(
-                        //                 padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
-                        //                 child: Center(
-                        //                   child: Text(
-                        //                     'Successfully!',
-                        //                     textAlign: TextAlign.center,
-                        //                     style: TextStyle(
-                        //                       fontFamily: 'Plus Jakarta Sans',
-                        //                       color: Colors.black,
-                        //                       fontSize: 20,
-                        //                       fontWeight: FontWeight.w600,
-                        //                     ),
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //           actions: <Widget>[
-                        //             Center(
-                        //               child: TextButton(
-                        //                 onPressed: () {
-                        //                   Navigator.pushNamed(
-                        //                     context,
-                        //                     '/home',
-                        //                     arguments: '${user.username}',
-                        //                   );
-                        //                 },
-                        //                 child: Text('OK'),
-                        //               ),
-                        //             ),
-                        //           ],
-                        //         );
-                        //       },
-                        //     );
-                        //   }
-                        // } catch (e) {
-                        //   print("Error occurred: $e");
-                        // }
+                        try {
+                          bool success = await _productService.editProduct(
+                            productID: widget.productID,
+                            productNameController: _productNameController,
+                            productPriceController: _productPriceController,
+                            productCategoryController: _productCategoryController,
+                            productDescriptionController: _productDescriptionController,
+                            productLocationController: _productLocationController,
+                            productImgVideoController: _productImgVideoController,
+                          );
+
+                          if (success) {
+
+                            // showDialog(
+                            //   context: context,
+                            //   builder: (BuildContext context) {
+                            //     return AlertDialog(
+                            //       backgroundColor: Colors.white,
+                            //       content: Column(
+                            //         mainAxisSize: MainAxisSize.min,
+                            //         children: [
+                            //           Center(
+                            //             child: Icon(
+                            //               Icons.done,
+                            //               color: Colors.lightGreenAccent,
+                            //               size: 60,
+                            //             ),
+                            //           ),
+                            //           Padding(
+                            //             padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
+                            //             child: Center(
+                            //               child: Text(
+                            //                 'Successfully!',
+                            //                 textAlign: TextAlign.center,
+                            //                 style: TextStyle(
+                            //                   fontFamily: 'Plus Jakarta Sans',
+                            //                   color: Colors.black,
+                            //                   fontSize: 20,
+                            //                   fontWeight: FontWeight.w600,
+                            //                 ),
+                            //               ),
+                            //             ),
+                            //           ),
+                            //         ],
+                            //       ),
+                            //       actions: <Widget>[
+                            //         Center(
+                            //           child: TextButton(
+                            //             onPressed: () {
+                            //               Navigator.pushNamed(
+                            //                 context,
+                            //                 '/home',
+                            //                 arguments: '${user.username}',
+                            //               );
+                            //             },
+                            //             child: Text('OK'),
+                            //           ),
+                            //         ),
+                            //       ],
+                            //     );
+                            //   },
+                            // );
+                          }
+                        } catch (e) {
+                          print("Error occurred: $e");
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,
@@ -555,10 +609,10 @@ class _editProductScreenState extends State<EditProductScreen> {
                 ],
               ),
             ),
+            ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
 
