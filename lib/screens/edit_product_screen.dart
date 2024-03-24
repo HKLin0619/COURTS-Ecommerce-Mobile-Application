@@ -91,13 +91,13 @@ class _editProductScreenState extends State<EditProductScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.yellowAccent,
           title: Text(
-            'Add Furniture ',
+            'Edit Furniture ',
             style: TextStyle(
               fontFamily: 'Plus Jakarta Sans',
               fontWeight: FontWeight.w600,
-              fontSize: 21,
+              fontSize: 18,
               color: Colors.black, // Use theme color
             ),
           ),

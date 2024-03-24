@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:courts_ecommerce/models/product.dart';
 import 'package:courts_ecommerce/providers/product_provider.dart';
 import 'package:courts_ecommerce/providers/user_provider.dart';
@@ -81,31 +79,36 @@ class _adminScreenState extends State<AdminScreen> {
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0,20, 20, 0),
-                      child: Material(
-                        color: Colors.transparent,
-                        elevation: 5,
-                        shape: const CircleBorder(),
-                        child: Container(
-                          width: 55,
-                          height: 55,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 1,
-                            ),
-                          ),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/adminProfile');
+                        },
+                        child: Material(
+                          color: Colors.transparent,
+                          elevation: 5,
+                          shape: const CircleBorder(),
                           child: Container(
                             width: 55,
                             height: 55,
-                            clipBehavior: Clip.antiAlias,
                             decoration: BoxDecoration(
+                              color: Colors.white,
                               shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 1,
+                              ),
                             ),
-                            child: Image.network(
-                              'https://t4.ftcdn.net/jpg/05/09/59/75/360_F_509597532_RKUuYsERhODmkxkZd82pSHnFtDAtgbzJ.jpg',
-                              fit: BoxFit.cover,
+                            child: Container(
+                              width: 55,
+                              height: 55,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              child: Image.network(
+                                'https://t4.ftcdn.net/jpg/05/09/59/75/360_F_509597532_RKUuYsERhODmkxkZd82pSHnFtDAtgbzJ.jpg',
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),

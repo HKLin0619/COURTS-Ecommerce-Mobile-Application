@@ -1,5 +1,6 @@
 import 'package:courts_ecommerce/providers/product_provider.dart';
 import 'package:courts_ecommerce/screens/add_product_screen.dart';
+import 'package:courts_ecommerce/screens/admin_profile_screen.dart';
 import 'package:courts_ecommerce/screens/create_account_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -38,12 +39,13 @@ class MyApp extends StatelessWidget {
           '/': (context) => LoginScreen(),
           '/home': (context) {
             final user = Provider.of<UserProvider>(context).user;
-            return user != null && user.username == 'admin'
+            return user != null && user.userID == '1'
                 ? AdminScreen()
                 : CustomerScreen();
           },
           '/addProduct': (context) => AddProductScreen(),
           '/createAccount': (context) => CreateAccountScreen(),
+          '/adminProfile': (context) => AdminProfileScreen(),
         },
       ),
     );

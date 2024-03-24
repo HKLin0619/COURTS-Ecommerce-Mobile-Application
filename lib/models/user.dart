@@ -1,5 +1,5 @@
 class User{
-  final int userID;
+  final String userID;
   final String username;
   final String email;
   final String password;

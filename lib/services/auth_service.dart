@@ -27,7 +27,7 @@ class AuthService {
         final userData = jsonData['data'];
 
         return User(
-          userID: int.parse(userData['userID'].toString()),
+          userID: userData['userID'],
           username: userData['username'],
           email: userData['email'],
           password: userData['password'],

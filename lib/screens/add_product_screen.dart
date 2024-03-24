@@ -49,13 +49,13 @@ class _addProductScreenPageState extends State<AddProductScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.yellowAccent,
           title: Text(
             'Add Furniture ',
             style: TextStyle(
               fontFamily: 'Plus Jakarta Sans',
               fontWeight: FontWeight.w600,
-              fontSize: 21,
+              fontSize: 18,
               color: Colors.black, // Use theme color
             ),
           ),
@@ -536,8 +536,7 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                                         onPressed: () {
                                           Navigator.pushNamed(
                                               context,
-                                              '/home',
-                                               arguments: '${user.username}',
+                                              '/home'
                                           );
                                         },
                                         child: Text('OK'),
