@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'package:courts_ecommerce/models/product.dart';
-import 'package:courts_ecommerce/providers/product_provider.dart';
+import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:courts_ecommerce/services/product_service.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class EditProductScreen extends StatefulWidget {
@@ -16,6 +18,7 @@ class EditProductScreen extends StatefulWidget {
 class _editProductScreenState extends State<EditProductScreen> {
 
   String? _selectedValue;
+  final ImagePicker _imagePicker = ImagePicker();
   late ProductService _productService;
 
   late String productID;
@@ -57,18 +60,33 @@ class _editProductScreenState extends State<EditProductScreen> {
       _productNameController.text = product.productName;
       _productPriceController.text = product.productPrice.toString();
       _productCategoryController.text = product.productCategory;
-      // _productDescriptionController = product.productDescription;
-      // _productLocationController = product.productLocation;
-      // _productImgVideoController = product.productImgVideo;
-
+      _productDescriptionController.text = product.productDescription;
+      _productLocationController.text = product.productLocation;
+      _productImgVideoController.text = product.productImgVideo;
+      setState(() {});
     } catch (e) {
 
       print('Error loading product: $e');
     }
   }
 
+  void _pickImage() async {
+    final XFile? pickedFile = await _imagePicker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      final imageBytes = await pickedFile.readAsBytes();
+
+      setState(() {
+        _productImgVideoController.text = base64Encode(imageBytes);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    final user = Provider.of<UserProvider>(context).user!;
+
     return GestureDetector(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -221,290 +239,289 @@ class _editProductScreenState extends State<EditProductScreen> {
                           ),
                         ),
                       ),
-                      // Padding(
-                      //   padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
-                      //   child: Container(
-                      //     padding: EdgeInsetsDirectional.fromSTEB(15, 0, 10, 0),
-                      //     decoration: BoxDecoration(
-                      //       border: Border.all(width: 1),
-                      //       borderRadius: BorderRadius.circular(10),
-                      //     ),
-                      //     child:  DropdownButton<String>(
-                      //       value: _selectedValue,
-                      //       onChanged: (String? val) {
-                      //         setState(() {
-                      //           _selectedValue = val!;
-                      //           _productCategoryController.text = val!;
-                      //         });
-                      //       },
-                      //       items: [
-                      //         'Dining & Kitchen',
-                      //         'Home Furnishings',
-                      //         'Home Office',
-                      //         'Living Rooms'
-                      //       ]
-                      //           .map<DropdownMenuItem<String>>(
-                      //             (String value) => DropdownMenuItem<String>(
-                      //           value: value,
-                      //           child: Text(
-                      //             value,
-                      //             style: TextStyle(
-                      //               fontFamily: 'Plus Jakarta Sans',
-                      //               color: Colors.black,
-                      //               fontSize: 12,
-                      //               fontWeight: FontWeight.w500,
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       ).toList(),
-                      //       icon: Icon(
-                      //         Icons.keyboard_arrow_down_rounded,
-                      //         color: Colors.black,
-                      //         size: 21,
-                      //       ),
-                      //       hint: Text(
-                      //         'Product Category',
-                      //         style: TextStyle(
-                      //           fontFamily: 'Readex Pro',
-                      //           color: Color(0xFF808080),
-                      //           fontSize: 12,
-                      //           fontWeight: FontWeight.w600,
-                      //         ),
-                      //       ),
-                      //       isExpanded: true,
-                      //       underline: Container(
-                      //         height: 0,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
-                      //   child: Container(
-                      //     width: MediaQuery.sizeOf(context).width,
-                      //     child: TextFormField(
-                      //       // controller: _productDescriptionController,
-                      //       autofocus: false,
-                      //       obscureText: false,
-                      //       decoration: InputDecoration(
-                      //         labelText: 'Product Description',
-                      //         labelStyle: TextStyle(
-                      //           fontFamily: 'Plus Jakarta Sans',
-                      //           color: Color(0xFF808080),
-                      //           fontSize: 12,
-                      //           fontWeight: FontWeight.w600,
-                      //         ),
-                      //         alignLabelWithHint: false,
-                      //         enabledBorder: OutlineInputBorder(
-                      //           borderSide: BorderSide(
-                      //             color: Colors.black,
-                      //             width: 1,
-                      //           ),
-                      //           borderRadius: BorderRadius.circular(10),
-                      //         ),
-                      //         focusedBorder: OutlineInputBorder(
-                      //           borderSide: BorderSide(
-                      //             color: Color(0xFF4B39EF),
-                      //             width: 1,
-                      //           ),
-                      //           borderRadius: BorderRadius.circular(10),
-                      //         ),
-                      //         errorBorder: OutlineInputBorder(
-                      //           borderSide: BorderSide(
-                      //             color: Color(0xFFFF5963),
-                      //             width: 1,
-                      //           ),
-                      //           borderRadius: BorderRadius.circular(10),
-                      //         ),
-                      //         focusedErrorBorder: OutlineInputBorder(
-                      //           borderSide: BorderSide(
-                      //             color: Color(0xFFFF5963),
-                      //             width: 1,
-                      //           ),
-                      //           borderRadius: BorderRadius.circular(10),
-                      //         ),
-                      //         contentPadding:
-                      //         EdgeInsetsDirectional.fromSTEB(15, 15, 10, 10),
-                      //       ),
-                      //       style: TextStyle(
-                      //         fontFamily: 'Plus Jakarta Sans',
-                      //         color: Colors.black,
-                      //         fontSize: 12,
-                      //         fontWeight: FontWeight.w500,
-                      //       ),
-                      //       cursorColor: Colors.black,
-                      //       maxLines: 6,
-                      //       keyboardType: TextInputType.multiline,
-                      //     ),
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
-                      //   child: Container(
-                      //     width: MediaQuery.sizeOf(context).width,
-                      //     child: TextFormField(
-                      //       // controller: _productLocationController,
-                      //       autofocus: false,
-                      //       obscureText: false,
-                      //       decoration: InputDecoration(
-                      //         labelText: 'Product Location',
-                      //         labelStyle: TextStyle(
-                      //           fontFamily: 'Plus Jakarta Sans',
-                      //           color: Color(0xFF808080),
-                      //           fontSize: 12,
-                      //           fontWeight: FontWeight.w600,
-                      //         ),
-                      //         alignLabelWithHint: false,
-                      //         enabledBorder: OutlineInputBorder(
-                      //           borderSide: BorderSide(
-                      //             color: Colors.black,
-                      //             width: 1,
-                      //           ),
-                      //           borderRadius: BorderRadius.circular(10),
-                      //         ),
-                      //         focusedBorder: OutlineInputBorder(
-                      //           borderSide: BorderSide(
-                      //             color: Color(0xFF4B39EF),
-                      //             width: 1,
-                      //           ),
-                      //           borderRadius: BorderRadius.circular(10),
-                      //         ),
-                      //         errorBorder: OutlineInputBorder(
-                      //           borderSide: BorderSide(
-                      //             color: Color(0xFFFF5963),
-                      //             width: 1,
-                      //           ),
-                      //           borderRadius: BorderRadius.circular(10),
-                      //         ),
-                      //         focusedErrorBorder: OutlineInputBorder(
-                      //           borderSide: BorderSide(
-                      //             color: Color(0xFFFF5963),
-                      //             width: 1,
-                      //           ),
-                      //           borderRadius: BorderRadius.circular(10),
-                      //         ),
-                      //         contentPadding:
-                      //         EdgeInsetsDirectional.fromSTEB(15, 15, 10, 10),
-                      //       ),
-                      //       style: TextStyle(
-                      //         fontFamily: 'Plus Jakarta Sans',
-                      //         color: Colors.black,
-                      //         fontSize: 12,
-                      //         fontWeight: FontWeight.w500,
-                      //       ),
-                      //       cursorColor: Colors.black,
-                      //       maxLines: 6,
-                      //       keyboardType: TextInputType.streetAddress,
-                      //     ),
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
-                      //   child: Container(
-                      //     width: MediaQuery.sizeOf(context).width,
-                      //     height: MediaQuery.sizeOf(context).height * 0.41,
-                      //     child: Column(
-                      //       mainAxisSize: MainAxisSize.max,
-                      //       children: [
-                      //         Container(
-                      //           width: MediaQuery.sizeOf(context).width,
-                      //           height: MediaQuery.sizeOf(context).height * 0.3,
-                      //           decoration: BoxDecoration(
-                      //             color: Colors.white,
-                      //             borderRadius: BorderRadius.circular(10),
-                      //             border: Border.all(
-                      //               width: 1,
-                      //             ),
-                      //           ),
-                      //           // child: Column(
-                      //           //   mainAxisSize: MainAxisSize.max,
-                      //           //   mainAxisAlignment: MainAxisAlignment.center,
-                      //           //   children: [
-                      //           //     _productImgVideoController.text.isEmpty
-                      //           //         ? Column(
-                      //           //       mainAxisSize: MainAxisSize.max,
-                      //           //       mainAxisAlignment: MainAxisAlignment.center,
-                      //           //       children: [
-                      //           //         Icon(
-                      //           //           Icons.add_photo_alternate,
-                      //           //           color: Color(0xFF808080),
-                      //           //           size: 42,
-                      //           //         ),
-                      //           //         Text(
-                      //           //           'Upload Your Image',
-                      //           //           style: TextStyle(
-                      //           //             fontFamily: 'Plus Jakarta Sans',
-                      //           //             color: Color(0xFF808080),
-                      //           //             fontSize: 16,
-                      //           //             fontWeight: FontWeight.w600,
-                      //           //           ),
-                      //           //         ),
-                      //           //       ],
-                      //           //     ) : Padding(
-                      //           //       padding: EdgeInsets.all(1),
-                      //           //       child: ClipRRect(
-                      //           //         borderRadius: BorderRadius.circular(10),
-                      //           //         child:
-                      //           //         Image.memory(
-                      //           //           base64Decode(_productImgVideoController.text),
-                      //           //           width: MediaQuery.of(context).size.width,
-                      //           //           height: MediaQuery.of(context).size.height * 0.29,
-                      //           //           fit: BoxFit.fill,
-                      //           //         ),
-                      //           //       ),
-                      //           //     ),
-                      //           //   ],
-                      //           // ),
-                      //         ),
-                      //         Padding(
-                      //           padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                      //           child: ElevatedButton(
-                      //             // onPressed: _pickImage,
-                      //             onPressed: () {},
-                      //             style: ElevatedButton.styleFrom(
-                      //               backgroundColor: Colors.red,
-                      //               elevation: 4,
-                      //               side: BorderSide(
-                      //                 color: Colors.black,
-                      //                 width: 1,
-                      //               ),
-                      //               padding: EdgeInsets.all(0),
-                      //               shape: RoundedRectangleBorder(
-                      //                 borderRadius: BorderRadius.circular(10),
-                      //               ),
-                      //             ),
-                      //             child: Padding(
-                      //               padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                      //               child: Row(
-                      //                 mainAxisSize: MainAxisSize.max,
-                      //                 children: [
-                      //                   Icon(
-                      //                     Icons.upload,
-                      //                     color: Colors.black,
-                      //                     size: 19,
-                      //                   ),
-                      //                   Padding(
-                      //                     padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                      //                     child: Text(
-                      //                       'Upload',
-                      //                       textAlign: TextAlign.center,
-                      //                       style: TextStyle(
-                      //                         fontFamily: 'Plus Jakarta Sans',
-                      //                         color: Colors.black,
-                      //                         fontSize: 12,
-                      //                         fontWeight: FontWeight.w600,
-                      //                       ),
-                      //                     ),
-                      //                   ),
-                      //                 ],
-                      //               ),
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                        child: Container(
+                          padding: EdgeInsetsDirectional.fromSTEB(15, 0, 10, 0),
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child:  DropdownButton<String>(
+                            value: _selectedValue,
+                            onChanged: (String? val) {
+                              setState(() {
+                                _selectedValue = val!;
+                                _productCategoryController.text = val!;
+                              });
+                            },
+                            items: [
+                              'Dining & Kitchen',
+                              'Home Furnishings',
+                              'Home Office',
+                              'Living Rooms'
+                            ]
+                                .map<DropdownMenuItem<String>>(
+                                  (String value) => DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: TextStyle(
+                                    fontFamily: 'Plus Jakarta Sans',
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ).toList(),
+                            icon: Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              color: Colors.black,
+                              size: 21,
+                            ),
+                            hint: Text(
+                              _productCategoryController.text,
+                              style: TextStyle(
+                                fontFamily: 'Readex Pro',
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            isExpanded: true,
+                            underline: Container(
+                              height: 0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                        child: Container(
+                          width: MediaQuery.sizeOf(context).width,
+                          child: TextFormField(
+                            controller: _productDescriptionController,
+                            autofocus: false,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              labelText: 'Product Description',
+                              labelStyle: TextStyle(
+                                fontFamily: 'Plus Jakarta Sans',
+                                color: Color(0xFF808080),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              alignLabelWithHint: false,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.black,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFF4B39EF),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFFFF5963),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFFFF5963),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              contentPadding:
+                              EdgeInsetsDirectional.fromSTEB(15, 15, 10, 10),
+                            ),
+                            style: TextStyle(
+                              fontFamily: 'Plus Jakarta Sans',
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            cursorColor: Colors.black,
+                            maxLines: 6,
+                            keyboardType: TextInputType.multiline,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                        child: Container(
+                          width: MediaQuery.sizeOf(context).width,
+                          child: TextFormField(
+                            controller: _productLocationController,
+                            autofocus: false,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              labelText: 'Product Location',
+                              labelStyle: TextStyle(
+                                fontFamily: 'Plus Jakarta Sans',
+                                color: Color(0xFF808080),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              alignLabelWithHint: false,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.black,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFF4B39EF),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFFFF5963),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFFFF5963),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              contentPadding:
+                              EdgeInsetsDirectional.fromSTEB(15, 15, 10, 10),
+                            ),
+                            style: TextStyle(
+                              fontFamily: 'Plus Jakarta Sans',
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            cursorColor: Colors.black,
+                            maxLines: 6,
+                            keyboardType: TextInputType.streetAddress,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                        child: Container(
+                          width: MediaQuery.sizeOf(context).width,
+                          height: MediaQuery.sizeOf(context).height * 0.41,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Container(
+                                width: MediaQuery.sizeOf(context).width,
+                                height: MediaQuery.sizeOf(context).height * 0.3,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    _productImgVideoController.text.isEmpty
+                                        ? Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.add_photo_alternate,
+                                          color: Color(0xFF808080),
+                                          size: 42,
+                                        ),
+                                        Text(
+                                          'Upload Your Image',
+                                          style: TextStyle(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color: Color(0xFF808080),
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ) : Padding(
+                                      padding: EdgeInsets.all(1),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child:
+                                        Image.memory(
+                                          base64Decode(_productImgVideoController.text),
+                                          width: MediaQuery.of(context).size.width,
+                                          height: MediaQuery.of(context).size.height * 0.29,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                child: ElevatedButton(
+                                  onPressed: _pickImage,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.red,
+                                    elevation: 4,
+                                    side: BorderSide(
+                                      color: Colors.black,
+                                      width: 1,
+                                    ),
+                                    padding: EdgeInsets.all(0),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Icon(
+                                          Icons.upload,
+                                          color: Colors.black,
+                                          size: 19,
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                                          child: Text(
+                                            'Upload',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              color: Colors.black,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   Padding(
@@ -524,55 +541,55 @@ class _editProductScreenState extends State<EditProductScreen> {
 
                           if (success) {
 
-                            // showDialog(
-                            //   context: context,
-                            //   builder: (BuildContext context) {
-                            //     return AlertDialog(
-                            //       backgroundColor: Colors.white,
-                            //       content: Column(
-                            //         mainAxisSize: MainAxisSize.min,
-                            //         children: [
-                            //           Center(
-                            //             child: Icon(
-                            //               Icons.done,
-                            //               color: Colors.lightGreenAccent,
-                            //               size: 60,
-                            //             ),
-                            //           ),
-                            //           Padding(
-                            //             padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
-                            //             child: Center(
-                            //               child: Text(
-                            //                 'Successfully!',
-                            //                 textAlign: TextAlign.center,
-                            //                 style: TextStyle(
-                            //                   fontFamily: 'Plus Jakarta Sans',
-                            //                   color: Colors.black,
-                            //                   fontSize: 20,
-                            //                   fontWeight: FontWeight.w600,
-                            //                 ),
-                            //               ),
-                            //             ),
-                            //           ),
-                            //         ],
-                            //       ),
-                            //       actions: <Widget>[
-                            //         Center(
-                            //           child: TextButton(
-                            //             onPressed: () {
-                            //               Navigator.pushNamed(
-                            //                 context,
-                            //                 '/home',
-                            //                 arguments: '${user.username}',
-                            //               );
-                            //             },
-                            //             child: Text('OK'),
-                            //           ),
-                            //         ),
-                            //       ],
-                            //     );
-                            //   },
-                            // );
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  backgroundColor: Colors.white,
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Center(
+                                        child: Icon(
+                                          Icons.done,
+                                          color: Colors.lightGreenAccent,
+                                          size: 60,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
+                                        child: Center(
+                                          child: Text(
+                                            'Successfully!',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              color: Colors.black,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  actions: <Widget>[
+                                    Center(
+                                      child: TextButton(
+                                        onPressed: () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            '/home',
+                                            arguments: '${user.username}',
+                                          );
+                                        },
+                                        child: Text('OK'),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           }
                         } catch (e) {
                           print("Error occurred: $e");
@@ -594,7 +611,7 @@ class _editProductScreenState extends State<EditProductScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Add',
+                            'Edit',
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
                               color: Colors.white,
