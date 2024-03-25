@@ -1,6 +1,8 @@
 import 'package:courts_ecommerce/models/user.dart';
+import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:courts_ecommerce/services/user_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class EditProfileScreen extends StatefulWidget {
 
@@ -206,7 +208,17 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                             userEmailController: _userEmailController,
                           );
 
+
+
                           if (success) {
+
+                            Provider.of<UserProvider>(context, listen: false).updateUser(
+                                userID: widget.userID,
+                                username: _usernameController.text,
+                                userEmail: _userEmailController.text,
+                                userPassword: 'admin123'
+                            );
+
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {

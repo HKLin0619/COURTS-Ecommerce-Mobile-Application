@@ -1,6 +1,7 @@
 import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:courts_ecommerce/screens/admin_screen.dart';
 import 'package:courts_ecommerce/screens/edit_profile_screen.dart';
+import 'package:courts_ecommerce/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -422,7 +423,7 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                                 padding: EdgeInsetsDirectional.fromSTEB(14, 12, 14, 14),
                                 child: InkWell(
                                   onTap: () {
-                                    Navigator.pushNamed(context, '/');
+                                    Navigator.pushReplacementNamed(context, '/');
                                   },
                                   child: Container(
                                     width: double.infinity,

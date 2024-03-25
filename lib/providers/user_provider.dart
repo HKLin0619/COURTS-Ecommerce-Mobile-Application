@@ -18,4 +18,9 @@ class UserProvider with ChangeNotifier {
     }
   }
 
+  void updateUser({required String userID, required String username, required String userEmail, required String userPassword}) {
+    _user = User(userID:userID, username: username, email: userEmail, password: userPassword);
+    notifyListeners();
+  }
+
 }
