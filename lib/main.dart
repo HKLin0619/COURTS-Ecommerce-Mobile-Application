@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => LoginScreen(),
           '/home': (context) {
             final user = Provider.of<UserProvider>(context).user;
-            return user != null && user.userID == '1'
+            return user != null && user.username == 'admin'
                 ? AdminScreen()
                 : CustomerScreen();
           },
