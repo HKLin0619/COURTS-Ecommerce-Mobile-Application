@@ -577,7 +577,7 @@ class _editProductScreenState extends State<EditProductScreen> {
                                     Center(
                                       child: TextButton(
                                         onPressed: () {
-                                          Navigator.pushNamed(
+                                          Navigator.pushReplacementNamed(
                                             context,
                                             '/home',
                                             arguments: '${user.username}',

@@ -1,10 +1,7 @@
 import 'dart:convert';
-import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:courts_ecommerce/services/product_service.dart';
 import 'package:flutter/material.dart';
-
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 
 class AddProductScreen extends StatefulWidget {
 
@@ -42,8 +39,6 @@ class _addProductScreenPageState extends State<AddProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    final user = Provider.of<UserProvider>(context).user!;
 
     return GestureDetector(
       child: Scaffold(
@@ -534,7 +529,7 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                                     Center(
                                       child: TextButton(
                                         onPressed: () {
-                                          Navigator.pushNamed(
+                                          Navigator.pushReplacementNamed(
                                               context,
                                               '/home'
                                           );

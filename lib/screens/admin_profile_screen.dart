@@ -1,5 +1,6 @@
 import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:courts_ecommerce/screens/admin_screen.dart';
+import 'package:courts_ecommerce/screens/change_password_screen.dart';
 import 'package:courts_ecommerce/screens/edit_profile_screen.dart';
 import 'package:courts_ecommerce/screens/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -219,7 +220,10 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                                 padding: EdgeInsetsDirectional.fromSTEB(14, 12, 14, 0),
                                 child: InkWell(
                                   onTap: () {
-                                    // Navigator.pushNamed(context, '/adminProfile');
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => ChangePasswordScreen(userID: user.userID)),
+                                    );
                                   },
                                   child: Container(
                                     width: double.infinity,
