@@ -20,9 +20,12 @@ class UserService {
 
       return User(
         userID: userData['userID'].toString(),
-        username: userData['userName'],
-        email: userData['userEmail'],
-        password: userData['userPassword']
+        username: userData['username'],
+        fullName: userData['fullName'],
+        email: userData['email'],
+        phoneNumber: userData['phoneNumber'],
+        homeAddress: userData['homeAddress'],
+        password: userData['password']
       );
     } else {
       throw Exception('User Not Found');
@@ -31,16 +34,20 @@ class UserService {
 
   Future<bool> editProfile({
     required String userID,
-    required TextEditingController usernameController,
+    required TextEditingController userFullNameController,
     required TextEditingController userEmailController,
+    required TextEditingController userPhoneNumberController,
+    required TextEditingController userHomeAddressController,
   }) async {
     try {
       final response = await http.post(
         Uri.parse('$url/editProfile.php'),
         body: {
           'userID': userID,
-          'userName': usernameController.text,
-          'userEmail': userEmailController.text,
+          'fullName': userFullNameController.text,
+          'email': userEmailController.text,
+          'phoneNumber': userPhoneNumberController.text,
+          'homeAddress': userHomeAddressController.text,
         },
       );
       if (response.statusCode == 200) {

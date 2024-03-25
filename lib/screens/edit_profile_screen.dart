@@ -17,22 +17,31 @@ class _editProfileScreenState extends State<EditProfileScreen> {
 
   late UserService _userService;
 
-  late TextEditingController _usernameController;
+  final TextEditingController _usernameController = TextEditingController();
+  late TextEditingController _userFullNameController;
   late TextEditingController _userEmailController;
+  late TextEditingController _userPhoneNumberController;
+  late TextEditingController _userHomeAddressController;
+  final TextEditingController _userPasswordController = TextEditingController();
+
 
   @override
   void initState() {
     super.initState();
-    _usernameController = TextEditingController();
+    _userFullNameController = TextEditingController();
     _userEmailController = TextEditingController();
+    _userPhoneNumberController = TextEditingController();
+    _userHomeAddressController = TextEditingController();
     _userService = UserService();
     _loadUser();
   }
 
   @override
   void dispose() {
-    _usernameController.dispose();
+    _userFullNameController.dispose();
     _userEmailController.dispose();
+    _userPhoneNumberController.dispose();
+    _userHomeAddressController.dispose();
     super.dispose();
   }
 
@@ -40,7 +49,11 @@ class _editProfileScreenState extends State<EditProfileScreen> {
     try {
       User user = await _userService.getUserById(widget.userID);
       _usernameController.text = user.username;
+      _userFullNameController.text = user.fullName;
       _userEmailController.text = user.email;
+      _userPhoneNumberController.text = user.phoneNumber;
+      _userHomeAddressController.text = user.homeAddress;
+      _userPasswordController.text = user.password;
     } catch (e) {
 
       print('Error loading user: $e');
@@ -59,7 +72,7 @@ class _editProfileScreenState extends State<EditProfileScreen> {
             style: TextStyle(
               fontFamily: 'Plus Jakarta Sans',
               fontWeight: FontWeight.w600,
-              fontSize: 21,
+              fontSize: 18,
               color: Colors.black, // Use theme color
             ),
           ),
@@ -83,11 +96,11 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
                           child: TextFormField(
-                            controller: _usernameController,
+                            controller: _userFullNameController,
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Username',
+                              labelText: 'Full Name',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
                                 color: Color(0xFF808080),
@@ -146,7 +159,66 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'User Email',
+                              labelText: 'Email',
+                              labelStyle: TextStyle(
+                                fontFamily: 'Plus Jakarta Sans',
+                                color: Color(0xFF808080),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              alignLabelWithHint: false,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.black,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFF4B39EF),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFFFF5963),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFFFF5963),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              contentPadding:
+                              EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                            ),
+                            style: TextStyle(
+                              fontFamily: 'Plus Jakarta Sans',
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            cursorColor: Colors.black,
+                            keyboardType: TextInputType.text,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                        child: Container(
+                          width: MediaQuery.sizeOf(context).width,
+                          child: TextFormField(
+                            controller: _userPhoneNumberController,
+                            autofocus: false,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              labelText: 'Phone Number',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
                                 color: Color(0xFF808080),
@@ -198,14 +270,76 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                     ],
                   ),
                   Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                    child: Container(
+                      width: MediaQuery.sizeOf(context).width,
+                      child: TextFormField(
+                        controller: _userHomeAddressController,
+                        autofocus: false,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          labelText: 'Home Address',
+                          labelStyle: TextStyle(
+                            fontFamily: 'Plus Jakarta Sans',
+                            color: Color(0xFF808080),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          alignLabelWithHint: false,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.black,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xFF4B39EF),
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xFFFF5963),
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xFFFF5963),
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          contentPadding:
+                          EdgeInsetsDirectional.fromSTEB(15, 15, 10, 10),
+                        ),
+                        style: TextStyle(
+                          fontFamily: 'Plus Jakarta Sans',
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        cursorColor: Colors.black,
+                        maxLines: 6,
+                        keyboardType: TextInputType.streetAddress,
+                      ),
+                    ),
+                  ),
+                  Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(10, 5, 10, 15),
                     child: ElevatedButton(
                       onPressed: () async {
                         try {
                           bool success = await _userService.editProfile(
                             userID: widget.userID,
-                            usernameController: _usernameController,
+                            userFullNameController: _userFullNameController,
                             userEmailController: _userEmailController,
+                            userPhoneNumberController: _userPhoneNumberController,
+                            userHomeAddressController: _userHomeAddressController,
                           );
 
 
@@ -215,8 +349,11 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                             Provider.of<UserProvider>(context, listen: false).updateUser(
                                 userID: widget.userID,
                                 username: _usernameController.text,
-                                userEmail: _userEmailController.text,
-                                userPassword: 'admin123'
+                                fullName: _userFullNameController.text,
+                                email: _userEmailController.text,
+                                phoneNumber: _userPhoneNumberController.text,
+                                homeAddress: _userHomeAddressController.text,
+                                password: _userPasswordController.text
                             );
 
                             showDialog(

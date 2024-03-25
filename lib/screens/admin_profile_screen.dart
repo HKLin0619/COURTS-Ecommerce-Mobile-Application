@@ -103,7 +103,7 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    user.username,
+                                    user.fullName,
                                     style: TextStyle(
                                       fontFamily: 'Plus Jakarta Sans',
                                       fontWeight: FontWeight.w600,

@@ -65,7 +65,7 @@ class _adminScreenState extends State<AdminScreen> {
                             ),
                           ),
                           Text(
-                            '${user.username}',
+                            '${user.fullName}',
                             // 'admin',
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',

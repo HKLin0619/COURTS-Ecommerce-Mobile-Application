@@ -23,7 +23,7 @@ class _loginScreenState extends State<LoginScreen > {
 
     return GestureDetector(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.yellowAccent,
         body: SafeArea(
           top: true,
           child: Align(

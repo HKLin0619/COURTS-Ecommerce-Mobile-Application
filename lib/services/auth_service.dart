@@ -29,7 +29,10 @@ class AuthService {
         return User(
           userID: userData['userID'],
           username: userData['username'],
+          fullName: userData['fullName'],
           email: userData['email'],
+          phoneNumber: userData['phoneNumber'],
+          homeAddress: userData['homeAddress'],
           password: userData['password'],
         );
 
@@ -91,7 +94,10 @@ class AuthService {
 
   Future<bool> register({
     required TextEditingController usernameController,
+    required TextEditingController userFullNameController,
     required TextEditingController userEmailController,
+    required TextEditingController userPhoneNumberController,
+    required TextEditingController userHomeAddressController,
     required TextEditingController userPasswordController,
     required TextEditingController userConfirmPasswordController,
   }) async {
@@ -101,7 +107,10 @@ class AuthService {
           Uri.parse('$url/createAccount.php'),
           body:{
             'username': usernameController.text,
+            'fullName': userFullNameController.text,
             'email': userEmailController.text,
+            'phoneNumber': userPhoneNumberController.text,
+            'homeAddress': userHomeAddressController.text,
             'password': userPasswordController.text,
             'confirmPassword': userConfirmPasswordController.text,
           }
