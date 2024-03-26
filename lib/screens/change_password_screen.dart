@@ -14,6 +14,10 @@ class ChangePasswordScreen extends StatefulWidget {
 
 class _changePasswordScreenScreenState extends State<ChangePasswordScreen> {
 
+  bool _isOldPasswordVisible = false;
+  bool _isNewPasswordVisible = false;
+  bool _isNewConfirmPasswordVisible = false;
+
   AuthService _authService = AuthService();
 
   final TextEditingController _userOldPasswordController = TextEditingController();
@@ -58,7 +62,8 @@ class _changePasswordScreenScreenState extends State<ChangePasswordScreen> {
                           child: TextFormField(
                             controller: _userOldPasswordController,
                             autofocus: false,
-                            obscureText: false,
+                            autofillHints: [AutofillHints.password],
+                            obscureText: !_isOldPasswordVisible,
                             decoration: InputDecoration(
                               labelText: 'Old Password',
                               labelStyle: TextStyle(
@@ -98,6 +103,20 @@ class _changePasswordScreenScreenState extends State<ChangePasswordScreen> {
                               ),
                               contentPadding:
                               EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _isOldPasswordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Color(0xFF57636C),
+                                  size: 16,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _isOldPasswordVisible = !_isOldPasswordVisible;
+                                  });
+                                },
+                              ),
                             ),
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
@@ -117,7 +136,8 @@ class _changePasswordScreenScreenState extends State<ChangePasswordScreen> {
                           child: TextFormField(
                             controller: _userNewPasswordController,
                             autofocus: false,
-                            obscureText: false,
+                            autofillHints: [AutofillHints.password],
+                            obscureText: !_isNewPasswordVisible,
                             decoration: InputDecoration(
                               labelText: 'New Password',
                               labelStyle: TextStyle(
@@ -157,6 +177,20 @@ class _changePasswordScreenScreenState extends State<ChangePasswordScreen> {
                               ),
                               contentPadding:
                               EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _isNewPasswordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Color(0xFF57636C),
+                                  size: 16,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _isNewPasswordVisible = !_isNewPasswordVisible;
+                                  });
+                                },
+                              ),
                             ),
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
@@ -176,7 +210,8 @@ class _changePasswordScreenScreenState extends State<ChangePasswordScreen> {
                           child: TextFormField(
                             controller: _userConfirmNewPasswordController,
                             autofocus: false,
-                            obscureText: false,
+                            autofillHints: [AutofillHints.password],
+                            obscureText: !_isNewConfirmPasswordVisible,
                             decoration: InputDecoration(
                               labelText: 'Confirm New Password',
                               labelStyle: TextStyle(
@@ -215,6 +250,20 @@ class _changePasswordScreenScreenState extends State<ChangePasswordScreen> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               contentPadding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _isNewConfirmPasswordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Color(0xFF57636C),
+                                  size: 16,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _isNewConfirmPasswordVisible = !_isNewConfirmPasswordVisible;
+                                  });
+                                },
+                              ),
                             ),
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
