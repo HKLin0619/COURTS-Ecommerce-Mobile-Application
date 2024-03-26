@@ -28,356 +28,186 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
             ),
           ),
         ),
-        body: SafeArea(
-          top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
-                child: TextFormField(
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    labelText: 'Search',
-                    labelStyle: TextStyle(
-                      fontFamily: 'Plus Jakarta Sans',
-                      color: Color(0xFF57636C),
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0xFFF1F4F8),
-                        width: 1,
+        body: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      autofocus: false,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelText: 'Search customer...',
+                        labelStyle: TextStyle(
+                          fontFamily: 'Plus Jakarta Sans',
+                          color: Color(0xFF57636C),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFF4B39EF),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFFFF5963),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFFFF5963),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding: EdgeInsetsDirectional.fromSTEB(15, 15, 10, 10),
                       ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0xFF4B39EF),
-                        width: 1,
+                      style: TextStyle(
+                        fontFamily: 'Plus Jakarta Sans',
+                        color: Colors.black,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
                       ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0xFFFF5963),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0xFFFF5963),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    filled: true,
-                    fillColor: Color(0xFFF1F4F8),
-                    prefixIcon: Icon(
-                      Icons.search_outlined,
-                      color: Color(0xFF57636C),
                     ),
                   ),
-                  style: TextStyle(
-                    fontFamily: 'Plus Jakarta Sans',
-                    color: Color(0xFF14181B),
-                    fontSize: 12,
-                    fontWeight: FontWeight.normal,
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.search_rounded,
+                        color: Colors.black,
+                        size: 24,
+                      ),
+                      onPressed: () {
+                        print('IconButton pressed ...');
+                      },
+                    ),
                   ),
-                ),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.all(5),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      ListView(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
+            ),
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
                         children: [
-                          Card(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Colors.lightBlueAccent,
-                            elevation: 5,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width,
-                                      height: MediaQuery.sizeOf(context).height * 0.04,
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                            EdgeInsetsDirectional.fromSTEB(0, 0, 50, 0),
-                                            child: Text(
-                                              'User ID',
-                                              style: TextStyle(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 14,
-                                                color: Colors.black, // Use theme color
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            ': Hello World',
-                                            style: TextStyle(
-                                              fontFamily: 'Plus Jakarta Sans',
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 14,
-                                              color: Colors.black, // Use theme color
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width,
-                                      height: MediaQuery.sizeOf(context).height * 0.04,
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                            EdgeInsetsDirectional.fromSTEB(0, 0, 50, 0),
-                                            child: Text(
-                                              'Username',
-                                              style: TextStyle(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 14,
-                                                color: Colors.black, // Use theme color
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            ': Hello World',
-                                            style: TextStyle(
-                                              fontFamily: 'Plus Jakarta Sans',
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 14,
-                                              color: Colors.black, // Use theme color
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width,
-                                      height: MediaQuery.sizeOf(context).height * 0.04,
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                            EdgeInsetsDirectional.fromSTEB(0, 0, 50, 0),
-                                            child: Text(
-                                              'Full Name',
-                                              style: TextStyle(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 14,
-                                                color: Colors.black, // Use theme color
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            ': Hello World',
-                                            style: TextStyle(
-                                              fontFamily: 'Plus Jakarta Sans',
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 14,
-                                              color: Colors.black, // Use theme color
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width,
-                                      height: MediaQuery.sizeOf(context).height * 0.04,
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                            EdgeInsetsDirectional.fromSTEB(0, 0, 50, 0),
-                                            child: Text(
-                                              'Password',
-                                              style: TextStyle(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 14,
-                                                color: Colors.black, // Use theme color
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            ': Hello World',
-                                            style: TextStyle(
-                                              fontFamily: 'Plus Jakarta Sans',
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 14,
-                                              color: Colors.black, // Use theme color
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width,
-                                      height: MediaQuery.sizeOf(context).height * 0.04,
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                            EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
-                                            child: Text(
-                                              'Phone Number',
-                                              style: TextStyle(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 14,
-                                                color: Colors.black, // Use theme color
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            ': Hello World',
-                                            style: TextStyle(
-                                              fontFamily: 'Plus Jakarta Sans',
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 14,
-                                              color: Colors.black, // Use theme color
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width,
-                                      height: MediaQuery.sizeOf(context).height * 0.04,
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                            EdgeInsetsDirectional.fromSTEB(0, 0, 66, 0),
-                                            child: Text(
-                                              'Email',
-                                              style: TextStyle(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 14,
-                                                color: Colors.black, // Use theme color
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            ': Hello World',
-                                            style: TextStyle(
-                                              fontFamily: 'Plus Jakarta Sans',
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 14,
-                                              color: Colors.black, // Use theme color
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width,
-                                      height: MediaQuery.sizeOf(context).height * 0.04,
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                            EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
-                                            child: Text(
-                                              'Home Address',
-                                              style: TextStyle(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 14,
-                                                color: Colors.black, // Use theme color
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            ': Hello World',
-                                            style: TextStyle(
-                                              fontFamily: 'Plus Jakarta Sans',
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 14,
-                                              color: Colors.black, // Use theme color
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                            child: Container(
+                              width: double.infinity,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 6,
+                                    color: Color(0x32000000),
+                                    offset: Offset(0, 2),
+                                  )
                                 ],
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(15, 0, 10, 0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Name',
+                                            style: TextStyle(
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              color: Colors.black,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                            child: Text(
+                                              'user@domainname.com',
+                                              style: TextStyle(
+                                                fontFamily: 'Plus Jakarta Sans',
+                                                color: Colors.grey,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        print('Button pressed ...');
+                                      },
+                                      child: Text(
+                                        'View',
+                                        style: TextStyle(
+                                          fontFamily: 'Plus Jakarta Sans',
+                                          color: Colors.black,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.lightBlueAccent,// Set button color
+                                        padding: EdgeInsets.zero,
+                                        elevation: 3,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        side: BorderSide(
+                                          color: Colors.black, // Transparent border
+                                          width: 1,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
