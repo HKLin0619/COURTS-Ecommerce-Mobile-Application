@@ -76,4 +76,28 @@ class UserService {
     }
   }
 
+  Future<List<User>> fetchData() async {
+    final response = await http.get(
+        Uri.parse('$url/listUser.php')
+    );
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      List<User> userList = [];
+      for (var item in jsonData) {
+        userList.add(User(
+          userID: item['userID'],
+          username: item['username'],
+          fullName: item['fullName'],
+          email: item['email'],
+          phoneNumber: item['phoneNumber'],
+          homeAddress: item['homeAddress'],
+          password: item['password'],
+        ));
+      }
+      return userList;
+    } else {
+      throw Exception('Unexpected error occured !');
+    }
+  }
+
 }
