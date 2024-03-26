@@ -45,8 +45,6 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
     });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
 
