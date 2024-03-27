@@ -6,7 +6,7 @@ import 'package:courts_ecommerce/screens/edit_product_screen.dart';
 import 'package:courts_ecommerce/services/product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:charts_flutter/flutter.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class AdminScreen extends StatefulWidget {
 
@@ -427,7 +427,9 @@ class _adminScreenState extends State<AdminScreen> {
                                             decoration: BoxDecoration(
                                               color: Colors.deepOrange,
                                             ),
-
+                                            child: _isMonthlySelected
+                                                ? MonthlySalesChart() // 如果选择月度分析，则显示月度销售图表
+                                                : YearlySalesChart(), // 如果选择年度分析，则显示年度销售图表
                                           ),
                                         ),
                                         Expanded(
@@ -536,64 +538,97 @@ class _adminScreenState extends State<AdminScreen> {
 class MonthlySalesChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // 这里是月度销售图表的数据，你可以替换成实际的数据
-    var data = [
+    // 月度销售数据
+    var monthlyData = [
       SalesData('Jan', 200),
       SalesData('Feb', 300),
       SalesData('Mar', 400),
       // 添加其它月份数据...
     ];
 
-    var series = [
-      charts.Series(
-        id: 'Sales',
-        data: data,
-        domainFn: (SalesData sales, _) => sales.month,
-        measureFn: (SalesData sales, _) => sales.amount,
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        labelAccessorFn: (SalesData sales, _) => '${sales.month}: \$${sales.amount}',
-      ),
-    ];
-
-    return charts.BarChart(
-      series,
-      animate: true,
-      barRendererDecorator: charts.BarLabelDecorator<String>(),
-      domainAxis: charts.OrdinalAxisSpec(
-        renderSpec: charts.SmallTickRendererSpec(labelRotation: 60),
-      ),
-    );
+    return SalesChart(data: monthlyData);
   }
 }
 
 class YearlySalesChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // 这里是年度销售图表的数据，你可以替换成实际的数据
-    var data = [
+    // 年度销售数据
+    var yearlyData = [
       SalesData('2021', 5000),
       SalesData('2022', 6000),
       SalesData('2023', 7000),
       // 添加其它年份数据...
     ];
 
-    var series = [
-      charts.Series(
-        id: 'Sales',
-        data: data,
-        domainFn: (SalesData sales, _) => sales.month,
-        measureFn: (SalesData sales, _) => sales.amount,
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        labelAccessorFn: (SalesData sales, _) => '${sales.month}: \$${sales.amount}',
-      ),
-    ];
+    return SalesChart(data: yearlyData);
+  }
+}
 
-    return charts.BarChart(
-      series,
-      animate: true,
-      barRendererDecorator: charts.BarLabelDecorator<String>(),
-      domainAxis: charts.OrdinalAxisSpec(
-        renderSpec: charts.SmallTickRendererSpec(labelRotation: 0),
+class SalesChart extends StatelessWidget {
+  final List<SalesData> data;
+
+  SalesChart({required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          Expanded(
+            child: BarChart(
+              data: data,
+            ),
+          ),
+          Text(
+            data.first.month, // 如果是月度销售数据，显示月份；如果是年度销售数据，显示年份
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class BarChart extends StatelessWidget {
+  final List<SalesData> data;
+
+  BarChart({required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: data.map((item) {
+                  return Row(
+                    children: [
+                      Text(item.month, style: TextStyle(fontWeight: FontWeight.bold)),
+                      SizedBox(width: 10),
+                      Container(
+                        width: item.amount.toDouble(), // 根据销售数量确定柱状图宽度
+                        height: 30,
+                        color: Colors.blue,
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
+          Text('销售数量', style: TextStyle(fontWeight: FontWeight.bold)),
+        ],
       ),
     );
   }
@@ -605,7 +640,6 @@ class SalesData {
 
   SalesData(this.month, this.amount);
 }
-
 
 
 
