@@ -6,6 +6,7 @@ import 'package:courts_ecommerce/screens/edit_product_screen.dart';
 import 'package:courts_ecommerce/services/product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:charts_flutter/flutter.dart';
 
 class AdminScreen extends StatefulWidget {
 
@@ -18,6 +19,7 @@ class AdminScreen extends StatefulWidget {
 
 class _adminScreenState extends State<AdminScreen> {
 
+  bool _isMonthlySelected = true;
   late Future<List<Product>> _productListFuture;
   final ProductService _productService = ProductService();
 
@@ -408,8 +410,112 @@ class _adminScreenState extends State<AdminScreen> {
                                         },
                                       ),
                                     ),
+
                                   ],
                                 ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                                          child: Container(
+                                            width: MediaQuery.sizeOf(context).width,
+                                            height: MediaQuery.sizeOf(context).height * 0.5,
+                                            decoration: BoxDecoration(
+                                              color: Colors.deepOrange,
+                                            ),
+
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            width: MediaQuery.sizeOf(context).width,
+                                            height: MediaQuery.sizeOf(context).height,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                            ),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                ElevatedButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      _isMonthlySelected = true;
+                                                    });
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                    backgroundColor: Colors.black,
+                                                    elevation: 4,
+                                                    side: BorderSide(
+                                                      color: Colors.white,
+                                                      width: 1,
+                                                    ),
+                                                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 30),
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(12),
+                                                    ),
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Text(
+                                                        'Monthly',
+                                                        style: TextStyle(
+                                                          fontFamily: 'Plus Jakarta Sans',
+                                                          color: Colors.white,
+                                                          fontSize: 14,
+                                                          fontWeight: FontWeight.w600,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                SizedBox(width: 20),
+                                                ElevatedButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      _isMonthlySelected = false;
+                                                    });
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                    backgroundColor: Colors.black,
+                                                    elevation: 4,
+                                                    side: BorderSide(
+                                                      color: Colors.white,
+                                                      width: 1,
+                                                    ),
+                                                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 36),
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(12),
+                                                    ),
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Text(
+                                                        'Yearly',
+                                                        style: TextStyle(
+                                                          fontFamily: 'Plus Jakarta Sans',
+                                                          color: Colors.white,
+                                                          fontSize: 14,
+                                                          fontWeight: FontWeight.w600,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                           ),
@@ -425,6 +531,79 @@ class _adminScreenState extends State<AdminScreen> {
       ),
     );
   }
+}
+
+class MonthlySalesChart extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // 这里是月度销售图表的数据，你可以替换成实际的数据
+    var data = [
+      SalesData('Jan', 200),
+      SalesData('Feb', 300),
+      SalesData('Mar', 400),
+      // 添加其它月份数据...
+    ];
+
+    var series = [
+      charts.Series(
+        id: 'Sales',
+        data: data,
+        domainFn: (SalesData sales, _) => sales.month,
+        measureFn: (SalesData sales, _) => sales.amount,
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        labelAccessorFn: (SalesData sales, _) => '${sales.month}: \$${sales.amount}',
+      ),
+    ];
+
+    return charts.BarChart(
+      series,
+      animate: true,
+      barRendererDecorator: charts.BarLabelDecorator<String>(),
+      domainAxis: charts.OrdinalAxisSpec(
+        renderSpec: charts.SmallTickRendererSpec(labelRotation: 60),
+      ),
+    );
+  }
+}
+
+class YearlySalesChart extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // 这里是年度销售图表的数据，你可以替换成实际的数据
+    var data = [
+      SalesData('2021', 5000),
+      SalesData('2022', 6000),
+      SalesData('2023', 7000),
+      // 添加其它年份数据...
+    ];
+
+    var series = [
+      charts.Series(
+        id: 'Sales',
+        data: data,
+        domainFn: (SalesData sales, _) => sales.month,
+        measureFn: (SalesData sales, _) => sales.amount,
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        labelAccessorFn: (SalesData sales, _) => '${sales.month}: \$${sales.amount}',
+      ),
+    ];
+
+    return charts.BarChart(
+      series,
+      animate: true,
+      barRendererDecorator: charts.BarLabelDecorator<String>(),
+      domainAxis: charts.OrdinalAxisSpec(
+        renderSpec: charts.SmallTickRendererSpec(labelRotation: 0),
+      ),
+    );
+  }
+}
+
+class SalesData {
+  final String month;
+  final int amount;
+
+  SalesData(this.month, this.amount);
 }
 
 

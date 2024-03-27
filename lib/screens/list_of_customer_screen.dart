@@ -77,7 +77,7 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
                       controller: _searchController,
                       onChanged: (String value) {
                         if (value.isEmpty) {
-                          _filterUserList(""); // 如果搜索框为空，则显示全部数据
+                          _filterUserList("");
                         }
                       },
                       autofocus: false,
