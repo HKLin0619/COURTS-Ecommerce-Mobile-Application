@@ -1,17 +1,17 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 
-class SubscriberSeries {
+class Yearly {
   final String year;
-  final int subscribers;
+  final int totalSales;
   final charts.Color barColor;
 
-  SubscriberSeries(
+  Yearly(
       {
         required this.year,
-        required this.subscribers,
+        required this.totalSales,
         required this.barColor
       }
-      );
+  );
 }
 
 

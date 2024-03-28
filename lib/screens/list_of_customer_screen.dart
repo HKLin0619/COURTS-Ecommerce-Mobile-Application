@@ -16,7 +16,6 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
   final UserService _userService = UserService();
 
   TextEditingController _searchController = TextEditingController();
-  List<User> _userList = [];
 
   @override
   void initState() {

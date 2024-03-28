@@ -355,7 +355,7 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                                 padding: EdgeInsetsDirectional.fromSTEB(14, 12, 14, 0),
                                 child: InkWell(
                                   onTap: () {
-                                    // Navigator.pushNamed(context, '/adminProfile');
+                                    Navigator.pushNamed(context, '/listOfSellingHistory');
                                   },
                                   child: Container(
                                     width: double.infinity,

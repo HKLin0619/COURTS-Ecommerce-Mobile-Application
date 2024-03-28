@@ -1,12 +1,14 @@
 import 'dart:convert';
+import 'package:courts_ecommerce/models/monthlySalesData.dart';
 import 'package:courts_ecommerce/models/product.dart';
+import 'package:courts_ecommerce/models/yearlySalesData.dart';
 import 'package:courts_ecommerce/providers/product_provider.dart';
 import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:courts_ecommerce/screens/edit_product_screen.dart';
 import 'package:courts_ecommerce/services/product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class AdminScreen extends StatefulWidget {
 
@@ -425,11 +427,11 @@ class _adminScreenState extends State<AdminScreen> {
                                             width: MediaQuery.sizeOf(context).width,
                                             height: MediaQuery.sizeOf(context).height * 0.5,
                                             decoration: BoxDecoration(
-                                              color: Colors.deepOrange,
+                                              color: Colors.white,
                                             ),
-                                            // child: _isMonthlySelected
-                                            //     ? MonthlySalesChart()
-                                            //     : YearlySalesChart(),
+                                            child: _isMonthlySelected
+                                                ? MonthlySalesChart(data: [],)
+                                                : YearlySalesChart(data: [],),
                                           ),
                                         ),
                                         Expanded(
@@ -535,6 +537,80 @@ class _adminScreenState extends State<AdminScreen> {
   }
 }
 
+class MonthlySalesChart extends StatelessWidget {
+  final List<Monthly> data;
+
+  MonthlySalesChart({required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    List<charts.Series<Monthly, String>> series = [
+      charts.Series(
+          id: "Monthly",
+          data: data,
+          domainFn: (Monthly series, _) => series.monthly,
+          measureFn: (Monthly series, _) => series.totalSales,
+          colorFn: (Monthly series, _) => series.barColor
+      )
+    ];
+
+    return Container(
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(5),
+          child: Column(
+            children: <Widget>[
+              Text(
+                "Sales Report by Monthly",
+              ),
+              Expanded(
+                child: charts.BarChart(series, animate: true),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class YearlySalesChart extends StatelessWidget {
+  final List<Yearly> data;
+
+  YearlySalesChart({required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    List<charts.Series<Yearly, String>> series = [
+      charts.Series(
+          id: "Yearly",
+          data: data,
+          domainFn: (Yearly series, _) => series.year,
+          measureFn: (Yearly series, _) => series.totalSales,
+          colorFn: (Yearly series, _) => series.barColor
+      )
+    ];
+
+    return Container(
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(5),
+          child: Column(
+            children: <Widget>[
+              Text(
+                "Sales Report by Year",
+                //style: Theme.of(context).textTheme.bodyText2,
+              ),
+              Expanded(
+                child: charts.BarChart(series, animate: true),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 
 
