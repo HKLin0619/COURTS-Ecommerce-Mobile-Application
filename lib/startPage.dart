@@ -105,7 +105,7 @@ class _startPageState extends State<startPage> {
                           },
                           child: Text('Get Started'),
                           style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
+                              backgroundColor: Colors.white,
                               padding: EdgeInsets.zero,
                             textStyle: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
@@ -146,7 +146,7 @@ class _startPageState extends State<startPage> {
                             ),
                           ),
                           style: ElevatedButton.styleFrom(
-                            primary: Theme.of(context).secondaryHeaderColor, // Use theme color
+                            backgroundColor: Theme.of(context).secondaryHeaderColor, // Use theme color
                             padding: EdgeInsets.zero,
                             elevation: 8,
                             shape: RoundedRectangleBorder(
