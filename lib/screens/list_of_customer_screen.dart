@@ -1,3 +1,4 @@
+import 'package:courts_ecommerce/locales/language.dart';
 import 'package:courts_ecommerce/models/user.dart';
 import 'package:courts_ecommerce/services/user_service.dart';
 import 'package:flutter/material.dart';
@@ -47,13 +48,17 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
   @override
   Widget build(BuildContext context) {
 
+    Locale locale = Localizations.localeOf(context);
+    AppLocalizations translations = AppLocalizations();
+
     return GestureDetector(
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.yellowAccent,
           title: Text(
-            'List of Customer',
+            translations.translate('List of Customer', locale),
+            // 'List of Customer',
             style: TextStyle(
               fontFamily: 'Plus Jakarta Sans',
               fontWeight: FontWeight.w600,
@@ -82,7 +87,8 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
                       autofocus: false,
                       obscureText: false,
                       decoration: InputDecoration(
-                        labelText: 'Search customer...',
+                        labelText: translations.translate('Search customer...', locale),
+                        // labelText: 'Search customer...',
                         labelStyle: TextStyle(
                           fontFamily: 'Plus Jakarta Sans',
                           color: Color(0xFF57636C),
@@ -238,7 +244,8 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: [
                                                                   Text(
-                                                                    'User ID:',
+                                                                    translations.translate('User ID', locale) + ':',
+                                                                    // 'User ID:',
                                                                     style: TextStyle(
                                                                       fontFamily: 'Plus Jakarta Sans',
                                                                       color: Colors.black,
@@ -265,7 +272,8 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: [
                                                                   Text(
-                                                                    'Username:',
+                                                                    translations.translate('Username', locale) + ':',
+                                                                    // 'Username:',
                                                                     style: TextStyle(
                                                                       fontFamily: 'Plus Jakarta Sans',
                                                                       color: Colors.black,
@@ -292,7 +300,8 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: [
                                                                   Text(
-                                                                    'Phone Number:',
+                                                                    translations.translate('Phone Number', locale) + ':',
+                                                                    // 'Phone Number:',
                                                                     style: TextStyle(
                                                                       fontFamily: 'Plus Jakarta Sans',
                                                                       color: Colors.black,
@@ -319,7 +328,8 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: [
                                                                   Text(
-                                                                    'Home Address:',
+                                                                    translations.translate('Home Address', locale) + ':',
+                                                                    // 'Home Address:',
                                                                     style: TextStyle(
                                                                       fontFamily: 'Plus Jakarta Sans',
                                                                       color: Colors.black,
@@ -351,7 +361,8 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
                                                 );
                                               },
                                               child: Text(
-                                                'View',
+                                                translations.translate('View', locale),
+                                                // 'View',
                                                 style: TextStyle(
                                                   fontFamily: 'Plus Jakarta Sans',
                                                   color: Colors.black,

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:courts_ecommerce/locales/language.dart';
 import 'package:courts_ecommerce/models/monthlySalesData.dart';
 import 'package:courts_ecommerce/models/product.dart';
 import 'package:courts_ecommerce/models/yearlySalesData.dart';
@@ -8,7 +9,7 @@ import 'package:courts_ecommerce/screens/edit_product_screen.dart';
 import 'package:courts_ecommerce/services/product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+// import 'package:charts_flutter/flutter.dart' as charts;
 
 class AdminScreen extends StatefulWidget {
 
@@ -36,6 +37,9 @@ class _adminScreenState extends State<AdminScreen> {
 
     final user = Provider.of<UserProvider>(context).user!;
 
+    Locale locale = Localizations.localeOf(context);
+    AppLocalizations translations = AppLocalizations();
+
     return GestureDetector(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -59,7 +63,8 @@ class _adminScreenState extends State<AdminScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Welcome,',
+                            translations.translate('Welcome,', locale),
+                            // 'Welcome,',
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
@@ -161,7 +166,8 @@ class _adminScreenState extends State<AdminScreen> {
                                     ),
                                   ),
                                   Tab(
-                                    text: 'Furniture',
+                                    text: translations.translate('Furniture', locale),
+                                    // text: 'Furniture',
                                   ),
                                 ],
                               ),
@@ -177,7 +183,8 @@ class _adminScreenState extends State<AdminScreen> {
                                     ),
                                   ),
                                   Tab(
-                                    text: 'Analyze',
+                                    text: translations.translate('Analyze', locale),
+                                    // text: 'Analyze',
                                   ),
                                 ],
                               ),
@@ -201,7 +208,8 @@ class _adminScreenState extends State<AdminScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'Management Furniture',
+                                                translations.translate('Management Furniture', locale),
+                                                // 'Management Furniture',
                                                 textAlign: TextAlign.start,
                                                 style: TextStyle(
                                                   fontFamily: 'Plus Jakarta Sans',
@@ -211,7 +219,8 @@ class _adminScreenState extends State<AdminScreen> {
                                                 ),
                                               ),
                                               Text(
-                                                'Edit or Delete Products',
+                                                translations.translate('Edit or Delete Products', locale),
+                                                // 'Edit or Delete Products',
                                                 textAlign: TextAlign.start,
                                                 style: TextStyle(
                                                   fontFamily: 'Plus Jakarta Sans',
@@ -271,21 +280,25 @@ class _adminScreenState extends State<AdminScreen> {
                                                         context: context,
                                                         builder: (BuildContext context) {
                                                           return AlertDialog(
-                                                            title: Text("Note !"),
-                                                            content: Text("Are you sure you want to delete this product ?"),
+                                                            title: Text(translations.translate('Note !', locale)),
+                                                            // title: Text('Note !'),
+                                                            content: Text(translations.translate('Are you sure you want to delete this product ?', locale)),
+                                                            // content: Text('Are you sure you want to delete this product ?'),
                                                             actions: <Widget>[
                                                               TextButton(
                                                                 onPressed: () {
                                                                   Navigator.of(context).pop(false);
                                                                 },
-                                                                child: Text("Cancel"),
+                                                                child: Text(translations.translate('Cancel', locale)),
+                                                                // child: Text('Cancel'),
                                                               ),
                                                               TextButton(
                                                                 onPressed: () async {
                                                                   await Provider.of<ProductProvider>(context, listen: false).deleteProduct('${product.productID}',);
                                                                   Navigator.of(context).pop(true);
                                                                 },
-                                                                child: Text("Delete"),
+                                                                child: Text(translations.translate('Delete', locale)),
+                                                                // child: Text('Delete'),
                                                               ),
                                                             ],
                                                           );
@@ -429,15 +442,15 @@ class _adminScreenState extends State<AdminScreen> {
                                             decoration: BoxDecoration(
                                               color: Colors.white,
                                             ),
-                                            child: _isMonthlySelected
-                                                ? MonthlySalesChart(data: [],)
-                                                : YearlySalesChart(data: [],),
+                                            // child: _isMonthlySelected
+                                            //     ? MonthlySalesChart(data: [],)
+                                            //     : YearlySalesChart(data: [],),
                                           ),
                                         ),
                                         Expanded(
                                           child: Container(
-                                            width: MediaQuery.sizeOf(context).width,
-                                            height: MediaQuery.sizeOf(context).height,
+                                            width: MediaQuery.of(context).size.width,
+                                            height: MediaQuery.of(context).size.height,
                                             decoration: BoxDecoration(
                                               color: Colors.white,
                                             ),
@@ -458,7 +471,7 @@ class _adminScreenState extends State<AdminScreen> {
                                                       color: Colors.white,
                                                       width: 1,
                                                     ),
-                                                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 30),
+                                                    fixedSize: Size(120, 40),
                                                     shape: RoundedRectangleBorder(
                                                       borderRadius: BorderRadius.circular(12),
                                                     ),
@@ -467,7 +480,7 @@ class _adminScreenState extends State<AdminScreen> {
                                                     mainAxisAlignment: MainAxisAlignment.center,
                                                     children: [
                                                       Text(
-                                                        'Monthly',
+                                                        translations.translate('Monthly', locale),
                                                         style: TextStyle(
                                                           fontFamily: 'Plus Jakarta Sans',
                                                           color: Colors.white,
@@ -492,7 +505,7 @@ class _adminScreenState extends State<AdminScreen> {
                                                       color: Colors.white,
                                                       width: 1,
                                                     ),
-                                                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 36),
+                                                    fixedSize: Size(120, 40),
                                                     shape: RoundedRectangleBorder(
                                                       borderRadius: BorderRadius.circular(12),
                                                     ),
@@ -501,7 +514,7 @@ class _adminScreenState extends State<AdminScreen> {
                                                     mainAxisAlignment: MainAxisAlignment.center,
                                                     children: [
                                                       Text(
-                                                        'Yearly',
+                                                        translations.translate('Yearly', locale),
                                                         style: TextStyle(
                                                           fontFamily: 'Plus Jakarta Sans',
                                                           color: Colors.white,
@@ -515,7 +528,7 @@ class _adminScreenState extends State<AdminScreen> {
                                               ],
                                             ),
                                           ),
-                                        )
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -537,80 +550,80 @@ class _adminScreenState extends State<AdminScreen> {
   }
 }
 
-class MonthlySalesChart extends StatelessWidget {
-  final List<Monthly> data;
-
-  MonthlySalesChart({required this.data});
-
-  @override
-  Widget build(BuildContext context) {
-    List<charts.Series<Monthly, String>> series = [
-      charts.Series(
-          id: "Monthly",
-          data: data,
-          domainFn: (Monthly series, _) => series.monthly,
-          measureFn: (Monthly series, _) => series.totalSales,
-          colorFn: (Monthly series, _) => series.barColor
-      )
-    ];
-
-    return Container(
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(5),
-          child: Column(
-            children: <Widget>[
-              Text(
-                "Sales Report by Monthly",
-              ),
-              Expanded(
-                child: charts.BarChart(series, animate: true),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class YearlySalesChart extends StatelessWidget {
-  final List<Yearly> data;
-
-  YearlySalesChart({required this.data});
-
-  @override
-  Widget build(BuildContext context) {
-    List<charts.Series<Yearly, String>> series = [
-      charts.Series(
-          id: "Yearly",
-          data: data,
-          domainFn: (Yearly series, _) => series.year,
-          measureFn: (Yearly series, _) => series.totalSales,
-          colorFn: (Yearly series, _) => series.barColor
-      )
-    ];
-
-    return Container(
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(5),
-          child: Column(
-            children: <Widget>[
-              Text(
-                "Sales Report by Year",
-                //style: Theme.of(context).textTheme.bodyText2,
-              ),
-              Expanded(
-                child: charts.BarChart(series, animate: true),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+// class MonthlySalesChart extends StatelessWidget {
+//   final List<Monthly> data;
+//
+//   MonthlySalesChart({required this.data});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     List<charts.Series<Monthly, String>> series = [
+//       charts.Series(
+//           id: "Monthly",
+//           data: data,
+//           domainFn: (Monthly series, _) => series.monthly,
+//           measureFn: (Monthly series, _) => series.totalSales,
+//           colorFn: (Monthly series, _) => series.barColor
+//       )
+//     ];
+//
+//     return Container(
+//       child: Card(
+//         child: Padding(
+//           padding: const EdgeInsets.all(5),
+//           child: Column(
+//             children: <Widget>[
+//               Text(
+//                 "Sales Report by Monthly",
+//               ),
+//               Expanded(
+//                 child: charts.BarChart(series, animate: true),
+//               )
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+//
+// class YearlySalesChart extends StatelessWidget {
+//   final List<Yearly> data;
+//
+//   YearlySalesChart({required this.data});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     List<charts.Series<Yearly, String>> series = [
+//       charts.Series(
+//           id: "Yearly",
+//           data: data,
+//           domainFn: (Yearly series, _) => series.year,
+//           measureFn: (Yearly series, _) => series.totalSales,
+//           colorFn: (Yearly series, _) => series.barColor
+//       )
+//     ];
+//
+//     return Container(
+//       child: Card(
+//         child: Padding(
+//           padding: const EdgeInsets.all(5),
+//           child: Column(
+//             children: <Widget>[
+//               Text(
+//                 "Sales Report by Year",
+//                 //style: Theme.of(context).textTheme.bodyText2,
+//               ),
+//               Expanded(
+//                 child: charts.BarChart(series, animate: true),
+//               )
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 
 

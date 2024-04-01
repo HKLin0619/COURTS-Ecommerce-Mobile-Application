@@ -1,3 +1,4 @@
+import 'package:courts_ecommerce/locales/language.dart';
 import 'package:courts_ecommerce/models/user.dart';
 import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:courts_ecommerce/services/user_service.dart';
@@ -62,13 +63,18 @@ class _editProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    Locale locale = Localizations.localeOf(context);
+    AppLocalizations translations = AppLocalizations();
+
     return GestureDetector(
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.yellowAccent,
           title: Text(
-            'Edit Profile',
+            translations.translate('Edit Profile', locale),
+            // 'Edit Profile',
             style: TextStyle(
               fontFamily: 'Plus Jakarta Sans',
               fontWeight: FontWeight.w600,
@@ -100,7 +106,8 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Full Name',
+                              labelText: translations.translate('Full Name', locale),
+                              // labelText: 'Full Name',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
                                 color: Color(0xFF808080),
@@ -159,7 +166,8 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Email',
+                              labelText: translations.translate('Email', locale),
+                              // labelText: 'Email',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
                                 color: Color(0xFF808080),
@@ -218,7 +226,8 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Phone Number',
+                              labelText: translations.translate('Phone Number', locale),
+                              // labelText: 'Phone Number',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
                                 color: Color(0xFF808080),
@@ -278,7 +287,8 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                         autofocus: false,
                         obscureText: false,
                         decoration: InputDecoration(
-                          labelText: 'Home Address',
+                          labelText: translations.translate('Home Address', locale),
+                          // labelText: 'Home Address',
                           labelStyle: TextStyle(
                             fontFamily: 'Plus Jakarta Sans',
                             color: Color(0xFF808080),
@@ -375,7 +385,8 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                                         padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
                                         child: Center(
                                           child: Text(
-                                            'Successfully!',
+                                            translations.translate('Successfully!', locale),
+                                            // 'Successfully!',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontFamily: 'Plus Jakarta Sans',
@@ -425,7 +436,8 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Edit',
+                            translations.translate('Edit', locale),
+                            // 'Edit',
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
                               color: Colors.white,

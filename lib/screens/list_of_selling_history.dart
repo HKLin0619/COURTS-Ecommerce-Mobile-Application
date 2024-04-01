@@ -1,3 +1,4 @@
+import 'package:courts_ecommerce/locales/language.dart';
 import 'package:courts_ecommerce/models/user.dart';
 import 'package:courts_ecommerce/services/user_service.dart';
 import 'package:flutter/material.dart';
@@ -47,13 +48,17 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
   @override
   Widget build(BuildContext context) {
 
+    Locale locale = Localizations.localeOf(context);
+    AppLocalizations translations = AppLocalizations();
+
     return GestureDetector(
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.yellowAccent,
           title: Text(
-            'List of Selling History',
+            translations.translate('Selling History', locale),
+            // 'Selling History',
             style: TextStyle(
               fontFamily: 'Plus Jakarta Sans',
               fontWeight: FontWeight.w600,
@@ -82,7 +87,7 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                       autofocus: false,
                       obscureText: false,
                       decoration: InputDecoration(
-                        labelText: 'Search history...',
+                        labelText: translations.translate('Search history...', locale),
                         labelStyle: TextStyle(
                           fontFamily: 'Plus Jakarta Sans',
                           color: Color(0xFF57636C),
@@ -351,7 +356,8 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                   );
                                                 },
                                                 child: Text(
-                                                  'View',
+                                                  translations.translate('View', locale),
+                                                  // 'View',
                                                   style: TextStyle(
                                                     fontFamily: 'Plus Jakarta Sans',
                                                     color: Colors.black,

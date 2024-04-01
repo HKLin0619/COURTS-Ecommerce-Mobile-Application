@@ -1,3 +1,4 @@
+import 'package:courts_ecommerce/locales/language.dart';
 import 'package:courts_ecommerce/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
@@ -27,6 +28,10 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    Locale locale = Localizations.localeOf(context);
+    AppLocalizations translations = AppLocalizations();
+
     return GestureDetector(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -85,7 +90,8 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Create an account',
+                                    translations.translate('Create an account', locale),
+                                    // 'Create an account',
                                     style: TextStyle(
                                       fontFamily: 'Plus Jakarta Sans',
                                       color: Color(0xFF101213),
@@ -96,7 +102,8 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                                     child: Text(
-                                      'Let\'s get started by filling out the form below.',
+                                      translations.translate('Let\'s get started by filling out the form below.', locale),
+                                      // 'Let\'s get started by filling out the form below.',
                                       style: TextStyle(
                                         fontFamily: 'Plus Jakarta Sans',
                                         color: Color(0xFF57636C),
@@ -115,7 +122,8 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                         autofillHints: [AutofillHints.username],
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelText: 'Username',
+                                          labelText: translations.translate('Username', locale),
+                                          // labelText: 'Username',
                                           labelStyle: TextStyle(
                                             fontFamily: 'Plus Jakarta Sans',
                                             color: Color(0xFF57636C),
@@ -174,7 +182,8 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                         autofillHints: [AutofillHints.username],
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelText: 'Full Name',
+                                          labelText: translations.translate('Full Name', locale),
+                                          // labelText: 'Full Name',
                                           labelStyle: TextStyle(
                                             fontFamily: 'Plus Jakarta Sans',
                                             color: Color(0xFF57636C),
@@ -233,7 +242,8 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                         autofillHints: [AutofillHints.email],
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelText: 'Email',
+                                          labelText: translations.translate('Email', locale),
+                                          // labelText: 'Email',
                                           labelStyle: TextStyle(
                                             fontFamily: 'Plus Jakarta Sans',
                                             color: Color(0xFF57636C),
@@ -292,7 +302,8 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                         autofillHints: [AutofillHints.email],
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelText: 'Phone Number',
+                                          labelText: translations.translate('Phone Number', locale),
+                                          // labelText: 'Phone Number',
                                           labelStyle: TextStyle(
                                             fontFamily: 'Plus Jakarta Sans',
                                             color: Color(0xFF57636C),
@@ -351,7 +362,8 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                         autofillHints: [AutofillHints.email],
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelText: 'Home Address',
+                                          labelText: translations.translate('Home Address', locale),
+                                          // labelText: 'Home Address',
                                           labelStyle: TextStyle(
                                             fontFamily: 'Plus Jakarta Sans',
                                             color: Color(0xFF57636C),
@@ -411,7 +423,8 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                         autofillHints: [AutofillHints.password],
                                         obscureText: !_isPasswordVisible,
                                         decoration: InputDecoration(
-                                          labelText: 'Password',
+                                          labelText: translations.translate('Password', locale),
+                                          // labelText: 'Password',
                                           labelStyle: TextStyle(
                                             fontFamily: 'Plus Jakarta Sans',
                                             color: Color(0xFF57636C),
@@ -484,7 +497,8 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                         autofillHints: [AutofillHints.password],
                                         obscureText: !_isConfirmPasswordVisible,
                                         decoration: InputDecoration(
-                                          labelText: 'Confirm Password',
+                                          labelText: translations.translate('Confirm Password', locale),
+                                          // labelText: 'Confirm Password',
                                           labelStyle: TextStyle(
                                             fontFamily: 'Plus Jakarta Sans',
                                             color: Color(0xFF57636C),
@@ -583,7 +597,8 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                                         padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
                                                         child: Center(
                                                           child: Text(
-                                                            'Successfully!',
+                                                            translations.translate('Successfully!', locale),
+                                                            // 'Successfully!',
                                                             textAlign: TextAlign.center,
                                                             style: TextStyle(
                                                               fontFamily: 'Plus Jakarta Sans',
@@ -637,7 +652,8 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                         };
                                       },
                                       child: Text(
-                                        'Create Account',
+                                        translations.translate('Create Account', locale),
+                                        // 'Create Account',
                                         style: TextStyle(
                                           fontFamily: 'Plus Jakarta Sans',
                                           color: Colors.black,
@@ -666,11 +682,13 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                       text: TextSpan(
                                         children: [
                                           TextSpan(
-                                            text: 'Already have an account? ',
+                                            text: translations.translate('Already have an account? ', locale),
+                                            //text: 'Already have an account? ',
                                             style: TextStyle(),
                                           ),
                                           TextSpan(
-                                            text: 'Sign In here',
+                                            text: translations.translate('Sign In here', locale),
+                                            // text: 'Sign In here',
                                             style: TextStyle(
                                               fontFamily: 'Plus Jakarta Sans',
                                               color: Colors.red,

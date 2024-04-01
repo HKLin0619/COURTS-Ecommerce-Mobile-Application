@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:courts_ecommerce/locales/language.dart';
 import 'package:courts_ecommerce/services/product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -41,13 +42,17 @@ class _addProductScreenPageState extends State<AddProductScreen> {
   @override
   Widget build(BuildContext context) {
 
+    Locale locale = Localizations.localeOf(context);
+    AppLocalizations translations = AppLocalizations();
+
     return GestureDetector(
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.yellowAccent,
           title: Text(
-            'Add Furniture ',
+            translations.translate('Add Furniture', locale),
+            // 'Add Furniture',
             style: TextStyle(
               fontFamily: 'Plus Jakarta Sans',
               fontWeight: FontWeight.w600,
@@ -79,7 +84,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Product Name',
+                              labelText: translations.translate('Product Name', locale),
+                              // labelText: 'Product Name',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
                                 color: Color(0xFF808080),
@@ -138,7 +144,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Product Price',
+                              labelText: translations.translate('Product Price', locale),
+                              // labelText: 'Product Price',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
                                 color: Color(0xFF808080),
@@ -210,10 +217,14 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                               });
                             },
                             items: [
-                              'Dining & Kitchen',
-                              'Home Furnishings',
-                              'Home Office',
-                              'Living Rooms'
+                              translations.translate('Dining & Kitchen', locale),
+                              translations.translate('Home Furnishings', locale),
+                              translations.translate('Home Office', locale),
+                              translations.translate('Living Rooms', locale)
+                              // 'Dining & Kitchen',
+                              // 'Home Furnishings',
+                              // 'Home Office',
+                              // 'Living Rooms'
                             ]
                                 .map<DropdownMenuItem<String>>(
                                   (String value) => DropdownMenuItem<String>(
@@ -235,7 +246,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                               size: 21,
                             ),
                             hint: Text(
-                              'Product Category',
+                              translations.translate('Product Category', locale),
+                              // 'Product Category',
                               style: TextStyle(
                                 fontFamily: 'Readex Pro',
                                 color: Color(0xFF808080),
@@ -259,7 +271,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Product Description',
+                              labelText: translations.translate('Product Description', locale),
+                              // labelText: 'Product Description',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
                                 color: Color(0xFF808080),
@@ -319,7 +332,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Product Location',
+                              labelText: translations.translate('Product Location', locale),
+                              // labelText: 'Product Location',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
                                 color: Color(0xFF808080),
@@ -379,7 +393,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Product Video URL',
+                              labelText: translations.translate('Product Video URL', locale),
+                              // labelText: 'Product Video URL',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
                                 color: Color(0xFF808080),
@@ -461,7 +476,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                                           size: 42,
                                         ),
                                         Text(
-                                          'Upload Your Image',
+                                          translations.translate('Upload Your Image', locale),
+                                          // 'Upload Your Image',
                                           style: TextStyle(
                                             fontFamily: 'Plus Jakarta Sans',
                                             color: Color(0xFF808080),
@@ -515,7 +531,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                                         Padding(
                                           padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
                                           child: Text(
-                                            'Upload',
+                                            translations.translate('Upload', locale),
+                                            // 'Upload',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontFamily: 'Plus Jakarta Sans',
@@ -572,7 +589,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                                         padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
                                         child: Center(
                                           child: Text(
-                                            'Successfully!',
+                                            translations.translate('Successfully!', locale),
+                                            // 'Successfully!',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontFamily: 'Plus Jakarta Sans',
@@ -622,7 +640,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Add',
+                            translations.translate('Add', locale),
+                            // 'Add',
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
                               color: Colors.white,

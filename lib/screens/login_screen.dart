@@ -2,6 +2,7 @@ import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:provider/provider.dart';
+import 'package:courts_ecommerce/locales/language.dart';
 
 class LoginScreen  extends StatefulWidget {
 
@@ -20,6 +21,9 @@ class _loginScreenState extends State<LoginScreen > {
 
   @override
   Widget build(BuildContext context) {
+
+    Locale locale = Localizations.localeOf(context);
+    AppLocalizations translations = AppLocalizations();
 
     return GestureDetector(
       child: Scaffold(
@@ -84,7 +88,8 @@ class _loginScreenState extends State<LoginScreen > {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Welcome Back',
+                                translations.translate('Welcome Back', locale),
+                                // 'Welcome Back',
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                   fontFamily: 'Plus Jakarta Sans',
@@ -96,7 +101,8 @@ class _loginScreenState extends State<LoginScreen > {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
                                 child: Text(
-                                  'Fill out the information below in order to access your account.',
+                                  translations.translate('Fill out the information below in order to access your account.', locale),
+                                  // 'Fill out the information below in order to access your account.',
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
                                     fontFamily: 'Plus Jakarta Sans',
@@ -116,7 +122,8 @@ class _loginScreenState extends State<LoginScreen > {
                                     autofillHints: [AutofillHints.username],
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      labelText: 'Username',
+                                      labelText: translations.translate('Username', locale),
+                                      // labelText: 'Username',
                                       labelStyle: TextStyle(
                                         fontFamily: 'Plus Jakarta Sans',
                                         color: Color(0xFF57636C),
@@ -175,7 +182,8 @@ class _loginScreenState extends State<LoginScreen > {
                                     autofillHints: [AutofillHints.password],
                                     obscureText: !_isPasswordVisible,
                                     decoration: InputDecoration(
-                                      labelText: 'Password',
+                                      labelText: translations.translate('Password', locale),
+                                      // labelText: 'Password',
                                       labelStyle: TextStyle(
                                         fontFamily: 'Plus Jakarta Sans',
                                         color: Color(0xFF57636C),
@@ -266,7 +274,8 @@ class _loginScreenState extends State<LoginScreen > {
                                       }
                                     },
                                     child: Text(
-                                      'Sign In',
+                                      translations.translate('Sign In', locale),
+                                      // 'Sign In',
                                       style: TextStyle(
                                         fontFamily: 'Plus Jakarta Sans',
                                         color: Colors.black,
@@ -298,11 +307,13 @@ class _loginScreenState extends State<LoginScreen > {
                                     text: TextSpan(
                                       children: [
                                         TextSpan(
-                                          text: 'Don\'t have an account?  ',
+                                          text: translations.translate('Don\'t have an account? ', locale),
+                                          // text: 'Don\'t have an account? ',
                                           style: TextStyle(),
                                         ),
                                         TextSpan(
-                                          text: 'Sign Up here',
+                                          text: translations.translate('Sign Up here', locale),
+                                          // text: 'Sign Up here',
                                           style: TextStyle(
                                             fontFamily: 'Plus Jakarta Sans',
                                             color: Colors.red,

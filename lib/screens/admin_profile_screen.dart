@@ -1,3 +1,4 @@
+import 'package:courts_ecommerce/locales/language.dart';
 import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:courts_ecommerce/screens/admin_screen.dart';
 import 'package:courts_ecommerce/screens/change_password_screen.dart';
@@ -21,13 +22,17 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
 
     final user = Provider.of<UserProvider>(context).user!;
 
+    Locale locale = Localizations.localeOf(context);
+    AppLocalizations translations = AppLocalizations();
+
     return GestureDetector(
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.yellowAccent,
           title: Text(
-            'Profile',
+            translations.translate('Profile', locale),
+            // 'Profile',
             style: TextStyle(
               fontFamily: 'Plus Jakarta Sans',
               fontWeight: FontWeight.w600,
@@ -144,7 +149,8 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(14, 0, 0, 0),
                                 child: Text(
-                                  'Account',
+                                  translations.translate('Account', locale),
+                                  // 'Account',
                                   style: TextStyle(
                                     fontFamily: 'Plus Jakarta Sans',
                                     fontWeight: FontWeight.normal,
@@ -192,7 +198,8 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                                               padding:
                                               EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                                               child: Text(
-                                                'Edit Profile',
+                                                translations.translate('Edit Profile', locale),
+                                                // 'Edit Profile',
                                                 style: TextStyle(
                                                   fontFamily: 'Plus Jakarta Sans',
                                                   fontWeight: FontWeight.normal,
@@ -255,7 +262,8 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                                               padding:
                                               EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                                               child: Text(
-                                                'Change Password',
+                                                translations.translate('Change Password', locale),
+                                                // 'Change Password',
                                                 style: TextStyle(
                                                   fontFamily: 'Plus Jakarta Sans',
                                                   fontWeight: FontWeight.normal,
@@ -282,7 +290,8 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(14, 14, 0, 0),
                                 child: Text(
-                                  'Customer',
+                                  translations.translate('Customer', locale),
+                                  // 'Customer',
                                   style: TextStyle(
                                     fontFamily: 'Plus Jakarta Sans',
                                     fontWeight: FontWeight.normal,
@@ -327,7 +336,8 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                                               padding:
                                               EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                                               child: Text(
-                                                'List of Customer',
+                                                translations.translate('List of Customer', locale),
+                                                // 'List of Customer',
                                                 style: TextStyle(
                                                   fontFamily: 'Plus Jakarta Sans',
                                                   fontWeight: FontWeight.normal,
@@ -387,7 +397,8 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                                               padding:
                                               EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                                               child: Text(
-                                                'Selling History',
+                                                translations.translate('Selling History', locale),
+                                                // 'Selling History',
                                                 style: TextStyle(
                                                   fontFamily: 'Plus Jakarta Sans',
                                                   fontWeight: FontWeight.normal,
@@ -414,7 +425,8 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(14, 14, 0, 0),
                                 child: Text(
-                                  'Other',
+                                  translations.translate('Other', locale),
+                                  // 'Other',
                                   style: TextStyle(
                                     fontFamily: 'Plus Jakarta Sans',
                                     fontWeight: FontWeight.normal,
@@ -459,7 +471,8 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                                               padding:
                                               EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                                               child: Text(
-                                                'Logout',
+                                                translations.translate('Logout', locale),
+                                                // 'Logout',
                                                 style: TextStyle(
                                                   fontFamily: 'Plus Jakarta Sans',
                                                   fontWeight: FontWeight.normal,

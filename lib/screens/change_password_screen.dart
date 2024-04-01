@@ -1,3 +1,4 @@
+import 'package:courts_ecommerce/locales/language.dart';
 import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:courts_ecommerce/services/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -26,13 +27,18 @@ class _changePasswordScreenScreenState extends State<ChangePasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    Locale locale = Localizations.localeOf(context);
+    AppLocalizations translations = AppLocalizations();
+
     return GestureDetector(
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.yellowAccent,
           title: Text(
-            'Change Password',
+            translations.translate('Change Password', locale),
+            // 'Change Password',
             style: TextStyle(
               fontFamily: 'Plus Jakarta Sans',
               fontWeight: FontWeight.w600,
@@ -65,7 +71,8 @@ class _changePasswordScreenScreenState extends State<ChangePasswordScreen> {
                             autofillHints: [AutofillHints.password],
                             obscureText: !_isOldPasswordVisible,
                             decoration: InputDecoration(
-                              labelText: 'Old Password',
+                              labelText: translations.translate('Old Password', locale),
+                              // labelText: 'Old Password',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
                                 color: Color(0xFF808080),
@@ -139,7 +146,8 @@ class _changePasswordScreenScreenState extends State<ChangePasswordScreen> {
                             autofillHints: [AutofillHints.password],
                             obscureText: !_isNewPasswordVisible,
                             decoration: InputDecoration(
-                              labelText: 'New Password',
+                              labelText: translations.translate('New Password', locale),
+                              // labelText: 'New Password',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
                                 color: Color(0xFF808080),
@@ -213,7 +221,8 @@ class _changePasswordScreenScreenState extends State<ChangePasswordScreen> {
                             autofillHints: [AutofillHints.password],
                             obscureText: !_isNewConfirmPasswordVisible,
                             decoration: InputDecoration(
-                              labelText: 'Confirm New Password',
+                              labelText: translations.translate('Confirm New Password', locale),
+                              // labelText: 'Confirm New Password',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
                                 color: Color(0xFF808080),
@@ -309,7 +318,8 @@ class _changePasswordScreenScreenState extends State<ChangePasswordScreen> {
                                         padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
                                         child: Center(
                                           child: Text(
-                                            'Successfully!',
+                                            translations.translate('Successfully!', locale),
+                                            // 'Successfully!',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontFamily: 'Plus Jakarta Sans',
@@ -381,7 +391,8 @@ class _changePasswordScreenScreenState extends State<ChangePasswordScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Confirm',
+                            translations.translate('Change', locale),
+                            // 'Confirm',
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
                               color: Colors.white,
