@@ -1,5 +1,7 @@
 import 'package:courts_ecommerce/models/product.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -25,6 +27,7 @@ class ProductService {
             productImgVideo: item['productImgVideo'],
             productCategory: item['productCategory'],
             productLocation: item['productLocation'],
+            productVideoUrl: item['productVideoUrl']
           ));
         }
         return productList;
@@ -40,6 +43,7 @@ class ProductService {
     required TextEditingController productDescriptionController,
     required TextEditingController productLocationController,
     required TextEditingController productImgVideoController,
+    required TextEditingController productVideoURLController,
   }) async {
     try {
       final response = await http.post(
@@ -51,6 +55,7 @@ class ProductService {
             'productDescription': productDescriptionController.text,
             'productLocation': productLocationController.text,
             'productImgVideo': productImgVideoController.text,
+            'productVideoUrl': productVideoURLController.text,
           }
       );
       if (response.statusCode == 200) {
@@ -140,6 +145,7 @@ class ProductService {
         productImgVideo: productData['productImgVideo'],
         productCategory: productData['productCategory'],
         productLocation: productData['productLocation'],
+        productVideoUrl: productData['productVideoUrl']
       );
 
     } else {
@@ -154,7 +160,8 @@ class ProductService {
     required TextEditingController productCategoryController,
     required TextEditingController productDescriptionController,
     required TextEditingController productLocationController,
-    required TextEditingController productImgVideoController
+    required TextEditingController productImgVideoController,
+    required TextEditingController productVideoURLController
   }) async {
     try {
       final response = await http.post(
@@ -166,7 +173,9 @@ class ProductService {
           'productCategory': productCategoryController.text,
           'productDescription': productDescriptionController.text,
           'productLocation': productLocationController.text,
-          'productImgVideo': productImgVideoController.text,},
+          'productImgVideo': productImgVideoController.text,
+          'productVideoUrl': productVideoURLController.text,
+        },
       );
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body);

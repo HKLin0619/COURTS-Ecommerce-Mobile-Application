@@ -22,6 +22,7 @@ class _addProductScreenPageState extends State<AddProductScreen> {
   final TextEditingController _productDescriptionController = TextEditingController();
   final TextEditingController _productLocationController = TextEditingController();
   final TextEditingController _productImgVideoController = TextEditingController();
+  final TextEditingController _productVideoURLController = TextEditingController();
 
   ProductService _productService = ProductService();
 
@@ -373,6 +374,64 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                         padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
+                          child: TextFormField(
+                            controller: _productVideoURLController,
+                            autofocus: false,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              labelText: 'Product Video URL',
+                              labelStyle: TextStyle(
+                                fontFamily: 'Plus Jakarta Sans',
+                                color: Color(0xFF808080),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              alignLabelWithHint: false,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.black,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFF4B39EF),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFFFF5963),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFFFF5963),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              contentPadding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                            ),
+                            style: TextStyle(
+                              fontFamily: 'Plus Jakarta Sans',
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            cursorColor: Colors.black,
+                            keyboardType: TextInputType.text,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                        child: Container(
+                          width: MediaQuery.sizeOf(context).width,
                           height: MediaQuery.sizeOf(context).height * 0.41,
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
@@ -489,6 +548,7 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                             productDescriptionController: _productDescriptionController,
                             productLocationController: _productLocationController,
                             productImgVideoController: _productImgVideoController,
+                            productVideoURLController: _productVideoURLController
                           );
 
                           if (success) {

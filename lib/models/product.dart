@@ -6,6 +6,7 @@ class Product {
   final String productImgVideo;
   final String productCategory;
   final String productLocation;
+  final String productVideoUrl;
 
   Product({
     required this.productID,
@@ -14,6 +15,7 @@ class Product {
     required this.productDescription,
     required this.productImgVideo,
     required this.productCategory,
-    required this.productLocation
+    required this.productLocation,
+    required this.productVideoUrl
   });
 }

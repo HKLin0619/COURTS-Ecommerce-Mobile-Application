@@ -28,6 +28,7 @@ class _editProductScreenState extends State<EditProductScreen> {
   late TextEditingController _productDescriptionController;
   late TextEditingController _productLocationController;
   late TextEditingController _productImgVideoController;
+  late TextEditingController _productVideoURLController;
 
   @override
   void initState() {
@@ -38,6 +39,7 @@ class _editProductScreenState extends State<EditProductScreen> {
     _productDescriptionController = TextEditingController();
     _productLocationController = TextEditingController();
     _productImgVideoController = TextEditingController();
+    _productVideoURLController = TextEditingController();
     _productService = ProductService();
     _loadProduct();
   }
@@ -50,6 +52,7 @@ class _editProductScreenState extends State<EditProductScreen> {
     _productDescriptionController.dispose();
     _productLocationController.dispose();
     _productImgVideoController.dispose();
+    _productVideoURLController.dispose();
     super.dispose();
   }
 
@@ -63,6 +66,7 @@ class _editProductScreenState extends State<EditProductScreen> {
       _productDescriptionController.text = product.productDescription;
       _productLocationController.text = product.productLocation;
       _productImgVideoController.text = product.productImgVideo;
+      _productVideoURLController.text = product.productVideoUrl;
       setState(() {});
     } catch (e) {
 
@@ -420,6 +424,64 @@ class _editProductScreenState extends State<EditProductScreen> {
                         padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
                         child: Container(
                           width: MediaQuery.sizeOf(context).width,
+                          child: TextFormField(
+                            controller: _productVideoURLController,
+                            autofocus: false,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              labelText: 'Product Video URL',
+                              labelStyle: TextStyle(
+                                fontFamily: 'Plus Jakarta Sans',
+                                color: Color(0xFF808080),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              alignLabelWithHint: false,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.black,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFF4B39EF),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFFFF5963),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFFFF5963),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              contentPadding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                            ),
+                            style: TextStyle(
+                              fontFamily: 'Plus Jakarta Sans',
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            cursorColor: Colors.black,
+                            keyboardType: TextInputType.text,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
+                        child: Container(
+                          width: MediaQuery.sizeOf(context).width,
                           height: MediaQuery.sizeOf(context).height * 0.41,
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
@@ -537,6 +599,7 @@ class _editProductScreenState extends State<EditProductScreen> {
                             productDescriptionController: _productDescriptionController,
                             productLocationController: _productLocationController,
                             productImgVideoController: _productImgVideoController,
+                              productVideoURLController: _productVideoURLController
                           );
 
                           if (success) {
