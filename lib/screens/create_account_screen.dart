@@ -696,7 +696,7 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                               fontWeight: FontWeight.w600,
                                             ),
                                             recognizer: TapGestureRecognizer()..onTap = () {
-                                              Navigator.pushNamed(context, '/');
+                                              Navigator.pushNamed(context, '/login');
                                             },
                                           ),
                                         ],

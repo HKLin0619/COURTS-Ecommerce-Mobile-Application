@@ -6,6 +6,7 @@ import 'package:courts_ecommerce/screens/admin_profile_screen.dart';
 import 'package:courts_ecommerce/screens/create_account_screen.dart';
 import 'package:courts_ecommerce/screens/list_of_customer_screen.dart';
 import 'package:courts_ecommerce/screens/list_of_selling_history.dart';
+import 'package:courts_ecommerce/screens/start_loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -68,7 +69,8 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/',
         routes: {
-          '/': (context) => LoginScreen(),
+          '/': (context) => StartLoadingScreen(),
+          '/login': (context) => LoginScreen(),
           '/home': (context) {
             final user = Provider.of<UserProvider>(context).user;
             return user != null && user.username == 'admin'
