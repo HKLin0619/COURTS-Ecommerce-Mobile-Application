@@ -9,7 +9,7 @@ import 'package:courts_ecommerce/screens/edit_product_screen.dart';
 import 'package:courts_ecommerce/services/product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class AdminScreen extends StatefulWidget {
 
@@ -442,9 +442,9 @@ class _adminScreenState extends State<AdminScreen> {
                                             decoration: BoxDecoration(
                                               color: Colors.white,
                                             ),
-                                            // child: _isMonthlySelected
-                                            //     ? MonthlySalesChart(data: [],)
-                                            //     : YearlySalesChart(data: [],),
+                                            child: _isMonthlySelected
+                                                ? MonthlySalesChart(data: [])
+                                                : YearlySalesChart(data: []),
                                           ),
                                         ),
                                         Expanded(
@@ -465,7 +465,7 @@ class _adminScreenState extends State<AdminScreen> {
                                                     });
                                                   },
                                                   style: ElevatedButton.styleFrom(
-                                                    backgroundColor: Colors.black,
+                                                    backgroundColor: _isMonthlySelected ? Colors.greenAccent : Colors.black,
                                                     elevation: 4,
                                                     side: BorderSide(
                                                       color: Colors.white,
@@ -499,7 +499,7 @@ class _adminScreenState extends State<AdminScreen> {
                                                     });
                                                   },
                                                   style: ElevatedButton.styleFrom(
-                                                    backgroundColor: Colors.black,
+                                                    backgroundColor: _isMonthlySelected ? Colors.black : Colors.greenAccent,
                                                     elevation: 4,
                                                     side: BorderSide(
                                                       color: Colors.white,
@@ -550,6 +550,94 @@ class _adminScreenState extends State<AdminScreen> {
   }
 }
 
+class MonthlySalesChart extends StatelessWidget {
+
+  final List<Monthly> data;
+  MonthlySalesChart({required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+
+    Locale locale = Localizations.localeOf(context);
+    AppLocalizations translations = AppLocalizations();
+
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(6),
+        child: Column(
+          children: [
+            // New chart widget
+            Expanded(
+              child: SfCartesianChart(
+                primaryXAxis: CategoryAxis(),
+                // Enable tooltip
+                tooltipBehavior: TooltipBehavior(enable: true),
+                // Set the chart title
+                title: ChartTitle(text: translations.translate('Sales Report by Monthly', locale)),
+                // title: ChartTitle(text: 'Sales Report by Monthly'),
+                series: data.map((monthly) {
+                  return BarSeries<Monthly, String>(
+                    dataSource: [monthly],
+                    xValueMapper: (Monthly sales, _) => sales.monthly,
+                    yValueMapper: (Monthly sales, _) => sales.totalSales,
+                    // Enable data label
+                    dataLabelSettings: DataLabelSettings(isVisible: true),
+                  );
+                }).toList(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class YearlySalesChart extends StatelessWidget {
+
+  final List<Yearly> data;
+  YearlySalesChart({required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+
+    Locale locale = Localizations.localeOf(context);
+    AppLocalizations translations = AppLocalizations();
+
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(6),
+        child: Column(
+          children: [
+            // New chart widget
+            Expanded(
+              child: SfCartesianChart(
+                primaryXAxis: CategoryAxis(),
+                // Enable tooltip
+                tooltipBehavior: TooltipBehavior(enable: true),
+                // Set the chart title
+                title: ChartTitle(text: translations.translate('Sales Report by Yearly', locale)),
+                // title: ChartTitle(text: 'Sales Report by Yearly'),
+                series: data.map((yearly) {
+                  return BarSeries<Yearly, String>(
+                    dataSource: [yearly],
+                    xValueMapper: (Yearly sales, _) => sales.year,
+                    yValueMapper: (Yearly sales, _) => sales.totalSales,
+                    // Enable data label
+                    dataLabelSettings: DataLabelSettings(isVisible: true),
+                  );
+                }).toList(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
 // class MonthlySalesChart extends StatelessWidget {
 //   final List<Monthly> data;
 //
@@ -563,7 +651,6 @@ class _adminScreenState extends State<AdminScreen> {
 //           data: data,
 //           domainFn: (Monthly series, _) => series.monthly,
 //           measureFn: (Monthly series, _) => series.totalSales,
-//           colorFn: (Monthly series, _) => series.barColor
 //       )
 //     ];
 //

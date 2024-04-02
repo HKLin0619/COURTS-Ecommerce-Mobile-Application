@@ -65,6 +65,8 @@ class AppLocalizations {
       'User ID': 'User ID',
       'View': 'View',
       'Search history...': 'Search history...',
+      'Sales Report by Monthly': 'Sales Report by Monthly',
+      'Sales Report by Yearly': 'Sales Report by Yearly'
     },
     'zh': {
       'Welcome Back': '欢迎回来',
@@ -129,6 +131,8 @@ class AppLocalizations {
       'User ID': '用户ID',
       'View': '查看',
       'Search history...': '搜索历史记录...',
+      'Sales Report by Monthly': '每月销售报告',
+      'Sales Report by Yearly': '每年销售报告'
     },
     'ms': {
       'Welcome Back': 'Selamat Datang Kembali',
@@ -193,6 +197,8 @@ class AppLocalizations {
       'User ID': 'ID Pengguna',
       'View': 'Lihat',
       'Search history...': 'Cari sejarah...',
+      'Sales Report by Monthly': 'Laporan Jualan Bulanan',
+      'Sales Report by Yearly': 'Laporan Jualan Tahunan'
     },
   };
 
