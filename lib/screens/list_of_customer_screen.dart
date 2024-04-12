@@ -229,22 +229,29 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
                                                   context: context,
                                                   builder: (BuildContext context) {
                                                     return SizedBox(
-                                                      height: 500,
+                                                      height: 200,
                                                       width: MediaQuery.sizeOf(context).width,
                                                       child: Padding(
-                                                        padding: EdgeInsets.all(30),
+                                                        padding: EdgeInsets.all(20),
                                                         child: Column(
                                                           mainAxisSize: MainAxisSize.max,
                                                           crossAxisAlignment: CrossAxisAlignment.start,
                                                           children: [
+                                                            Container(
+                                                              height: 5,
+                                                              decoration: BoxDecoration(
+                                                                color: Colors.black,
+                                                                borderRadius: BorderRadius.circular(3),
+                                                              ),
+                                                            ),
                                                             Padding(
-                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                                              child: Column(
+                                                              padding: EdgeInsetsDirectional.fromSTEB(10, 20, 0, 10),
+                                                              child: Row(
                                                                 mainAxisSize: MainAxisSize.max,
                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: [
                                                                   Text(
-                                                                    translations.translate('User ID', locale) + ':',
+                                                                    translations.translate('User ID', locale),
                                                                     // 'User ID:',
                                                                     style: TextStyle(
                                                                       fontFamily: 'Plus Jakarta Sans',
@@ -253,8 +260,9 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
                                                                       fontWeight: FontWeight.w600,
                                                                     ),
                                                                   ),
+                                                                  SizedBox(width: 54),
                                                                   Text(
-                                                                    '${user.userID}',
+                                                                    ': ${user.userID}',
                                                                     style: TextStyle(
                                                                       fontFamily: 'Plus Jakarta Sans',
                                                                       color: Colors.black,
@@ -266,13 +274,13 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
                                                               ),
                                                             ),
                                                             Padding(
-                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                                              child: Column(
+                                                              padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 10),
+                                                              child: Row(
                                                                 mainAxisSize: MainAxisSize.max,
                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: [
                                                                   Text(
-                                                                    translations.translate('Username', locale) + ':',
+                                                                    translations.translate('Username', locale),
                                                                     // 'Username:',
                                                                     style: TextStyle(
                                                                       fontFamily: 'Plus Jakarta Sans',
@@ -281,8 +289,9 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
                                                                       fontWeight: FontWeight.w600,
                                                                     ),
                                                                   ),
+                                                                  SizedBox(width: 35),
                                                                   Text(
-                                                                    '${user.username}',
+                                                                    ': ${user.username}',
                                                                     style: TextStyle(
                                                                       fontFamily: 'Plus Jakarta Sans',
                                                                       color: Colors.black,
@@ -294,13 +303,13 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
                                                               ),
                                                             ),
                                                             Padding(
-                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                                              child: Column(
+                                                              padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 10),
+                                                              child: Row(
                                                                 mainAxisSize: MainAxisSize.max,
                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: [
                                                                   Text(
-                                                                    translations.translate('Phone Number', locale) + ':',
+                                                                    translations.translate('Phone Number', locale),
                                                                     // 'Phone Number:',
                                                                     style: TextStyle(
                                                                       fontFamily: 'Plus Jakarta Sans',
@@ -309,8 +318,9 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
                                                                       fontWeight: FontWeight.w600,
                                                                     ),
                                                                   ),
+                                                                  SizedBox(width: 5),
                                                                   Text(
-                                                                    '${user.phoneNumber}',
+                                                                    ': ${user.phoneNumber}',
                                                                     style: TextStyle(
                                                                       fontFamily: 'Plus Jakarta Sans',
                                                                       color: Colors.black,
@@ -322,13 +332,13 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
                                                               ),
                                                             ),
                                                             Padding(
-                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                                              child: Column(
+                                                              padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 10),
+                                                              child: Row(
                                                                 mainAxisSize: MainAxisSize.max,
                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: [
                                                                   Text(
-                                                                    translations.translate('Home Address', locale) + ':',
+                                                                    translations.translate('Home Address', locale),
                                                                     // 'Home Address:',
                                                                     style: TextStyle(
                                                                       fontFamily: 'Plus Jakarta Sans',
@@ -337,8 +347,9 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
                                                                       fontWeight: FontWeight.w600,
                                                                     ),
                                                                   ),
+                                                                  SizedBox(width: 5),
                                                                   Text(
-                                                                    '${user.homeAddress}',
+                                                                    ': ${user.homeAddress}',
                                                                     style: TextStyle(
                                                                       fontFamily: 'Plus Jakarta Sans',
                                                                       color: Colors.black,

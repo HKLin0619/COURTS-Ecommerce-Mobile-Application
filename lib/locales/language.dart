@@ -131,7 +131,7 @@ class AppLocalizations {
       'User ID': '用户ID',
       'View': '查看',
       'Search history...': '搜索历史记录...',
-      'Sales Report by Monthly': '每月销售报告',
+      'Sales Report by Monthly in 2024': '2024年每月销售报告',
       'Sales Report by Yearly': '每年销售报告'
     },
     'ms': {
@@ -197,7 +197,7 @@ class AppLocalizations {
       'User ID': 'ID Pengguna',
       'View': 'Lihat',
       'Search history...': 'Cari sejarah...',
-      'Sales Report by Monthly': 'Laporan Jualan Bulanan',
+      'Sales Report by Monthly in 2024': 'Laporan Jualan Bulanan 2024',
       'Sales Report by Yearly': 'Laporan Jualan Tahunan'
     },
   };
