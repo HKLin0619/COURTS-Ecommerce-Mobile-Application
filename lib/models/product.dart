@@ -16,6 +16,6 @@ class Product {
     required this.productImgVideo,
     required this.productCategory,
     required this.productLocation,
-    required this.productVideoUrl
+    required this.productVideoUrl,
   });
 }

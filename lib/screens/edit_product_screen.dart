@@ -8,16 +8,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class EditProductScreen extends StatefulWidget {
-
   final String productID;
-  const EditProductScreen({Key? key, required this.productID}) : super(key: key);
+  const EditProductScreen({Key? key, required this.productID})
+      : super(key: key);
 
   @override
   _editProductScreenState createState() => _editProductScreenState();
 }
 
 class _editProductScreenState extends State<EditProductScreen> {
-
   String? _selectedValue;
   final ImagePicker _imagePicker = ImagePicker();
   late ProductService _productService;
@@ -36,7 +35,7 @@ class _editProductScreenState extends State<EditProductScreen> {
     super.initState();
     _productNameController = TextEditingController();
     _productPriceController = TextEditingController();
-    _productCategoryController =  TextEditingController();
+    _productCategoryController = TextEditingController();
     _productDescriptionController = TextEditingController();
     _productLocationController = TextEditingController();
     _productImgVideoController = TextEditingController();
@@ -59,7 +58,6 @@ class _editProductScreenState extends State<EditProductScreen> {
 
   Future<void> _loadProduct() async {
     try {
-
       Product product = await _productService.getProductById(widget.productID);
       _productNameController.text = product.productName;
       _productPriceController.text = product.productPrice.toString();
@@ -70,13 +68,13 @@ class _editProductScreenState extends State<EditProductScreen> {
       _productVideoURLController.text = product.productVideoUrl;
       setState(() {});
     } catch (e) {
-
       print('Error loading product: $e');
     }
   }
 
   void _pickImage() async {
-    final XFile? pickedFile = await _imagePicker.pickImage(source: ImageSource.gallery);
+    final XFile? pickedFile =
+        await _imagePicker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       final imageBytes = await pickedFile.readAsBytes();
@@ -89,7 +87,6 @@ class _editProductScreenState extends State<EditProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final user = Provider.of<UserProvider>(context).user!;
 
     Locale locale = Localizations.localeOf(context);
@@ -134,7 +131,8 @@ class _editProductScreenState extends State<EditProductScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: translations.translate('Product Name', locale),
+                              labelText: translations.translate(
+                                  'Product Name', locale),
                               // labelText: 'Product Name',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
@@ -172,7 +170,7 @@ class _editProductScreenState extends State<EditProductScreen> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               contentPadding:
-                              EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                                  EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
                             ),
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
@@ -194,7 +192,8 @@ class _editProductScreenState extends State<EditProductScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: translations.translate('Product Price', locale),
+                              labelText: translations.translate(
+                                  'Product Price', locale),
                               // labelText: 'Product Price',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
@@ -231,7 +230,8 @@ class _editProductScreenState extends State<EditProductScreen> {
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              contentPadding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                              contentPadding:
+                                  EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
                               prefix: Text(
                                 'RM ',
                                 style: TextStyle(
@@ -258,7 +258,7 @@ class _editProductScreenState extends State<EditProductScreen> {
                             border: Border.all(width: 1),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child:  DropdownButton<String>(
+                          child: DropdownButton<String>(
                             value: _selectedValue,
                             onChanged: (String? val) {
                               setState(() {
@@ -267,9 +267,11 @@ class _editProductScreenState extends State<EditProductScreen> {
                               });
                             },
                             items: [
-                              translations.translate('Dining & Kitchen', locale),
-                              translations.translate('Home Furnishings', locale),
-                              translations.translate('Home Office', locale),
+                              translations.translate(
+                                  'Dining', locale),
+                              translations.translate(
+                                  'Home', locale),
+                              translations.translate('Office', locale),
                               translations.translate('Living Rooms', locale)
                               // 'Dining & Kitchen',
                               // 'Home Furnishings',
@@ -278,18 +280,19 @@ class _editProductScreenState extends State<EditProductScreen> {
                             ]
                                 .map<DropdownMenuItem<String>>(
                                   (String value) => DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  value,
-                                  style: TextStyle(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    color: Colors.black,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
+                                    value: value,
+                                    child: Text(
+                                      value,
+                                      style: TextStyle(
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ).toList(),
+                                )
+                                .toList(),
                             icon: Icon(
                               Icons.keyboard_arrow_down_rounded,
                               color: Colors.black,
@@ -320,7 +323,8 @@ class _editProductScreenState extends State<EditProductScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: translations.translate('Product Description', locale),
+                              labelText: translations.translate(
+                                  'Product Description', locale),
                               // labelText: 'Product Description',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
@@ -357,8 +361,8 @@ class _editProductScreenState extends State<EditProductScreen> {
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              contentPadding:
-                              EdgeInsetsDirectional.fromSTEB(15, 15, 10, 10),
+                              contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                  15, 15, 10, 10),
                             ),
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
@@ -381,7 +385,8 @@ class _editProductScreenState extends State<EditProductScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: translations.translate('Product Location', locale),
+                              labelText: translations.translate(
+                                  'Product Location', locale),
                               // labelText: 'Product Location',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
@@ -418,8 +423,8 @@ class _editProductScreenState extends State<EditProductScreen> {
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              contentPadding:
-                              EdgeInsetsDirectional.fromSTEB(15, 15, 10, 10),
+                              contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                  15, 15, 10, 10),
                             ),
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
@@ -442,7 +447,8 @@ class _editProductScreenState extends State<EditProductScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: translations.translate('Product Video URL', locale),
+                              labelText: translations.translate(
+                                  'Product Video URL', locale),
                               // labelText: 'Product Video URL',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
@@ -479,7 +485,8 @@ class _editProductScreenState extends State<EditProductScreen> {
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              contentPadding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                              contentPadding:
+                                  EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
                             ),
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
@@ -516,43 +523,56 @@ class _editProductScreenState extends State<EditProductScreen> {
                                   children: [
                                     _productImgVideoController.text.isEmpty
                                         ? Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.add_photo_alternate,
-                                          color: Color(0xFF808080),
-                                          size: 42,
-                                        ),
-                                        Text(
-                                          translations.translate('Upload Your Image', locale),
-                                          // 'Upload Your Image',
-                                          style: TextStyle(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: Color(0xFF808080),
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons.add_photo_alternate,
+                                                color: Color(0xFF808080),
+                                                size: 42,
+                                              ),
+                                              Text(
+                                                translations.translate(
+                                                    'Upload Your Image',
+                                                    locale),
+                                                // 'Upload Your Image',
+                                                style: TextStyle(
+                                                  fontFamily:
+                                                      'Plus Jakarta Sans',
+                                                  color: Color(0xFF808080),
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        : Padding(
+                                            padding: EdgeInsets.all(1),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Image.memory(
+                                                base64Decode(
+                                                    _productImgVideoController
+                                                        .text),
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.29,
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ) : Padding(
-                                      padding: EdgeInsets.all(1),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child:
-                                        Image.memory(
-                                          base64Decode(_productImgVideoController.text),
-                                          width: MediaQuery.of(context).size.width,
-                                          height: MediaQuery.of(context).size.height * 0.29,
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                    ),
                                   ],
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                                 child: ElevatedButton(
                                   onPressed: _pickImage,
                                   style: ElevatedButton.styleFrom(
@@ -568,7 +588,8 @@ class _editProductScreenState extends State<EditProductScreen> {
                                     ),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        15, 0, 0, 0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
@@ -578,9 +599,12 @@ class _editProductScreenState extends State<EditProductScreen> {
                                           size: 19,
                                         ),
                                         Padding(
-                                          padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  15, 0, 0, 0),
                                           child: Text(
-                                            translations.translate('Upload', locale),
+                                            translations.translate(
+                                                'Upload', locale),
                                             // 'Upload',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
@@ -608,18 +632,21 @@ class _editProductScreenState extends State<EditProductScreen> {
                       onPressed: () async {
                         try {
                           bool success = await _productService.editProduct(
-                            productID: widget.productID,
-                            productNameController: _productNameController,
-                            productPriceController: _productPriceController,
-                            productCategoryController: _productCategoryController,
-                            productDescriptionController: _productDescriptionController,
-                            productLocationController: _productLocationController,
-                            productImgVideoController: _productImgVideoController,
-                              productVideoURLController: _productVideoURLController
-                          );
+                              productID: widget.productID,
+                              productNameController: _productNameController,
+                              productPriceController: _productPriceController,
+                              productCategoryController:
+                                  _productCategoryController,
+                              productDescriptionController:
+                                  _productDescriptionController,
+                              productLocationController:
+                                  _productLocationController,
+                              productImgVideoController:
+                                  _productImgVideoController,
+                              productVideoURLController:
+                                  _productVideoURLController);
 
                           if (success) {
-
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -636,10 +663,12 @@ class _editProductScreenState extends State<EditProductScreen> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            15, 10, 0, 0),
                                         child: Center(
                                           child: Text(
-                                            translations.translate('Successfully!', locale),
+                                            translations.translate(
+                                                'Successfully!', locale),
                                             // 'Successfully!',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
@@ -707,24 +736,9 @@ class _editProductScreenState extends State<EditProductScreen> {
                 ],
               ),
             ),
-            ),
           ),
         ),
-      );
+      ),
+    );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

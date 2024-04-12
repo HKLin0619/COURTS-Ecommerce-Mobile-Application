@@ -7,6 +7,8 @@ import 'package:courts_ecommerce/screens/create_account_screen.dart';
 import 'package:courts_ecommerce/screens/list_of_customer_screen.dart';
 import 'package:courts_ecommerce/screens/list_of_selling_history.dart';
 import 'package:courts_ecommerce/screens/start_loading_screen.dart';
+import 'package:courts_ecommerce/screens/home.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +21,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:courts_ecommerce/locales/language.dart';
 
 void main() async {
-
   try {
     await dotenv.load(fileName: ".env");
   } catch (e) {
@@ -34,7 +35,9 @@ void main() async {
 Future<Locale> _getLocale() async {
   String locale;
   try {
-    locale = Platform.localeName.split('_').first; // Extract language code from locale
+    locale = Platform.localeName
+        .split('_')
+        .first; // Extract language code from locale
   } catch (e) {
     locale = 'en'; // Default to English if unable to fetch system locale
   }
@@ -53,6 +56,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
         localizationsDelegates: [
           AppLocalizationsDelegate(), // Your custom localizations delegate
           GlobalMaterialLocalizations.delegate,
@@ -75,7 +79,7 @@ class MyApp extends StatelessWidget {
             final user = Provider.of<UserProvider>(context).user;
             return user != null && user.username == 'admin'
                 ? AdminScreen()
-                : CustomerScreen();
+                : HomePageWidget();
           },
           '/addProduct': (context) => AddProductScreen(),
           '/createAccount': (context) => CreateAccountScreen(),

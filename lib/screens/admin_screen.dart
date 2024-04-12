@@ -12,16 +12,13 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class AdminScreen extends StatefulWidget {
-
   const AdminScreen({Key? key}) : super(key: key);
 
   @override
   _adminScreenState createState() => _adminScreenState();
-
 }
 
 class _adminScreenState extends State<AdminScreen> {
-
   bool _isMonthlySelected = true;
   late Future<List<Product>> _productListFuture;
   final ProductService _productService = ProductService();
@@ -34,7 +31,6 @@ class _adminScreenState extends State<AdminScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final user = Provider.of<UserProvider>(context).user!;
 
     Locale locale = Localizations.localeOf(context);
@@ -87,7 +83,7 @@ class _adminScreenState extends State<AdminScreen> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0,20, 20, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 20, 20, 0),
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, '/adminProfile');
@@ -158,7 +154,8 @@ class _adminScreenState extends State<AdminScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 10, 0),
                                     child: Icon(
                                       Icons.chair,
                                       color: Colors.black,
@@ -166,7 +163,8 @@ class _adminScreenState extends State<AdminScreen> {
                                     ),
                                   ),
                                   Tab(
-                                    text: translations.translate('Furniture', locale),
+                                    text: translations.translate(
+                                        'Furniture', locale),
                                     // text: 'Furniture',
                                   ),
                                 ],
@@ -175,7 +173,8 @@ class _adminScreenState extends State<AdminScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 10, 0),
                                     child: Icon(
                                       Icons.analytics,
                                       color: Colors.black,
@@ -183,7 +182,8 @@ class _adminScreenState extends State<AdminScreen> {
                                     ),
                                   ),
                                   Tab(
-                                    text: translations.translate('Analyze', locale),
+                                    text: translations.translate(
+                                        'Analyze', locale),
                                     // text: 'Analyze',
                                   ),
                                 ],
@@ -200,50 +200,67 @@ class _adminScreenState extends State<AdminScreen> {
                                       padding: EdgeInsets.all(10),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Column(
                                             mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                translations.translate('Management Furniture', locale),
+                                                translations.translate(
+                                                    'Management Furniture',
+                                                    locale),
                                                 // 'Management Furniture',
                                                 textAlign: TextAlign.start,
                                                 style: TextStyle(
-                                                  fontFamily: 'Plus Jakarta Sans',
+                                                  fontFamily:
+                                                      'Plus Jakarta Sans',
                                                   fontWeight: FontWeight.w600,
                                                   fontSize: 12,
-                                                  color: Colors.black, // Use theme color
+                                                  color: Colors
+                                                      .black, // Use theme color
                                                 ),
                                               ),
                                               Text(
-                                                translations.translate('Edit or Delete Products', locale),
+                                                translations.translate(
+                                                    'Edit or Delete Products',
+                                                    locale),
                                                 // 'Edit or Delete Products',
                                                 textAlign: TextAlign.start,
                                                 style: TextStyle(
-                                                  fontFamily: 'Plus Jakarta Sans',
+                                                  fontFamily:
+                                                      'Plus Jakarta Sans',
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: 10,
-                                                  color: Colors.black, // Use theme color
+                                                  color: Colors
+                                                      .black, // Use theme color
                                                 ),
                                               ),
                                             ],
                                           ),
                                           InkWell(
                                             onTap: () {
-                                              Navigator.pushNamed(context, '/addProduct');
+                                              Navigator.pushNamed(
+                                                  context, '/addProduct');
                                             },
-                                            borderRadius: BorderRadius.circular(10),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                             splashColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             child: Container(
                                               width: 31,
                                               height: 31,
                                               decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.lightGreenAccent, width: 2),
-                                                borderRadius: BorderRadius.circular(10),
+                                                border: Border.all(
+                                                    color:
+                                                        Colors.lightGreenAccent,
+                                                    width: 2),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
                                                 color: Colors.black,
                                               ),
                                               child: Center(
@@ -259,165 +276,245 @@ class _adminScreenState extends State<AdminScreen> {
                                       ),
                                     ),
                                     Expanded(
-                                      child: FutureBuilder <List<Product>> (
+                                      child: FutureBuilder<List<Product>>(
                                         future: _productListFuture,
                                         builder: (context, snapshot) {
                                           if (snapshot.hasData) {
-                                            List<Product> productList = snapshot.data!;
-                                            return
-                                              ListView.builder(
-                                                padding: EdgeInsets.zero,
-                                                shrinkWrap: true,
-                                                scrollDirection: Axis.vertical,
-                                                itemCount: productList?.length,
-                                                itemBuilder: (context, index) {
-                                                  Product product = productList[index];
-                                                  return Dismissible(
-                                                    key: UniqueKey(),
-                                                    direction: DismissDirection.endToStart,
-                                                    onDismissed: (direction) async  {
-                                                      final result = await showDialog(
-                                                        context: context,
-                                                        builder: (BuildContext context) {
-                                                          return AlertDialog(
-                                                            title: Text(translations.translate('Note !', locale)),
-                                                            // title: Text('Note !'),
-                                                            content: Text(translations.translate('Are you sure you want to delete this product ?', locale)),
-                                                            // content: Text('Are you sure you want to delete this product ?'),
-                                                            actions: <Widget>[
-                                                              TextButton(
-                                                                onPressed: () {
-                                                                  Navigator.of(context).pop(false);
-                                                                },
-                                                                child: Text(translations.translate('Cancel', locale)),
-                                                                // child: Text('Cancel'),
-                                                              ),
-                                                              TextButton(
-                                                                onPressed: () async {
-                                                                  await Provider.of<ProductProvider>(context, listen: false).deleteProduct('${product.productID}',);
-                                                                  Navigator.of(context).pop(true);
-                                                                },
-                                                                child: Text(translations.translate('Delete', locale)),
-                                                                // child: Text('Delete'),
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      );
-                                                      if (result == false) {
-                                                        setState(() {});
-                                                        return;
-                                                      }
-                                                      setState(() {
-                                                        productList.removeAt(index);
-                                                      });
-                                                    },
-                                                    background: Card(
-                                                      shape: RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(0),
-                                                      ),
-                                                      color: Color(0xFFFF0206),
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.all(15),
-                                                        child: Icon(
-                                                          Icons.delete,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    child: InkWell(
-                                                      onTap: () {
-                                                        Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(builder: (context) => EditProductScreen(productID: product.productID)),
+                                            List<Product> productList =
+                                                snapshot.data!;
+                                            return ListView.builder(
+                                              padding: EdgeInsets.zero,
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.vertical,
+                                              itemCount: productList?.length,
+                                              itemBuilder: (context, index) {
+                                                Product product =
+                                                    productList[index];
+                                                return Dismissible(
+                                                  key: UniqueKey(),
+                                                  direction: DismissDirection
+                                                      .endToStart,
+                                                  onDismissed:
+                                                      (direction) async {
+                                                    final result =
+                                                        await showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return AlertDialog(
+                                                          title: Text(
+                                                              translations
+                                                                  .translate(
+                                                                      'Note !',
+                                                                      locale)),
+                                                          // title: Text('Note !'),
+                                                          content: Text(translations
+                                                              .translate(
+                                                                  'Are you sure you want to delete this product ?',
+                                                                  locale)),
+                                                          // content: Text('Are you sure you want to delete this product ?'),
+                                                          actions: <Widget>[
+                                                            TextButton(
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop(false);
+                                                              },
+                                                              child: Text(translations
+                                                                  .translate(
+                                                                      'Cancel',
+                                                                      locale)),
+                                                              // child: Text('Cancel'),
+                                                            ),
+                                                            TextButton(
+                                                              onPressed:
+                                                                  () async {
+                                                                await Provider.of<
+                                                                            ProductProvider>(
+                                                                        context,
+                                                                        listen:
+                                                                            false)
+                                                                    .deleteProduct(
+                                                                  '${product.productID}',
+                                                                );
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop(true);
+                                                              },
+                                                              child: Text(translations
+                                                                  .translate(
+                                                                      'Delete',
+                                                                      locale)),
+                                                              // child: Text('Delete'),
+                                                            ),
+                                                          ],
                                                         );
                                                       },
-                                                      child: Card(
-                                                        clipBehavior: Clip.none,
+                                                    );
+                                                    if (result == false) {
+                                                      setState(() {});
+                                                      return;
+                                                    }
+                                                    setState(() {
+                                                      productList
+                                                          .removeAt(index);
+                                                    });
+                                                  },
+                                                  background: Card(
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              0),
+                                                    ),
+                                                    color: Color(0xFFFF0206),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              15),
+                                                      child: Icon(
+                                                        Icons.delete,
                                                         color: Colors.white,
-                                                        elevation: 4,
-                                                        shape: RoundedRectangleBorder(
-                                                          borderRadius: BorderRadius.circular(8),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                EditProductScreen(
+                                                                    productID:
+                                                                        product
+                                                                            .productID)),
+                                                      );
+                                                    },
+                                                    child: Card(
+                                                      clipBehavior: Clip.none,
+                                                      color: Colors.white,
+                                                      elevation: 4,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                      child: Container(
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                        height: 80,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
                                                         ),
-                                                        child: Container(
-                                                          width: MediaQuery.of(context).size.width,
-                                                          height: 80,
-                                                          decoration: BoxDecoration(
-                                                            color: Colors.white,
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisSize: MainAxisSize.max,
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                            children: [
-                                                              Container(
-                                                                width: 80,
-                                                                height: 80,
-                                                                decoration:
-                                                                BoxDecoration(
-                                                                  color: Colors.white,
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Container(
+                                                              width: 80,
+                                                              height: 80,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                              child: Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .all(5),
+                                                                child:
+                                                                    ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8),
+                                                                  child: Image
+                                                                      .memory(
+                                                                    base64Decode(
+                                                                        '${product.productImgVideo}'),
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  ),
                                                                 ),
-                                                                child: Padding(
-                                                                  padding:
-                                                                  EdgeInsets.all(5),
-                                                                  child: ClipRRect(
-                                                                    borderRadius:
-                                                                    BorderRadius.circular(8),
-                                                                    child:
-                                                                    Image.memory(
-                                                                      base64Decode('${product.productImgVideo}'),
-                                                                      fit: BoxFit.cover,
+                                                              ),
+                                                            ),
+                                                            Expanded(
+                                                              child: Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            10,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                child: Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Text(
+                                                                      '${product.productName}',
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontFamily:
+                                                                            'Plus Jakarta Sans',
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontSize:
+                                                                            12,
+                                                                        color: Colors
+                                                                            .black, // Use theme color
+                                                                      ),
                                                                     ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Expanded(
-                                                                child: Padding(
-                                                                  padding:
-                                                                  EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                                                                  child: Column(
-                                                                    mainAxisSize: MainAxisSize.max,
-                                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                                    children: [
-                                                                      Text(
-                                                                        '${product.productName}',
-                                                                        style: TextStyle(
-                                                                          fontFamily: 'Plus Jakarta Sans',
-                                                                          fontWeight: FontWeight.w600,
-                                                                          fontSize: 12,
-                                                                          color: Colors.black, // Use theme color
-                                                                        ),
+                                                                    Text(
+                                                                      'RM ${product.productPrice.toStringAsFixed(2)}',
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontFamily:
+                                                                            'Plus Jakarta Sans',
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        fontSize:
+                                                                            10,
+                                                                        color: Colors
+                                                                            .black, // Use theme color
                                                                       ),
-                                                                      Text(
-                                                                        'RM ${product.productPrice.toStringAsFixed(2)}',
-                                                                        style: TextStyle(
-                                                                          fontFamily: 'Plus Jakarta Sans',
-                                                                          fontWeight: FontWeight.w500,
-                                                                          fontSize: 10,
-                                                                          color: Colors.black, // Use theme color
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
+                                                                    ),
+                                                                  ],
                                                                 ),
                                                               ),
-                                                              SizedBox(
-                                                                height: 100,
-                                                                width: 5,
-                                                                child: VerticalDivider(
-                                                                  thickness: 15,
-                                                                  color:
-                                                                  Color(0xFFFF0206),
-                                                                ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 100,
+                                                              width: 5,
+                                                              child:
+                                                                  VerticalDivider(
+                                                                thickness: 15,
+                                                                color: Color(
+                                                                    0xFFFF0206),
                                                               ),
-                                                            ],
-                                                          ),
+                                                            ),
+                                                          ],
                                                         ),
                                                       ),
                                                     ),
-                                                  );
-                                                },
-                                              );
+                                                  ),
+                                                );
+                                              },
+                                            );
                                           } else if (snapshot.hasError) {
                                             return Text("${snapshot.error}");
                                           }
@@ -425,20 +522,25 @@ class _adminScreenState extends State<AdminScreen> {
                                         },
                                       ),
                                     ),
-
                                   ],
                                 ),
                                 Expanded(
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 10, 0, 0),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Padding(
-                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 0, 0, 10),
                                           child: Container(
-                                            width: MediaQuery.sizeOf(context).width,
-                                            height: MediaQuery.sizeOf(context).height * 0.5,
+                                            width: MediaQuery.sizeOf(context)
+                                                .width,
+                                            height: MediaQuery.sizeOf(context)
+                                                    .height *
+                                                0.5,
                                             decoration: BoxDecoration(
                                               color: Colors.white,
                                             ),
@@ -449,14 +551,19 @@ class _adminScreenState extends State<AdminScreen> {
                                         ),
                                         Expanded(
                                           child: Container(
-                                            width: MediaQuery.of(context).size.width,
-                                            height: MediaQuery.of(context).size.height,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height: MediaQuery.of(context)
+                                                .size
+                                                .height,
                                             decoration: BoxDecoration(
                                               color: Colors.white,
                                             ),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: [
                                                 ElevatedButton(
                                                   onPressed: () {
@@ -464,28 +571,40 @@ class _adminScreenState extends State<AdminScreen> {
                                                       _isMonthlySelected = true;
                                                     });
                                                   },
-                                                  style: ElevatedButton.styleFrom(
-                                                    backgroundColor: _isMonthlySelected ? Colors.greenAccent : Colors.black,
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        _isMonthlySelected
+                                                            ? Colors.greenAccent
+                                                            : Colors.black,
                                                     elevation: 4,
                                                     side: BorderSide(
                                                       color: Colors.white,
                                                       width: 1,
                                                     ),
                                                     fixedSize: Size(120, 40),
-                                                    shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(12),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
                                                     ),
                                                   ),
                                                   child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: [
                                                       Text(
-                                                        translations.translate('Monthly', locale),
+                                                        translations.translate(
+                                                            'Monthly', locale),
                                                         style: TextStyle(
-                                                          fontFamily: 'Plus Jakarta Sans',
+                                                          fontFamily:
+                                                              'Plus Jakarta Sans',
                                                           color: Colors.white,
                                                           fontSize: 14,
-                                                          fontWeight: FontWeight.w600,
+                                                          fontWeight:
+                                                              FontWeight.w600,
                                                         ),
                                                       ),
                                                     ],
@@ -495,31 +614,45 @@ class _adminScreenState extends State<AdminScreen> {
                                                 ElevatedButton(
                                                   onPressed: () {
                                                     setState(() {
-                                                      _isMonthlySelected = false;
+                                                      _isMonthlySelected =
+                                                          false;
                                                     });
                                                   },
-                                                  style: ElevatedButton.styleFrom(
-                                                    backgroundColor: _isMonthlySelected ? Colors.black : Colors.greenAccent,
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        _isMonthlySelected
+                                                            ? Colors.black
+                                                            : Colors
+                                                                .greenAccent,
                                                     elevation: 4,
                                                     side: BorderSide(
                                                       color: Colors.white,
                                                       width: 1,
                                                     ),
                                                     fixedSize: Size(120, 40),
-                                                    shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(12),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
                                                     ),
                                                   ),
                                                   child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: [
                                                       Text(
-                                                        translations.translate('Yearly', locale),
+                                                        translations.translate(
+                                                            'Yearly', locale),
                                                         style: TextStyle(
-                                                          fontFamily: 'Plus Jakarta Sans',
+                                                          fontFamily:
+                                                              'Plus Jakarta Sans',
                                                           color: Colors.white,
                                                           fontSize: 14,
-                                                          fontWeight: FontWeight.w600,
+                                                          fontWeight:
+                                                              FontWeight.w600,
                                                         ),
                                                       ),
                                                     ],
@@ -551,13 +684,11 @@ class _adminScreenState extends State<AdminScreen> {
 }
 
 class MonthlySalesChart extends StatelessWidget {
-
   final List<Monthly> data;
   MonthlySalesChart({required this.data});
 
   @override
   Widget build(BuildContext context) {
-
     Locale locale = Localizations.localeOf(context);
     AppLocalizations translations = AppLocalizations();
 
@@ -573,7 +704,9 @@ class MonthlySalesChart extends StatelessWidget {
                 // Enable tooltip
                 tooltipBehavior: TooltipBehavior(enable: true),
                 // Set the chart title
-                title: ChartTitle(text: translations.translate('Sales Report by Monthly', locale)),
+                title: ChartTitle(
+                    text: translations.translate(
+                        'Sales Report by Monthly', locale)),
                 // title: ChartTitle(text: 'Sales Report by Monthly'),
                 series: data.map((monthly) {
                   return BarSeries<Monthly, String>(
@@ -593,15 +726,12 @@ class MonthlySalesChart extends StatelessWidget {
   }
 }
 
-
 class YearlySalesChart extends StatelessWidget {
-
   final List<Yearly> data;
   YearlySalesChart({required this.data});
 
   @override
   Widget build(BuildContext context) {
-
     Locale locale = Localizations.localeOf(context);
     AppLocalizations translations = AppLocalizations();
 
@@ -617,7 +747,9 @@ class YearlySalesChart extends StatelessWidget {
                 // Enable tooltip
                 tooltipBehavior: TooltipBehavior(enable: true),
                 // Set the chart title
-                title: ChartTitle(text: translations.translate('Sales Report by Yearly', locale)),
+                title: ChartTitle(
+                    text: translations.translate(
+                        'Sales Report by Yearly', locale)),
                 // title: ChartTitle(text: 'Sales Report by Yearly'),
                 series: data.map((yearly) {
                   return BarSeries<Yearly, String>(

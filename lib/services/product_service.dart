@@ -8,18 +8,15 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ProductService {
-
   var url = '${dotenv.env['URL']}';
 
   Future<List<Product>> fetchData() async {
-    final response = await http.get(
-        Uri.parse('$url/listProduct.php')
-    );
-      if (response.statusCode == 200) {
-        final jsonData = json.decode(response.body);
-        List<Product> productList = [];
-        for (var item in jsonData) {
-          productList.add(Product(
+    final response = await http.get(Uri.parse('$url/listProduct.php'));
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      List<Product> productList = [];
+      for (var item in jsonData) {
+        productList.add(Product(
             productID: item['productID'],
             productName: item['productName'],
             productPrice: double.parse(item['productPrice']),
@@ -27,10 +24,9 @@ class ProductService {
             productImgVideo: item['productImgVideo'],
             productCategory: item['productCategory'],
             productLocation: item['productLocation'],
-            productVideoUrl: item['productVideoUrl']
-          ));
-        }
-        return productList;
+            productVideoUrl: item['productVideoUrl']));
+      }
+      return productList;
     } else {
       throw Exception('Unexpected error occured !');
     }
@@ -46,18 +42,15 @@ class ProductService {
     required TextEditingController productVideoURLController,
   }) async {
     try {
-      final response = await http.post(
-          Uri.parse('$url/addProduct.php'),
-          body:{
-            'productName': productNameController.text,
-            'productPrice': productPriceController.text,
-            'productCategory': productCategoryController.text,
-            'productDescription': productDescriptionController.text,
-            'productLocation': productLocationController.text,
-            'productImgVideo': productImgVideoController.text,
-            'productVideoUrl': productVideoURLController.text,
-          }
-      );
+      final response = await http.post(Uri.parse('$url/addProduct.php'), body: {
+        'productName': productNameController.text,
+        'productPrice': productPriceController.text,
+        'productCategory': productCategoryController.text,
+        'productDescription': productDescriptionController.text,
+        'productLocation': productLocationController.text,
+        'productImgVideo': productImgVideoController.text,
+        'productVideoUrl': productVideoURLController.text,
+      });
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body);
         if (jsonData['status'] == 'success') {
@@ -95,28 +88,26 @@ class ProductService {
     }
   }
 
-  Future<void> deleteProduct(String productID) async  {
+  Future<void> deleteProduct(String productID) async {
     try {
       final response = await http.post(
-          Uri.parse('$url/deleteProduct.php'),
-          body:{
-            'productID': productID
-          },
+        Uri.parse('$url/deleteProduct.php'),
+        body: {'productID': productID},
       );
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body);
         if (jsonData['status'] == 'success') {
           Fluttertoast.showToast(
-              msg: 'Delete successfully!',
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.TOP,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.green,
-              textColor: Colors.black,
-              fontSize: 12.0,
+            msg: 'Delete successfully!',
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.black,
+            fontSize: 12.0,
           );
           throw Exception('Success to delete product');
-        }  else {
+        } else {
           throw Exception('Unexpected status: ${jsonData['status']}');
         }
       } else {
@@ -128,7 +119,6 @@ class ProductService {
   }
 
   Future<Product> getProductById(String productID) async {
-
     final response = await http.post(
       Uri.parse('$url/getProductById.php'),
       body: {'productID': productID},
@@ -138,31 +128,28 @@ class ProductService {
       final productData = jsonData['productData'];
 
       return Product(
-        productID: productData['productID'].toString(),
-        productName: productData['productName'],
-        productPrice: double.parse(productData['productPrice']),
-        productDescription: productData['productDescription'],
-        productImgVideo: productData['productImgVideo'],
-        productCategory: productData['productCategory'],
-        productLocation: productData['productLocation'],
-        productVideoUrl: productData['productVideoUrl']
-      );
-
+          productID: productData['productID'].toString(),
+          productName: productData['productName'],
+          productPrice: double.parse(productData['productPrice']),
+          productDescription: productData['productDescription'],
+          productImgVideo: productData['productImgVideo'],
+          productCategory: productData['productCategory'],
+          productLocation: productData['productLocation'],
+          productVideoUrl: productData['productVideoUrl']);
     } else {
       throw Exception('Product Not Found');
     }
   }
 
-  Future<bool> editProduct({
-    required String productID,
-    required TextEditingController productNameController,
-    required TextEditingController productPriceController,
-    required TextEditingController productCategoryController,
-    required TextEditingController productDescriptionController,
-    required TextEditingController productLocationController,
-    required TextEditingController productImgVideoController,
-    required TextEditingController productVideoURLController
-  }) async {
+  Future<bool> editProduct(
+      {required String productID,
+      required TextEditingController productNameController,
+      required TextEditingController productPriceController,
+      required TextEditingController productCategoryController,
+      required TextEditingController productDescriptionController,
+      required TextEditingController productLocationController,
+      required TextEditingController productImgVideoController,
+      required TextEditingController productVideoURLController}) async {
     try {
       final response = await http.post(
         Uri.parse('$url/editProduct.php'),
@@ -202,7 +189,4 @@ class ProductService {
       throw Exception('An unexpected error occurred: $error');
     }
   }
-
 }
-
-
