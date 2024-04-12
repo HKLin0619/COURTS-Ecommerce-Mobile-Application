@@ -65,7 +65,7 @@ class AppLocalizations {
       'User ID': 'User ID',
       'View': 'View',
       'Search history...': 'Search history...',
-      'Sales Report by Monthly': 'Sales Report by Monthly',
+      'Sales Report by Monthly in 2024': 'Sales Report by Monthly in 2024',
       'Sales Report by Yearly': 'Sales Report by Yearly'
     },
     'zh': {

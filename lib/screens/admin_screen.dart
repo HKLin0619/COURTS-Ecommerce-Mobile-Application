@@ -594,7 +594,10 @@ class MonthlySalesChart extends StatelessWidget {
                 // Enable tooltip
                 tooltipBehavior: TooltipBehavior(enable: true),
                 // Set the chart title
-                title: ChartTitle(text: translations.translate('Sales Report by Monthly', locale)),
+                title: ChartTitle(
+                    text: translations.translate('Sales Report by Monthly in 2024', locale),
+                    textStyle: TextStyle(fontSize: 14),
+                ),
                 // title: ChartTitle(text: 'Sales Report by Monthly'),
                 series: data.map((monthly) {
                   return BarSeries<Monthly, String>(
@@ -638,7 +641,10 @@ class YearlySalesChart extends StatelessWidget {
                 // Enable tooltip
                 tooltipBehavior: TooltipBehavior(enable: true),
                 // Set the chart title
-                title: ChartTitle(text: translations.translate('Sales Report by Yearly', locale)),
+                title: ChartTitle(
+                    text: translations.translate('Sales Report by Yearly', locale),
+                    textStyle: TextStyle(fontSize: 14),
+                ),
                 // title: ChartTitle(text: 'Sales Report by Yearly'),
                 series: data.map((yearly) {
                   return BarSeries<Yearly, String>(
