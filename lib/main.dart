@@ -4,6 +4,7 @@ import 'package:courts_ecommerce/providers/product_provider.dart';
 import 'package:courts_ecommerce/screens/add_product_screen.dart';
 import 'package:courts_ecommerce/screens/admin_profile_screen.dart';
 import 'package:courts_ecommerce/screens/create_account_screen.dart';
+import 'package:courts_ecommerce/screens/customer_profile_screen.dart';
 import 'package:courts_ecommerce/screens/list_of_customer_screen.dart';
 import 'package:courts_ecommerce/screens/list_of_selling_history.dart';
 import 'package:courts_ecommerce/screens/start_loading_screen.dart';
@@ -80,6 +81,7 @@ class MyApp extends StatelessWidget {
           '/addProduct': (context) => AddProductScreen(),
           '/createAccount': (context) => CreateAccountScreen(),
           '/adminProfile': (context) => AdminProfileScreen(),
+          '/customerProfile': (context) => CustomerProfileScreen(),
           '/listOfCustomer': (context) => ListOfCustomerScreen(),
           '/listOfSellingHistory': (context) => ListOfSellingHistoryScreen(),
         },

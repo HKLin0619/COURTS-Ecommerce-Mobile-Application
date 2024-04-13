@@ -647,7 +647,7 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                                         onPressed: () {
                                                           Navigator.pushNamed(
                                                             context,
-                                                            '/',
+                                                            '/login',
                                                           );
                                                         },
                                                         child: Semantics(

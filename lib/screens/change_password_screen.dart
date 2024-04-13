@@ -281,7 +281,7 @@ class _changePasswordScreenScreenState extends State<ChangePasswordScreen> {
                               fontWeight: FontWeight.w500,
                             ),
                             cursorColor: Colors.black,
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.text,
                           ),
                         ),
                       ),
@@ -336,10 +336,11 @@ class _changePasswordScreenScreenState extends State<ChangePasswordScreen> {
                                     Center(
                                       child: TextButton(
                                         onPressed: () {
-                                          Navigator.pushReplacementNamed(
-                                            context,
-                                            '/adminProfile',
-                                          );
+                                          if (widget.userID == '1') {
+                                            Navigator.pushReplacementNamed(context, '/adminProfile');
+                                          } else {
+                                            Navigator.pushReplacementNamed(context, '/customerProfile');
+                                          }
                                         },
                                         child: Text('OK'),
                                       ),

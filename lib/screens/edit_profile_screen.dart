@@ -403,10 +403,11 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                                     Center(
                                       child: TextButton(
                                         onPressed: () {
-                                          Navigator.pushReplacementNamed(
-                                            context,
-                                            '/adminProfile',
-                                          );
+                                          if (_usernameController.text == 'admin') {
+                                            Navigator.pushReplacementNamed(context, '/adminProfile');
+                                          } else {
+                                            Navigator.pushReplacementNamed(context, '/customerProfile');
+                                          }
                                         },
                                         child: Text('OK'),
                                       ),
