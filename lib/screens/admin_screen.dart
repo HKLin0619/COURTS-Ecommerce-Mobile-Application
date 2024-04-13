@@ -26,16 +26,12 @@ class _adminScreenState extends State<AdminScreen> {
   bool _isMonthlySelected = true;
   late Future<List<Product>> _productListFuture;
   final ProductService _productService = ProductService();
-  late Future<List<Yearly>> _yearlyDataFuture;
-  late Future<List<Monthly>> _monthlyDataFuture;
   final AnalysisService _analysisService = AnalysisService();
 
   @override
   void initState() {
     super.initState();
     _productListFuture = _productService.fetchData();
-    _yearlyDataFuture = _analysisService.yearlyData();
-    _monthlyDataFuture = _analysisService.monthlyData();
   }
 
   @override

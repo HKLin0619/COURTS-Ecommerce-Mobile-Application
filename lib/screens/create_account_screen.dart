@@ -68,13 +68,16 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                         alignment: AlignmentDirectional(-1, 0),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(32, 0, 0, 0),
-                          child: Text(
-                            'COURTS',
-                            style: TextStyle(
-                              fontFamily: 'Plus Jakarta Sans',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 32,
-                              color: Color(0xFF0000FF), // Use theme color
+                          child: Semantics(
+                            label: 'COURTS',
+                            child: Text(
+                              'COURTS',
+                              style: TextStyle(
+                                fontFamily: 'Plus Jakarta Sans',
+                                fontWeight: FontWeight.w600,
+                                fontSize: 32,
+                                color: Color(0xFF0000FF), // Use theme color
+                              ),
                             ),
                           ),
                         ),
@@ -89,474 +92,501 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                 mainAxisSize: MainAxisSize.max,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    translations.translate('Create an account', locale),
-                                    // 'Create an account',
-                                    style: TextStyle(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      color: Color(0xFF101213),
-                                      fontSize: 21,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                  Semantics(
+                                    label: 'Create an account',
                                     child: Text(
-                                      translations.translate('Let\'s get started by filling out the form below.', locale),
-                                      // 'Let\'s get started by filling out the form below.',
+                                      translations.translate('Create an account', locale),
+                                      // 'Create an account',
                                       style: TextStyle(
                                         fontFamily: 'Plus Jakarta Sans',
-                                        color: Color(0xFF57636C),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
+                                        color: Color(0xFF101213),
+                                        fontSize: 21,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                    child: Container(
-                                      width: 250,
-                                      child: TextFormField(
-                                        controller: _usernameController,
-                                        autofocus: false,
-                                        autofillHints: [AutofillHints.username],
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          labelText: translations.translate('Username', locale),
-                                          // labelText: 'Username',
-                                          labelStyle: TextStyle(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: Color(0xFF57636C),
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFE0E3E7),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFF4B39EF),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFFF5963),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          focusedErrorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFFF5963),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          contentPadding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                        ),
+                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                    child: Semantics(
+                                      label: 'Let\'s get started by filling out the form below.',
+                                      child: Text(
+                                        translations.translate('Let\'s get started by filling out the form below.', locale),
+                                        // 'Let\'s get started by filling out the form below.',
                                         style: TextStyle(
                                           fontFamily: 'Plus Jakarta Sans',
-                                          color: Colors.black,
+                                          color: Color(0xFF57636C),
                                           fontSize: 12,
                                           fontWeight: FontWeight.w500,
                                         ),
-                                        keyboardType: TextInputType.text,
                                       ),
                                     ),
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                    child: Container(
-                                      width: 250,
-                                      child: TextFormField(
-                                        controller: _userFullNameController,
-                                        autofocus: false,
-                                        autofillHints: [AutofillHints.username],
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          labelText: translations.translate('Full Name', locale),
-                                          // labelText: 'Full Name',
-                                          labelStyle: TextStyle(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: Color(0xFF57636C),
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFE0E3E7),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFF4B39EF),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFFF5963),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          focusedErrorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFFF5963),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          contentPadding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                        ),
-                                        style: TextStyle(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          color: Colors.black,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                        keyboardType: TextInputType.text,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                    child: Container(
-                                      width: 250,
-                                      child: TextFormField(
-                                        controller: _userEmailController,
-                                        autofocus: false,
-                                        autofillHints: [AutofillHints.email],
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          labelText: translations.translate('Email', locale),
-                                          // labelText: 'Email',
-                                          labelStyle: TextStyle(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: Color(0xFF57636C),
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFE0E3E7),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFF4B39EF),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFFF5963),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          focusedErrorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFFF5963),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          contentPadding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                        ),
-                                        style: TextStyle(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          color: Colors.black,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                        keyboardType: TextInputType.emailAddress,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                    child: Container(
-                                      width: 250,
-                                      child: TextFormField(
-                                        controller: _userPhoneNumberController,
-                                        autofocus: false,
-                                        autofillHints: [AutofillHints.email],
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          labelText: translations.translate('Phone Number', locale),
-                                          // labelText: 'Phone Number',
-                                          labelStyle: TextStyle(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: Color(0xFF57636C),
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFE0E3E7),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFF4B39EF),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFFF5963),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          focusedErrorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFFF5963),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          contentPadding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                        ),
-                                        style: TextStyle(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          color: Colors.black,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                        keyboardType: TextInputType.emailAddress,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                    child: Container(
-                                      width: 250,
-                                      child: TextFormField(
-                                        controller: _userHomeAddressController,
-                                        autofocus: false,
-                                        autofillHints: [AutofillHints.email],
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          labelText: translations.translate('Home Address', locale),
-                                          // labelText: 'Home Address',
-                                          labelStyle: TextStyle(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: Color(0xFF57636C),
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFE0E3E7),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFF4B39EF),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFFF5963),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          focusedErrorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFFF5963),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          contentPadding: EdgeInsetsDirectional.fromSTEB(15, 15, 10, 10),
-                                        ),
-                                        style: TextStyle(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          color: Colors.black,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                        maxLines: 6,
-                                        keyboardType: TextInputType.streetAddress,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                    child: Container(
-                                      width: 250,
-                                      child: TextFormField(
-                                        controller: _userPasswordController,
-                                        autofocus: false,
-                                        autofillHints: [AutofillHints.password],
-                                        obscureText: !_isPasswordVisible,
-                                        decoration: InputDecoration(
-                                          labelText: translations.translate('Password', locale),
-                                          // labelText: 'Password',
-                                          labelStyle: TextStyle(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: Color(0xFF57636C),
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFE0E3E7),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFF4B39EF),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFFF5963),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          focusedErrorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFFF5963),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          contentPadding:
-                                          EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                          suffixIcon: IconButton(
-                                            icon: Icon(
-                                              _isPasswordVisible
-                                                  ? Icons.visibility
-                                                  : Icons.visibility_off,
+                                    child: Semantics(
+                                      label: 'Username',
+                                      child: Container(
+                                        width: 250,
+                                        child: TextFormField(
+                                          controller: _usernameController,
+                                          autofocus: false,
+                                          autofillHints: [AutofillHints.username],
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            labelText: translations.translate('Username', locale),
+                                            // labelText: 'Username',
+                                            labelStyle: TextStyle(
+                                              fontFamily: 'Plus Jakarta Sans',
                                               color: Color(0xFF57636C),
-                                              size: 16,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
                                             ),
-                                            onPressed: () {
-                                              setState(() {
-                                                _isPasswordVisible = !_isPasswordVisible;
-                                              });
-                                            },
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFE0E3E7),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFF4B39EF),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            errorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFFF5963),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            focusedErrorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFFF5963),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            filled: true,
+                                            fillColor: Colors.white,
+                                            contentPadding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                                           ),
+                                          style: TextStyle(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          keyboardType: TextInputType.text,
                                         ),
-                                        style: TextStyle(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          color: Colors.black,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                                    child: Semantics(
+                                      label: 'Full Name',
+                                      child: Container(
+                                        width: 250,
+                                        child: TextFormField(
+                                          controller: _userFullNameController,
+                                          autofocus: false,
+                                          autofillHints: [AutofillHints.username],
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            labelText: translations.translate('Full Name', locale),
+                                            // labelText: 'Full Name',
+                                            labelStyle: TextStyle(
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              color: Color(0xFF57636C),
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFE0E3E7),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFF4B39EF),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            errorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFFF5963),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            focusedErrorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFFF5963),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            filled: true,
+                                            fillColor: Colors.white,
+                                            contentPadding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                                          ),
+                                          style: TextStyle(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          keyboardType: TextInputType.text,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                                    child: Semantics(
+                                      label: 'Email',
+                                      child: Container(
+                                        width: 250,
+                                        child: TextFormField(
+                                          controller: _userEmailController,
+                                          autofocus: false,
+                                          autofillHints: [AutofillHints.email],
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            labelText: translations.translate('Email', locale),
+                                            // labelText: 'Email',
+                                            labelStyle: TextStyle(
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              color: Color(0xFF57636C),
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFE0E3E7),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFF4B39EF),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            errorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFFF5963),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            focusedErrorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFFF5963),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            filled: true,
+                                            fillColor: Colors.white,
+                                            contentPadding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                                          ),
+                                          style: TextStyle(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          keyboardType: TextInputType.emailAddress,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                                    child: Semantics(
+                                      label: 'Phone Number',
+                                      child: Container(
+                                        width: 250,
+                                        child: TextFormField(
+                                          controller: _userPhoneNumberController,
+                                          autofocus: false,
+                                          autofillHints: [AutofillHints.email],
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            labelText: translations.translate('Phone Number', locale),
+                                            // labelText: 'Phone Number',
+                                            labelStyle: TextStyle(
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              color: Color(0xFF57636C),
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFE0E3E7),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFF4B39EF),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            errorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFFF5963),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            focusedErrorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFFF5963),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            filled: true,
+                                            fillColor: Colors.white,
+                                            contentPadding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                                          ),
+                                          style: TextStyle(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          keyboardType: TextInputType.emailAddress,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                                    child: Semantics(
+                                      label: 'Home Address',
+                                      child: Container(
+                                        width: 250,
+                                        child: TextFormField(
+                                          controller: _userHomeAddressController,
+                                          autofocus: false,
+                                          autofillHints: [AutofillHints.email],
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            labelText: translations.translate('Home Address', locale),
+                                            // labelText: 'Home Address',
+                                            labelStyle: TextStyle(
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              color: Color(0xFF57636C),
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFE0E3E7),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFF4B39EF),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            errorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFFF5963),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            focusedErrorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFFF5963),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            filled: true,
+                                            fillColor: Colors.white,
+                                            contentPadding: EdgeInsetsDirectional.fromSTEB(15, 15, 10, 10),
+                                          ),
+                                          style: TextStyle(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          maxLines: 6,
+                                          keyboardType: TextInputType.streetAddress,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                                    child: Semantics(
+                                      label: 'Password',
+                                      child: Container(
+                                        width: 250,
+                                        child: TextFormField(
+                                          controller: _userPasswordController,
+                                          autofocus: false,
+                                          autofillHints: [AutofillHints.password],
+                                          obscureText: !_isPasswordVisible,
+                                          decoration: InputDecoration(
+                                            labelText: translations.translate('Password', locale),
+                                            // labelText: 'Password',
+                                            labelStyle: TextStyle(
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              color: Color(0xFF57636C),
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFE0E3E7),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFF4B39EF),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            errorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFFF5963),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            focusedErrorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFFF5963),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            filled: true,
+                                            fillColor: Colors.white,
+                                            contentPadding:
+                                            EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                                            suffixIcon: IconButton(
+                                              icon: Icon(
+                                                _isPasswordVisible
+                                                    ? Icons.visibility
+                                                    : Icons.visibility_off,
+                                                color: Color(0xFF57636C),
+                                                size: 16,
+                                              ),
+                                              onPressed: () {
+                                                setState(() {
+                                                  _isPasswordVisible = !_isPasswordVisible;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                          style: TextStyle(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                    child: Container(
-                                      width: 250,
-                                      child: TextFormField(
-                                        controller: _userConfirmPasswordController,
-                                        autofocus: false,
-                                        autofillHints: [AutofillHints.password],
-                                        obscureText: !_isConfirmPasswordVisible,
-                                        decoration: InputDecoration(
-                                          labelText: translations.translate('Confirm Password', locale),
-                                          // labelText: 'Confirm Password',
-                                          labelStyle: TextStyle(
+                                    child: Semantics(
+                                      label: 'Confirm Password',
+                                      child: Container(
+                                        width: 250,
+                                        child: TextFormField(
+                                          controller: _userConfirmPasswordController,
+                                          autofocus: false,
+                                          autofillHints: [AutofillHints.password],
+                                          obscureText: !_isConfirmPasswordVisible,
+                                          decoration: InputDecoration(
+                                            labelText: translations.translate('Confirm Password', locale),
+                                            // labelText: 'Confirm Password',
+                                            labelStyle: TextStyle(
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              color: Color(0xFF57636C),
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFE0E3E7),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFF4B39EF),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            errorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFFF5963),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            focusedErrorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xFFFF5963),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            filled: true,
+                                            fillColor: Colors.white,
+                                            contentPadding:
+                                            EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                                            suffixIcon: IconButton(
+                                              icon: Icon(
+                                                _isConfirmPasswordVisible
+                                                    ? Icons.visibility
+                                                    : Icons.visibility_off,
+                                                color: Color(0xFF57636C),
+                                                size: 16,
+                                              ),
+                                              onPressed: () {
+                                                setState(() {
+                                                  _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                          style: TextStyle(
                                             fontFamily: 'Plus Jakarta Sans',
-                                            color: Color(0xFF57636C),
+                                            color: Colors.black,
                                             fontSize: 12,
                                             fontWeight: FontWeight.w500,
                                           ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFE0E3E7),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFF4B39EF),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFFF5963),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          focusedErrorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFFF5963),
-                                              width: 2,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          contentPadding:
-                                          EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                          suffixIcon: IconButton(
-                                            icon: Icon(
-                                              _isConfirmPasswordVisible
-                                                  ? Icons.visibility
-                                                  : Icons.visibility_off,
-                                              color: Color(0xFF57636C),
-                                              size: 16,
-                                            ),
-                                            onPressed: () {
-                                              setState(() {
-                                                _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                        style: TextStyle(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          color: Colors.black,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
                                         ),
                                       ),
                                     ),
@@ -620,7 +650,10 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                                             '/',
                                                           );
                                                         },
-                                                        child: Text('OK'),
+                                                        child: Semantics(
+                                                          label: 'OK',
+                                                          child: Text('OK'),
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
@@ -651,14 +684,17 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                           }
                                         };
                                       },
-                                      child: Text(
-                                        translations.translate('Create Account', locale),
-                                        // 'Create Account',
-                                        style: TextStyle(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
+                                      child: Semantics(
+                                        label: 'Create Account',
+                                        child: Text(
+                                          translations.translate('Create Account', locale),
+                                          // 'Create Account',
+                                          style: TextStyle(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color: Colors.black,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                         ),
                                       ),
                                       style: ElevatedButton.styleFrom(
@@ -678,33 +714,36 @@ class _createAccountScreenState extends State<CreateAccountScreen> {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                                    child: RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text: translations.translate('Already have an account? ', locale),
-                                            //text: 'Already have an account? ',
-                                            style: TextStyle(),
-                                          ),
-                                          TextSpan(
-                                            text: translations.translate('Sign In here', locale),
-                                            // text: 'Sign In here',
-                                            style: TextStyle(
-                                              fontFamily: 'Plus Jakarta Sans',
-                                              color: Colors.red,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w600,
+                                    child: Semantics(
+                                      label: 'Already have an account? Sign In here',
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: translations.translate('Already have an account? ', locale),
+                                              //text: 'Already have an account? ',
+                                              style: TextStyle(),
                                             ),
-                                            recognizer: TapGestureRecognizer()..onTap = () {
-                                              Navigator.pushNamed(context, '/login');
-                                            },
+                                            TextSpan(
+                                              text: translations.translate('Sign In here', locale),
+                                              // text: 'Sign In here',
+                                              style: TextStyle(
+                                                fontFamily: 'Plus Jakarta Sans',
+                                                color: Colors.red,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                              recognizer: TapGestureRecognizer()..onTap = () {
+                                                Navigator.pushNamed(context, '/login');
+                                              },
+                                            ),
+                                          ],
+                                          style: TextStyle(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color: Color(0xFF101213),
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
                                           ),
-                                        ],
-                                        style: TextStyle(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          color: Color(0xFF101213),
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
                                         ),
                                       ),
                                     ),

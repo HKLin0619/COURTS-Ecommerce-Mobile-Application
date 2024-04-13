@@ -3,7 +3,6 @@ import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:courts_ecommerce/screens/admin_screen.dart';
 import 'package:courts_ecommerce/screens/change_password_screen.dart';
 import 'package:courts_ecommerce/screens/edit_profile_screen.dart';
-import 'package:courts_ecommerce/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,24 +29,30 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.yellowAccent,
-          title: Text(
-            translations.translate('Profile', locale),
-            // 'Profile',
-            style: TextStyle(
-              fontFamily: 'Plus Jakarta Sans',
-              fontWeight: FontWeight.w600,
-              fontSize: 18,
-              color: Colors.black, // Use theme color
+          title: Semantics(
+            label: 'Profile',
+            child: Text(
+              translations.translate('Profile', locale),
+              // 'Profile',
+              style: TextStyle(
+                fontFamily: 'Plus Jakarta Sans',
+                fontWeight: FontWeight.w600,
+                fontSize: 18,
+                color: Colors.black, // Use theme color
+              ),
             ),
           ),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AdminScreen()),
-              );
-            },
+          leading: Semantics(
+            label: 'Back',
+            child: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AdminScreen()),
+                );
+              },
+            ),
           ),
         ),
         body: SafeArea(
@@ -146,16 +151,19 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(14, 0, 0, 0),
-                                child: Text(
-                                  translations.translate('Account', locale),
-                                  // 'Account',
-                                  style: TextStyle(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 14,
-                                    color: Color(0xFF57636C), // Use theme color
+                              Semantics(
+                                label: 'Account',
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(14, 0, 0, 0),
+                                  child: Text(
+                                    translations.translate('Account', locale),
+                                    // 'Account',
+                                    style: TextStyle(
+                                      fontFamily: 'Plus Jakarta Sans',
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 14,
+                                      color: Color(0xFF57636C), // Use theme color
+                                    ),
                                   ),
                                 ),
                               ),
@@ -197,14 +205,17 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                                             child: Padding(
                                               padding:
                                               EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                              child: Text(
-                                                translations.translate('Edit Profile', locale),
-                                                // 'Edit Profile',
-                                                style: TextStyle(
-                                                  fontFamily: 'Plus Jakarta Sans',
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 14,
-                                                  color: Color(0xFF14181B), // Use theme color
+                                              child: Semantics(
+                                                label: 'Edit Profile',
+                                                child: Text(
+                                                  translations.translate('Edit Profile', locale),
+                                                  // 'Edit Profile',
+                                                  style: TextStyle(
+                                                    fontFamily: 'Plus Jakarta Sans',
+                                                    fontWeight: FontWeight.normal,
+                                                    fontSize: 14,
+                                                    color: Color(0xFF14181B), // Use theme color
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -261,14 +272,17 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                                             child: Padding(
                                               padding:
                                               EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                              child: Text(
-                                                translations.translate('Change Password', locale),
-                                                // 'Change Password',
-                                                style: TextStyle(
-                                                  fontFamily: 'Plus Jakarta Sans',
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 14,
-                                                  color: Color(0xFF14181B), // Use theme color
+                                              child: Semantics(
+                                                label: 'Change Password',
+                                                child: Text(
+                                                  translations.translate('Change Password', locale),
+                                                  // 'Change Password',
+                                                  style: TextStyle(
+                                                    fontFamily: 'Plus Jakarta Sans',
+                                                    fontWeight: FontWeight.normal,
+                                                    fontSize: 14,
+                                                    color: Color(0xFF14181B), // Use theme color
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -289,14 +303,17 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(14, 14, 0, 0),
-                                child: Text(
-                                  translations.translate('Customer', locale),
-                                  // 'Customer',
-                                  style: TextStyle(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 14,
-                                    color: Color(0xFF57636C), // Use theme color
+                                child: Semantics(
+                                  label: 'Customer',
+                                  child: Text(
+                                    translations.translate('Customer', locale),
+                                    // 'Customer',
+                                    style: TextStyle(
+                                      fontFamily: 'Plus Jakarta Sans',
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 14,
+                                      color: Color(0xFF57636C), // Use theme color
+                                    ),
                                   ),
                                 ),
                               ),
@@ -335,14 +352,17 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                                             child: Padding(
                                               padding:
                                               EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                              child: Text(
-                                                translations.translate('List of Customer', locale),
-                                                // 'List of Customer',
-                                                style: TextStyle(
-                                                  fontFamily: 'Plus Jakarta Sans',
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 14,
-                                                  color: Color(0xFF14181B), // Use theme color
+                                              child: Semantics(
+                                                label: 'List of Customer',
+                                                child: Text(
+                                                  translations.translate('List of Customer', locale),
+                                                  // 'List of Customer',
+                                                  style: TextStyle(
+                                                    fontFamily: 'Plus Jakarta Sans',
+                                                    fontWeight: FontWeight.normal,
+                                                    fontSize: 14,
+                                                    color: Color(0xFF14181B), // Use theme color
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -396,14 +416,17 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                                             child: Padding(
                                               padding:
                                               EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                              child: Text(
-                                                translations.translate('Selling History', locale),
-                                                // 'Selling History',
-                                                style: TextStyle(
-                                                  fontFamily: 'Plus Jakarta Sans',
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 14,
-                                                  color: Color(0xFF14181B), // Use theme color
+                                              child: Semantics(
+                                                label: 'Selling History',
+                                                child: Text(
+                                                  translations.translate('Selling History', locale),
+                                                  // 'Selling History',
+                                                  style: TextStyle(
+                                                    fontFamily: 'Plus Jakarta Sans',
+                                                    fontWeight: FontWeight.normal,
+                                                    fontSize: 14,
+                                                    color: Color(0xFF14181B), // Use theme color
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -424,14 +447,17 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(14, 14, 0, 0),
-                                child: Text(
-                                  translations.translate('Other', locale),
-                                  // 'Other',
-                                  style: TextStyle(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 14,
-                                    color: Color(0xFF57636C), // Use theme color
+                                child: Semantics(
+                                  label: 'Other',
+                                  child: Text(
+                                    translations.translate('Other', locale),
+                                    // 'Other',
+                                    style: TextStyle(
+                                      fontFamily: 'Plus Jakarta Sans',
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 14,
+                                      color: Color(0xFF57636C), // Use theme color
+                                    ),
                                   ),
                                 ),
                               ),
@@ -470,14 +496,17 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                                             child: Padding(
                                               padding:
                                               EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                              child: Text(
-                                                translations.translate('Logout', locale),
-                                                // 'Logout',
-                                                style: TextStyle(
-                                                  fontFamily: 'Plus Jakarta Sans',
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 14,
-                                                  color: Color(0xFF14181B), // Use theme color
+                                              child: Semantics(
+                                                label: 'Logout',
+                                                child: Text(
+                                                  translations.translate('Logout', locale),
+                                                  // 'Logout',
+                                                  style: TextStyle(
+                                                    fontFamily: 'Plus Jakarta Sans',
+                                                    fontWeight: FontWeight.normal,
+                                                    fontSize: 14,
+                                                    color: Color(0xFF14181B), // Use theme color
+                                                  ),
                                                 ),
                                               ),
                                             ),
