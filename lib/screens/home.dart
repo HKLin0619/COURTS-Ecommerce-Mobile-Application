@@ -1,4 +1,5 @@
 import 'package:courts_ecommerce/providers/user_provider.dart';
+import 'package:courts_ecommerce/screens/customer_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:courts_ecommerce/screens/login_screen.dart';
 
@@ -137,7 +138,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     child: Text('Profile'),
                   ),
                   onTap: () {
-                    // Handle Profile tap
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CustomerProfileScreen()),
+                    );
                   },
                 ),
               if (isLoggedIn)

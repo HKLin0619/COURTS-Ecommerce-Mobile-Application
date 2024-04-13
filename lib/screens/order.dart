@@ -114,7 +114,7 @@ class _OrderPageState extends State<OrderPage> {
                                                     BorderRadius.circular(8),
                                                 child: Image.memory(
                                                   base64Decode(orders[index]
-                                                      .productImageUrl),
+                                                      .productImgVideo),
                                                   width: 90,
                                                   height: 90,
                                                   fit: BoxFit.cover,
@@ -174,7 +174,7 @@ class _OrderPageState extends State<OrderPage> {
                                                           EdgeInsets.fromLTRB(
                                                               0, 0, 0, 12),
                                                       child: Text(
-                                                        '\RM ${orders[index].orderAmount.toStringAsFixed(2)}',
+                                                        '\RM ${orders[index].productPrice.toStringAsFixed(2)}',
                                                         textAlign:
                                                             TextAlign.end,
                                                         style: TextStyle(

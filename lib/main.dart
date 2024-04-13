@@ -20,7 +20,7 @@ import 'package:courts_ecommerce/screens/login_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:courts_ecommerce/locales/language.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
+// import 'package:flutter_stripe/flutter_stripe.dart';
 
 void main() async {
   // Stripe.publishableKey =

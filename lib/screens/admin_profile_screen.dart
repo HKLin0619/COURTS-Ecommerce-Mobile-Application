@@ -3,6 +3,7 @@ import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:courts_ecommerce/screens/admin_screen.dart';
 import 'package:courts_ecommerce/screens/change_password_screen.dart';
 import 'package:courts_ecommerce/screens/edit_profile_screen.dart';
+import 'package:courts_ecommerce/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
