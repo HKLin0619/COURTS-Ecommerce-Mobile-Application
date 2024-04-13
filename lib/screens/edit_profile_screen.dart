@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class EditProfileScreen extends StatefulWidget {
-
   final String userID;
   const EditProfileScreen({Key? key, required this.userID}) : super(key: key);
 
@@ -15,7 +14,6 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _editProfileScreenState extends State<EditProfileScreen> {
-
   late UserService _userService;
 
   final TextEditingController _usernameController = TextEditingController();
@@ -24,7 +22,6 @@ class _editProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController _userPhoneNumberController;
   late TextEditingController _userHomeAddressController;
   final TextEditingController _userPasswordController = TextEditingController();
-
 
   @override
   void initState() {
@@ -56,14 +53,12 @@ class _editProfileScreenState extends State<EditProfileScreen> {
       _userHomeAddressController.text = user.homeAddress;
       _userPasswordController.text = user.password;
     } catch (e) {
-
       print('Error loading user: $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
     Locale locale = Localizations.localeOf(context);
     AppLocalizations translations = AppLocalizations();
 
@@ -106,7 +101,8 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: translations.translate('Full Name', locale),
+                              labelText:
+                                  translations.translate('Full Name', locale),
                               // labelText: 'Full Name',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
@@ -144,7 +140,7 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               contentPadding:
-                              EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                                  EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
                             ),
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
@@ -166,7 +162,8 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: translations.translate('Email', locale),
+                              labelText:
+                                  translations.translate('Email', locale),
                               // labelText: 'Email',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
@@ -204,7 +201,7 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               contentPadding:
-                              EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                                  EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
                             ),
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
@@ -226,7 +223,8 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: translations.translate('Phone Number', locale),
+                              labelText: translations.translate(
+                                  'Phone Number', locale),
                               // labelText: 'Phone Number',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
@@ -263,7 +261,8 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              contentPadding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                              contentPadding:
+                                  EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
                             ),
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
@@ -287,7 +286,8 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                         autofocus: false,
                         obscureText: false,
                         decoration: InputDecoration(
-                          labelText: translations.translate('Home Address', locale),
+                          labelText:
+                              translations.translate('Home Address', locale),
                           // labelText: 'Home Address',
                           labelStyle: TextStyle(
                             fontFamily: 'Plus Jakarta Sans',
@@ -325,7 +325,7 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           contentPadding:
-                          EdgeInsetsDirectional.fromSTEB(15, 15, 10, 10),
+                              EdgeInsetsDirectional.fromSTEB(15, 15, 10, 10),
                         ),
                         style: TextStyle(
                           fontFamily: 'Plus Jakarta Sans',
@@ -348,23 +348,24 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                             userID: widget.userID,
                             userFullNameController: _userFullNameController,
                             userEmailController: _userEmailController,
-                            userPhoneNumberController: _userPhoneNumberController,
-                            userHomeAddressController: _userHomeAddressController,
+                            userPhoneNumberController:
+                                _userPhoneNumberController,
+                            userHomeAddressController:
+                                _userHomeAddressController,
                           );
 
-
-
                           if (success) {
-
-                            Provider.of<UserProvider>(context, listen: false).updateUser(
-                                userID: widget.userID,
-                                username: _usernameController.text,
-                                fullName: _userFullNameController.text,
-                                email: _userEmailController.text,
-                                phoneNumber: _userPhoneNumberController.text,
-                                homeAddress: _userHomeAddressController.text,
-                                password: _userPasswordController.text
-                            );
+                            Provider.of<UserProvider>(context, listen: false)
+                                .updateUser(
+                                    userID: widget.userID,
+                                    username: _usernameController.text,
+                                    fullName: _userFullNameController.text,
+                                    email: _userEmailController.text,
+                                    phoneNumber:
+                                        _userPhoneNumberController.text,
+                                    homeAddress:
+                                        _userHomeAddressController.text,
+                                    password: _userPasswordController.text);
 
                             showDialog(
                               context: context,
@@ -382,10 +383,12 @@ class _editProfileScreenState extends State<EditProfileScreen> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            15, 10, 0, 0),
                                         child: Center(
                                           child: Text(
-                                            translations.translate('Successfully!', locale),
+                                            translations.translate(
+                                                'Successfully!', locale),
                                             // 'Successfully!',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
@@ -458,18 +461,3 @@ class _editProfileScreenState extends State<EditProfileScreen> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

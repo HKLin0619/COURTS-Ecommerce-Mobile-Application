@@ -50,13 +50,61 @@ class OrderService {
           );
           throw Exception('Failed to add product: Unsuccess');
         } else {
-          throw Exception('Unexpected status: ${jsonData['status']}');
+          throw Exception('Unexpected status: ${jsonData['message']}');
         }
       } else {
         throw Exception('Failed to add order');
       }
     } catch (error) {
       throw Exception('An unexpected error occurred: $error');
+    }
+  }
+
+  Future<Map<String, dynamic>> getOrderForm(String orderID) async {
+    try {
+      final response =
+          await http.get(Uri.parse('$url/getOrderForm.php?orderID=$orderID'));
+
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body);
+        if (jsonData.containsKey('productID') &&
+            jsonData.containsKey('userID') &&
+            jsonData.containsKey('productName')) {
+          return {
+            'productID': jsonData['productID'],
+            'userID': jsonData['userID'],
+            'productName': jsonData['productName'],
+          };
+        } else {
+          throw Exception('Incomplete product details received');
+        }
+      } else {
+        throw Exception(
+            'Failed to fetch product details: ${response.statusCode}');
+      }
+    } catch (error) {
+      throw Exception(
+          'An unexpected error occurred while fetching product details: $error');
+    }
+  }
+
+  // get list of orders by user id
+  Future<List<Order>> fetchData(String userId) async {
+    final response =
+        await http.get(Uri.parse('$url/listOrder.php?userID=$userId'));
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      List<Order> orderList = [];
+      for (var item in jsonData) {
+        orderList.add(Order(
+            orderId: item['orderId'],
+            orderDate: item['orderDate'],
+            orderAmount: double.parse(item['orderAmount']),
+            productImageUrl: item['productImgVideo']));
+      }
+      return orderList;
+    } else {
+      throw Exception('User ID missing');
     }
   }
 }

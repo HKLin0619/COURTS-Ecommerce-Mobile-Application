@@ -1,7 +1,9 @@
+import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:courts_ecommerce/screens/login_screen.dart';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:provider/provider.dart';
 import 'dart:async';
 import 'product.dart';
 import 'order.dart';
@@ -48,10 +50,17 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     super.dispose();
   }
 
-  bool isLoggedIn = true;
-
   @override
   Widget build(BuildContext context) {
+    // Obtain the user object from UserProvider
+    final user = Provider.of<UserProvider>(context).user;
+
+    // Determine the username based on user object
+    final username = user != null ? user.username : 'guest';
+
+    // Determine isLoggedIn status based on the username
+    final isLoggedIn = username != 'guest';
+
     return Scaffold(
       key: _scaffoldKey, // Assign the key to the Scaffold
       appBar: AppBar(
@@ -139,10 +148,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     child: Text('Order'),
                   ),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => OrderWidget()),
-                    );
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => OrderPage()));
                   },
                 ),
               ListTile(
@@ -166,11 +173,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (isLoggedIn) {
-  Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginScreen()),
-                        );                      } else {
+                        Navigator.pushReplacementNamed(context, '/login');
+                      } else {
                         // Navigate to the login screen
                         Navigator.push(
                           context,

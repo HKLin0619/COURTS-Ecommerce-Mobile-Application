@@ -1,3 +1,6 @@
+// String googleApiKey = "AIzaSyBZ9PuqBbQYs43j0liSLyC25_A4rTE92T4";
+
+import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -5,6 +8,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:math';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -15,7 +19,9 @@ class _HomeState extends State<Home> {
   GoogleMapController? mapController;
   PolylinePoints polylinePoints = PolylinePoints();
 
-  String googleApiKey = "AIzaSyBZ9PuqBbQYs43j0liSLyC25_A4rTE92T4";
+  String googleApiKey =
+      "AIzaSyBZ9PuqBbQYs43j0liSLyC25_A4rTE92T4"; // Replace with your Google Maps API key
+
   List<Map<String, dynamic>> courtsLocations = [
     {
       'name': 'Courts Gong Badak',
@@ -37,15 +43,40 @@ class _HomeState extends State<Home> {
       'address':
           'No.49 & 51, Jalan Batu Nilam 5, Bandar Bukit Tinggi 41200 Klang, Selangor',
     },
+    {
+      'name': 'Courts Bukit Tinggi',
+      'address':
+          'No.49 & 51, Jalan Batu Nilam 5, Bandar Bukit Tinggi 41200 Klang, Selangor',
+    },
+    {
+      'name': 'Courts IOI City Mall',
+      'address':
+          'L2-30 & L2-31, Level 2, IOI City Mall, Lebuh IRC, IOI Resort City, 62502 Putrajaya',
+    },
+
+    {
+      'name': 'Courts Cheras Sentral Mall',
+      'address':
+          'F30, First Floor, Cheras Sentral Mall, Jalan 2/142A, Taman Len Seng, 56000 Kuala Lumpur',
+    },
+    {
+      'name': 'Courts Setia Alam',
+      'address':
+          'No. 2-1-3, Jalan Setia Prima (S), U13/S, Setia Alam, 40170 Shah Alam, Selangor',
+    },
+    {
+      'name': 'Courts Sri Petaling',
+      'address': 'No. 29, Jalan Radin Anum 1, Sri Petaling, 57000 Kuala Lumpur',
+    },
     // Add more Courts locations with accurate addresses here
   ];
 
   Set<Marker> markers = Set();
   Map<PolylineId, Polyline> polylines = {};
-  String startAddress = 'Ss 22 Damansara Jaya 47400 Petaling Jaya Selangor';
 
-  LatLng startLocation = LatLng(3.150204013019715,
-      101.6787826300758); // Initialize with default coordinates
+  String startAddress = '';
+  LatLng startLocation =
+      LatLng(3.150204013019715, 101.6787826300758); // Default coordinates
 
   double distance = 0.0;
 
@@ -78,12 +109,17 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> getStartLocationCoordinates() async {
-    LatLng? latLng = await getLocationCoordinates(startAddress);
-    if (latLng != null) {
-      setState(() {
-        startLocation = latLng;
-      });
-      getDirections(); // After obtaining startLocation, calculate nearest court
+    final user = Provider.of<UserProvider>(context, listen: false).user;
+    if (user != null) {
+      // Use the user's homeAddress as the startAddress
+      startAddress = user.homeAddress ?? '';
+      LatLng? latLng = await getLocationCoordinates(startAddress);
+      if (latLng != null) {
+        setState(() {
+          startLocation = latLng;
+        });
+        getDirections(); // After obtaining startLocation, calculate nearest court
+      }
     }
   }
 
@@ -111,7 +147,6 @@ class _HomeState extends State<Home> {
   void getDirections() async {
     List<LatLng> nearestPolylineCoordinates = [];
     LatLng? nearestLocation;
-
     double minDistance = double.infinity;
 
     for (var location in courtsLocations) {
@@ -161,7 +196,7 @@ class _HomeState extends State<Home> {
     }
   }
 
-  addPolyLine(List<LatLng> polylineCoordinates) {
+  void addPolyLine(List<LatLng> polylineCoordinates) {
     PolylineId id = PolylineId("poly");
     Polyline polyline = Polyline(
       polylineId: id,
@@ -183,9 +218,12 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
+    final adr = user != null ? user.homeAddress : 'guest';
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Loction'),
+        title: Text('Location'),
         backgroundColor: Colors.amber,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_rounded),
@@ -202,18 +240,16 @@ class _HomeState extends State<Home> {
               zoom: 14.0,
             ),
             markers: {
-              // Add markers for courts locations
               ...markers,
-              // Marker for startLocation
               Marker(
                 markerId: MarkerId('startLocation'),
                 position: startLocation,
                 infoWindow: InfoWindow(
                   title: 'Start Location',
-                  snippet: 'Starting Point',
+                  snippet: adr,
                 ),
                 icon: BitmapDescriptor.defaultMarkerWithHue(
-                    BitmapDescriptor.hueGreen), // Green marker
+                    BitmapDescriptor.hueGreen),
               ),
             },
             polylines: Set<Polyline>.of(polylines.values),
@@ -229,11 +265,26 @@ class _HomeState extends State<Home> {
             left: 50,
             child: Container(
               child: Card(
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  child: Text(
-                    "Total Distance: ${distance.toStringAsFixed(2)} KM",
-                    style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Total Distance: ${distance.toStringAsFixed(2)} KM",
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        "Shipping Fee: RM ${(distance * 0.4).toStringAsFixed(1)}",
+                        style: TextStyle(
+                          fontSize: 10,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -246,17 +297,14 @@ class _HomeState extends State<Home> {
 
   double calculateTotalDistance(List<LatLng> polylineCoordinates) {
     double totalDistance = 0.0;
-
     for (int i = 0; i < polylineCoordinates.length - 1; i++) {
-      double distance = calculateDistance(
+      totalDistance += calculateDistance(
         polylineCoordinates[i].latitude,
         polylineCoordinates[i].longitude,
         polylineCoordinates[i + 1].latitude,
         polylineCoordinates[i + 1].longitude,
       );
-      totalDistance += distance;
     }
-
     return totalDistance;
   }
 }

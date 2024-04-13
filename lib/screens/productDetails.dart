@@ -1,9 +1,12 @@
+import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:courts_ecommerce/services/order_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 import 'video.dart';
 import 'package:courts_ecommerce/models/product.dart';
@@ -34,6 +37,7 @@ class ProductDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user!;
     List<Review> reviewslist = [
       Review(
         reviewId: '1',
@@ -363,10 +367,34 @@ class ProductDetailsWidget extends StatelessWidget {
                 width: double.infinity,
                 height: 40,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     print('Button pressed ...');
-                    // Call stipe integration
-                    //async bool success = await _orderService.addOrder(orderDate: orderDate, orderAmount: orderAmount, userID: userID, productID: productID)
+                    String formattedDate =
+                        DateFormat('yyyy-MM-dd').format(DateTime.now());
+                    try {
+                      // print(widget.userID);
+                      // return;
+                      bool success = await _orderService.addOrder(
+                        orderDate: formattedDate,
+                        orderAmount: productPrice.toString(),
+                        userID: user.userID,
+                        productID: productId,
+                      );
+
+                      if (success) {
+                        // Handle successful order addition
+                        print('Order added successfully!');
+                        // Add further actions or UI updates here
+                      } else {
+                        // Handle unsuccessful order addition
+                        print('Failed to add order.');
+                        // Add error handling or UI feedback
+                      }
+                    } catch (error) {
+                      // Handle unexpected errors
+                      print('Error adding order: $error');
+                      // Display a generic error message or perform additional error handling
+                    }
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(

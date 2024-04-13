@@ -1,8 +1,12 @@
+import 'package:courts_ecommerce/services/order_service.dart';
+import 'package:courts_ecommerce/services/review_service.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class FormWidget extends StatefulWidget {
-  const FormWidget({Key? key}) : super(key: key);
+  const FormWidget({Key? key, required this.orderID}) : super(key: key);
+  final String orderID;
 
   @override
   State<FormWidget> createState() => _FormWidgetState();
@@ -13,6 +17,11 @@ class _FormWidgetState extends State<FormWidget>
   late double _ratingBarValue;
   late AnimationController _animationController;
   late Animation<Offset> _offsetAnimation;
+  late String _productName = '';
+  late String _productID = '';
+  final ReviewService _reviewService = ReviewService();
+
+  late TextEditingController _commentController;
 
   @override
   void initState() {
@@ -20,7 +29,7 @@ class _FormWidgetState extends State<FormWidget>
     _ratingBarValue = 3;
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 500), // Set animation duration
+      duration: Duration(milliseconds: 1500), // Set animation duration
     );
     _offsetAnimation = Tween<Offset>(
       begin: Offset(0.0, 1.0), // Start off-screen at bottom
@@ -29,9 +38,26 @@ class _FormWidgetState extends State<FormWidget>
       parent: _animationController,
       curve: Curves.easeOut,
     ));
+    _commentController = TextEditingController();
 
     // Start the animation when the widget is built
     _animationController.forward();
+    _fetchOrderDetails();
+  }
+
+  Future<void> _fetchOrderDetails() async {
+    try {
+      final orderService = OrderService();
+      final result = await orderService.getOrderForm(widget.orderID);
+
+      setState(() {
+        _productName = result['productName'];
+        _productID = result['productID'];
+      });
+    } catch (error) {
+      // Handle error fetching order details
+      print('Error fetching order details: $error');
+    }
   }
 
   @override
@@ -52,7 +78,8 @@ class _FormWidgetState extends State<FormWidget>
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                padding: EdgeInsets.all(16),
+                padding: EdgeInsets.fromLTRB(
+                    16, 40, 16, 16), // Top padding set to 15
                 color: Colors.white,
                 child: SingleChildScrollView(
                   child: Column(
@@ -71,7 +98,8 @@ class _FormWidgetState extends State<FormWidget>
                           border: Border.all(color: Colors.black),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(10),
+                          padding: EdgeInsets.fromLTRB(
+                              10, 10, 10, 10), // Top padding set to 15
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -85,7 +113,7 @@ class _FormWidgetState extends State<FormWidget>
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'Product Name',
+                                            _productName,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline6,
@@ -115,7 +143,7 @@ class _FormWidgetState extends State<FormWidget>
                               Padding(
                                 padding: EdgeInsets.only(bottom: 4),
                                 child: Text(
-                                  'Order ID',
+                                  'Order ID: ${widget.orderID}',
                                   style: Theme.of(context).textTheme.subtitle1,
                                 ),
                               ),
@@ -148,7 +176,7 @@ class _FormWidgetState extends State<FormWidget>
                                 height: 300,
                                 constraints: BoxConstraints(
                                   maxWidth: 350,
-                                  maxHeight: 200,
+                                  maxHeight: 190,
                                 ),
                                 decoration: BoxDecoration(
                                   color: Theme.of(context).backgroundColor,
@@ -163,6 +191,8 @@ class _FormWidgetState extends State<FormWidget>
                                     hint: 'Enter your comment here',
                                     child: TextFormField(
                                       autofocus: true,
+                                      controller:
+                                          _commentController, // Use _commentController here
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelStyle: TextStyle(
@@ -253,18 +283,83 @@ class _FormWidgetState extends State<FormWidget>
                                     ),
                                     ElevatedButton(
                                       onPressed: () {
-                                        print('Submit button pressed ...');
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content:
-                                                Text('Submission successful'),
-                                          ),
-                                        );
-                                        _animationController
-                                            .reverse()
-                                            .then((_) {
-                                          Navigator.pop(context);
+                                        final orderID = widget.orderID;
+                                        final productID = _productID;
+                                        final comment =
+                                            _commentController.text.trim();
+                                        final rating = _ratingBarValue;
+
+                                        // Validate inputs before showing the SnackBar
+                                        if (comment.isEmpty) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                  'Please enter a comment.'),
+                                            ),
+                                          );
+                                          return;
+                                        }
+
+                                        if (rating == 0) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                  'Please rate the product.'),
+                                            ),
+                                          );
+                                          return;
+                                        }
+
+                                        // Display a SnackBar with the review details
+
+                                        int parsedOrderID = int.tryParse(
+                                                orderID) ??
+                                            0; // Convert orderID to int (default value 0 if parsing fails)
+                                        int parsedProductID =
+                                            int.tryParse(productID) ?? 0;
+
+                                        _reviewService
+                                            .addReview(
+                                          orderID: parsedOrderID,
+                                          productID: parsedProductID,
+                                          comment: comment,
+                                          rating: rating.toInt(),
+                                        )
+                                            .then((success) {
+                                          if (success) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                    'Review submitted successfully'),
+                                              ),
+                                            );
+                                            _animationController
+                                                .reverse()
+                                                .then((_) {
+                                              Navigator.pop(context);
+                                            });
+                                          } else {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                    'Failed to submit review'),
+                                              ),
+                                            );
+                                          }
+                                        }).catchError((error) {
+                                          print(
+                                              'Error submitting review: $error');
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                  'Review submitted before'),
+                                            ),
+                                          );
                                         });
                                       },
                                       style: ElevatedButton.styleFrom(

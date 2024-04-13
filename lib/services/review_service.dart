@@ -7,7 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class ProductService {
+class ReviewService {
   var url = '${dotenv.env['URL']}';
 
   Future<bool> addReview({
@@ -70,7 +70,7 @@ class ProductService {
       }
     } catch (error) {
       Fluttertoast.showToast(
-        msg: 'An error occurred. Please try again.',
+        msg: 'Review submitted before',
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 1,

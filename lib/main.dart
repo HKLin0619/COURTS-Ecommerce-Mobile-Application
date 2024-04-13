@@ -19,8 +19,11 @@ import 'package:courts_ecommerce/screens/login_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:courts_ecommerce/locales/language.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 
 void main() async {
+  // Stripe.publishableKey =
+  //     "pk_test_51OD60zLeBMspac8vhCyZvZbwsaNYryZXygbJYEiutm1IwWtA9fGjKSsYI15WQrnKPKdaEUGvw8zk92Z4dj7PqRro00KvT2OjaK";
   try {
     await dotenv.load(fileName: ".env");
   } catch (e) {

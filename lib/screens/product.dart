@@ -1,5 +1,7 @@
+import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:courts_ecommerce/services/product_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'productDetails.dart';
 import 'package:courts_ecommerce/models/product.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -73,163 +75,13 @@ class _ProductPageState extends State<ProductPage>
 
   @override
   Widget build(BuildContext context) {
-    // await _productService.fetchData
-    // List<Product> allProducts = [
-    //   Product(
-    //     productID: '1',
-    //     productName: 'Dining Chair',
-    //     productPrice: 99.99,
-    //     productDescription: 'Comfortable dining chair for your home.',
-    //     productImgVideo:
-    //         'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/55f6abe8-760c-427f-8cfa-b2df31bdd5b5/jordan-sport-dna-85-mens-t-shirt-ZLs0q3.png',
-    //     productCategory: 'Dining',
-    //     productLocation: 'Home',
-    //     productVideoUrl:
-    //         'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-    //     //totalRating: 0,
-    //     //avgRating: 0.0,
-    //   ),
-    //   Product(
-    //     productID: '2',
-    //     productName: 'Dining Table',
-    //     productPrice: 299.99,
-    //     productDescription: 'Elegant dining table made of solid wood.',
-    //     productImgVideo:
-    //         'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/55f6abe8-760c-427f-8cfa-b2df31bdd5b5/jordan-sport-dna-85-mens-t-shirt-ZLs0q3.png',
-    //     productCategory: 'Dining',
-    //     productLocation: 'Home',
-    //     productVideoUrl:
-    //         'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-    //     // totalRating: 0,
-    //     // avgRating: 0.0,
-    //   ),
-    //   Product(
-    //     productID: '2',
-    //     productName: 'Dining Table',
-    //     productPrice: 299.99,
-    //     productDescription: 'Elegant dining table made of solid wood.',
-    //     productImgVideo:
-    //         'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/55f6abe8-760c-427f-8cfa-b2df31bdd5b5/jordan-sport-dna-85-mens-t-shirt-ZLs0q3.png',
-    //     productCategory: 'Dining',
-    //     productLocation: 'Home',
-    //     productVideoUrl:
-    //         'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-    //     // totalRating: 0,
-    //     // avgRating: 0.0,
-    //   ),
-    //   Product(
-    //     productID: '2',
-    //     productName: 'Dining Table',
-    //     productPrice: 299.99,
-    //     productDescription: 'Elegant dining table made of solid wood.',
-    //     productImgVideo:
-    //         'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/55f6abe8-760c-427f-8cfa-b2df31bdd5b5/jordan-sport-dna-85-mens-t-shirt-ZLs0q3.png',
-    //     productCategory: 'Dining',
-    //     productLocation: 'Home',
-    //     productVideoUrl:
-    //         'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-    //     // totalRating: 0,
-    //     // avgRating: 0.0,
-    //   ),
-    //   Product(
-    //     productID: '2',
-    //     productName: 'Dining Table',
-    //     productPrice: 299.99,
-    //     productDescription: 'Elegant dining table made of solid wood.',
-    //     productImgVideo:
-    //         'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/55f6abe8-760c-427f-8cfa-b2df31bdd5b5/jordan-sport-dna-85-mens-t-shirt-ZLs0q3.png',
-    //     productCategory: 'Dining',
-    //     productLocation: 'Home',
-    //     productVideoUrl:
-    //         'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-    //     // totalRating: 0,
-    //     // avgRating: 0.0,
-    //   ),
-    //   Product(
-    //     productID: '3',
-    //     productName: 'Sofa',
-    //     productPrice: 499.99,
-    //     productDescription: 'Cozy sofa for your living room.',
-    //     productImgVideo:
-    //         'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/55f6abe8-760c-427f-8cfa-b2df31bdd5b5/jordan-sport-dna-85-mens-t-shirt-ZLs0q3.png',
-    //     productCategory: 'Home',
-    //     productLocation: 'Living Room',
-    //     productVideoUrl:
-    //         'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-    //     // totalRating: 0,
-    //     // avgRating: 0.0,
-    //   ),
-    //   Product(
-    //     productID: '4',
-    //     productName: 'Bed',
-    //     productPrice: 699.99,
-    //     productDescription: 'King-sized bed for a good night\'s sleep.',
-    //     productImgVideo:
-    //         'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/55f6abe8-760c-427f-8cfa-b2df31bdd5b5/jordan-sport-dna-85-mens-t-shirt-ZLs0q3.png',
-    //     productCategory: 'Home',
-    //     productLocation: 'Bedroom',
-    //     productVideoUrl:
-    //         'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-    //     // totalRating: 0,
-    //     // avgRating: 0.0,
-    //   ),
-    //   Product(
-    //     productID: '5',
-    //     productName: 'Desk',
-    //     productPrice: 199.99,
-    //     productDescription: 'Sturdy desk for your office workspace.',
-    //     productImgVideo:
-    //         'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/55f6abe8-760c-427f-8cfa-b2df31bdd5b5/jordan-sport-dna-85-mens-t-shirt-ZLs0q3.png',
-    //     productCategory: 'Office',
-    //     productLocation: 'Office',
-    //     productVideoUrl:
-    //         'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-    //     // totalRating: 0,
-    //     // avgRating: 0.0,
-    //   ),
-    //   Product(
-    //     productID: '6',
-    //     productName: 'Chair',
-    //     productPrice: 149.99,
-    //     productDescription: 'Ergonomic chair for long hours of work.',
-    //     productImgVideo:
-    //         'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/55f6abe8-760c-427f-8cfa-b2df31bdd5b5/jordan-sport-dna-85-mens-t-shirt-ZLs0q3.png',
-    //     productCategory: 'Office',
-    //     productLocation: 'Office',
-    //     productVideoUrl:
-    //         'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-    //     // totalRating: 0,
-    //     // avgRating: 0.0,
-    //   ),
-    //   Product(
-    //     productID: '7',
-    //     productName: 'Coffee Table',
-    //     productPrice: 129.99,
-    //     productDescription: 'Stylish coffee table for your living room.',
-    //     productImgVideo:
-    //         'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/55f6abe8-760c-427f-8cfa-b2df31bdd5b5/jordan-sport-dna-85-mens-t-shirt-ZLs0q3.png',
-    //     productCategory: 'Living Room',
-    //     productLocation: 'Living Room',
-    //     productVideoUrl:
-    //         'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-    //     // totalRating: 0,
-    //     // avgRating: 0.0,
-    //   ),
-    //   Product(
-    //     productID: '8',
-    //     productName: 'TV Stand',
-    //     productPrice: 179.99,
-    //     productDescription: 'Modern TV stand with ample storage space.',
-    //     productImgVideo:
-    //         'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/55f6abe8-760c-427f-8cfa-b2df31bdd5b5/jordan-sport-dna-85-mens-t-shirt-ZLs0q3.png',
-    //     productCategory: 'Living Room',
-    //     productLocation: 'Living Room',
-    //     productVideoUrl:
-    //         'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-    //     // totalRating: 0,
-    //     // avgRating: 0.0,
-    //   ),
-    // ];
+    final user = Provider.of<UserProvider>(context).user;
+
+    // Determine the username based on user object
+    final username = user != null ? user.username : 'guest';
+
+    // Determine isLoggedIn status based on the username
+    final isLoggedIn = username != 'guest';
 
     return GestureDetector(
       onTap: () {
@@ -348,7 +200,7 @@ class _ProductPageState extends State<ProductPage>
                       Tab(text: 'Dining'),
                       Tab(text: 'Home'),
                       Tab(text: 'Office'),
-                      Tab(text: 'Living Room'),
+                      Tab(text: 'Living Rooms'),
                     ],
                   ),
                   Expanded(
@@ -391,27 +243,37 @@ class _ProductPageState extends State<ProductPage>
                                                   8, 4, 8, 4),
                                               child: GestureDetector(
                                                 onTap: () {
-                                                  Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ProductDetailsWidget(
-                                                        productId:
-                                                            product.productID,
-                                                        productName:
-                                                            product.productName,
-                                                        productDescription: product
-                                                            .productDescription,
-                                                        productPrice: product
-                                                            .productPrice,
-                                                        productImageURL: product
-                                                            .productImgVideo,
-                                                        productVideoURL: product
-                                                            .productVideoUrl,
-                                                        // totalRating: product.totalRating,
-                                                        // avgRating: product.avgRating,
+                                                  if (isLoggedIn) {
+                                                    Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ProductDetailsWidget(
+                                                          productId:
+                                                              product.productID,
+                                                          productName: product
+                                                              .productName,
+                                                          productDescription:
+                                                              product
+                                                                  .productDescription,
+                                                          productPrice: product
+                                                              .productPrice,
+                                                          productImageURL: product
+                                                              .productImgVideo,
+                                                          productVideoURL: product
+                                                              .productVideoUrl,
+                                                        ),
                                                       ),
-                                                    ),
-                                                  );
+                                                    );
+                                                  } else {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                            'Login required to view product details'),
+                                                      ),
+                                                    );
+                                                  }
                                                 },
                                                 child: Container(
                                                   width: double.infinity,
@@ -496,8 +358,10 @@ class _ProductPageState extends State<ProductPage>
                                           padding:
                                               EdgeInsets.fromLTRB(16, 16, 0, 0),
                                           child: Text(
-                                            'Categories',
-                                            style: TextStyle(fontSize: 20),
+                                            'Categories', // Combine user.userID with 'Categories'
+                                            style: TextStyle(
+                                                fontSize:
+                                                    20), // Specify the style using named argument
                                           ),
                                         ),
                                         ListView.builder(
@@ -517,27 +381,37 @@ class _ProductPageState extends State<ProductPage>
                                                   8, 4, 8, 4),
                                               child: GestureDetector(
                                                 onTap: () {
-                                                  Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ProductDetailsWidget(
-                                                        productId:
-                                                            product.productID,
-                                                        productName:
-                                                            product.productName,
-                                                        productDescription: product
-                                                            .productDescription,
-                                                        productPrice: product
-                                                            .productPrice,
-                                                        productImageURL: product
-                                                            .productImgVideo,
-                                                        productVideoURL: product
-                                                            .productVideoUrl,
-                                                        // totalRating: product.totalRating,
-                                                        // avgRating: product.avgRating,
+                                                  if (isLoggedIn) {
+                                                    Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ProductDetailsWidget(
+                                                          productId:
+                                                              product.productID,
+                                                          productName: product
+                                                              .productName,
+                                                          productDescription:
+                                                              product
+                                                                  .productDescription,
+                                                          productPrice: product
+                                                              .productPrice,
+                                                          productImageURL: product
+                                                              .productImgVideo,
+                                                          productVideoURL: product
+                                                              .productVideoUrl,
+                                                        ),
                                                       ),
-                                                    ),
-                                                  );
+                                                    );
+                                                  } else {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                            'Login required to view product details'),
+                                                      ),
+                                                    );
+                                                  }
                                                 },
                                                 child: Container(
                                                   width: double.infinity,
@@ -582,7 +456,7 @@ class _ProductPageState extends State<ProductPage>
                                                                 ),
                                                               ),
                                                               Text(
-                                                                '\$${product.productPrice.toStringAsFixed(2)}',
+                                                                '\RM ${product.productPrice.toStringAsFixed(2)}',
                                                                 style:
                                                                     TextStyle(
                                                                   fontSize: 20,
@@ -637,27 +511,37 @@ class _ProductPageState extends State<ProductPage>
                                                   8, 4, 8, 4),
                                               child: GestureDetector(
                                                 onTap: () {
-                                                  Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ProductDetailsWidget(
-                                                        productId:
-                                                            product.productID,
-                                                        productName:
-                                                            product.productName,
-                                                        productDescription: product
-                                                            .productDescription,
-                                                        productPrice: product
-                                                            .productPrice,
-                                                        productImageURL: product
-                                                            .productImgVideo,
-                                                        productVideoURL: product
-                                                            .productVideoUrl,
-                                                        // totalRating: product.totalRating,
-                                                        // avgRating: product.avgRating,
+                                                  if (isLoggedIn) {
+                                                    Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ProductDetailsWidget(
+                                                          productId:
+                                                              product.productID,
+                                                          productName: product
+                                                              .productName,
+                                                          productDescription:
+                                                              product
+                                                                  .productDescription,
+                                                          productPrice: product
+                                                              .productPrice,
+                                                          productImageURL: product
+                                                              .productImgVideo,
+                                                          productVideoURL: product
+                                                              .productVideoUrl,
+                                                        ),
                                                       ),
-                                                    ),
-                                                  );
+                                                    );
+                                                  } else {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                            'Login required to view product details'),
+                                                      ),
+                                                    );
+                                                  }
                                                 },
                                                 child: Container(
                                                   width: double.infinity,
@@ -702,7 +586,7 @@ class _ProductPageState extends State<ProductPage>
                                                                 ),
                                                               ),
                                                               Text(
-                                                                '\$${product.productPrice.toStringAsFixed(2)}',
+                                                                '\RM ${product.productPrice.toStringAsFixed(2)}',
                                                                 style:
                                                                     TextStyle(
                                                                   fontSize: 20,
@@ -748,7 +632,7 @@ class _ProductPageState extends State<ProductPage>
                                           itemBuilder: (context, index) {
                                             final product = allProducts[index];
                                             if (product.productCategory !=
-                                                'Living Room') {
+                                                'Living Rooms') {
                                               return SizedBox
                                                   .shrink(); // Skip this item if not in the "Home" category
                                             }
@@ -757,27 +641,37 @@ class _ProductPageState extends State<ProductPage>
                                                   8, 4, 8, 4),
                                               child: GestureDetector(
                                                 onTap: () {
-                                                  Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ProductDetailsWidget(
-                                                        productId:
-                                                            product.productID,
-                                                        productName:
-                                                            product.productName,
-                                                        productDescription: product
-                                                            .productDescription,
-                                                        productPrice: product
-                                                            .productPrice,
-                                                        productImageURL: product
-                                                            .productImgVideo,
-                                                        productVideoURL: product
-                                                            .productVideoUrl,
-                                                        // totalRating: product.totalRating,
-                                                        // avgRating: product.avgRating,
+                                                  if (isLoggedIn) {
+                                                    Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ProductDetailsWidget(
+                                                          productId:
+                                                              product.productID,
+                                                          productName: product
+                                                              .productName,
+                                                          productDescription:
+                                                              product
+                                                                  .productDescription,
+                                                          productPrice: product
+                                                              .productPrice,
+                                                          productImageURL: product
+                                                              .productImgVideo,
+                                                          productVideoURL: product
+                                                              .productVideoUrl,
+                                                        ),
                                                       ),
-                                                    ),
-                                                  );
+                                                    );
+                                                  } else {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                            'Login required to view product details'),
+                                                      ),
+                                                    );
+                                                  }
                                                 },
                                                 child: Container(
                                                   width: double.infinity,
@@ -822,7 +716,7 @@ class _ProductPageState extends State<ProductPage>
                                                                 ),
                                                               ),
                                                               Text(
-                                                                '\$${product.productPrice.toStringAsFixed(2)}',
+                                                                '\RM ${product.productPrice.toStringAsFixed(2)}',
                                                                 style:
                                                                     TextStyle(
                                                                   fontSize: 20,
