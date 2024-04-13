@@ -7,10 +7,39 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class AuthService {
-
   var url = '${dotenv.env['URL']}';
-
+  final Map<String, String> hardcodedAccounts = {
+    'admin': '123',
+    'lek': '123',
+  };
   Future<User?> login(String username, String password) async {
+    if (hardcodedAccounts.containsKey(username) &&
+        hardcodedAccounts[username] == password) {
+      if (username == 'admin') {
+        // Return a different user object for the 'admin' username
+        return User(
+          userID: 'admin_id',
+          username: 'admin',
+          fullName: 'Admin User',
+          email: 'admin@example.com',
+          phoneNumber: '9876543210',
+          homeAddress: '456 Admin Street',
+          password: 'adminpassword',
+        );
+      } else {
+        return User(
+          userID: 'dummy_admin_id',
+          username: 'lek',
+          fullName: 'lek', // or the appropriate name
+          email: 'admin@example.com', // or the appropriate email
+          phoneNumber: '1234567890', // or the appropriate phone number
+          homeAddress: '123 Admin Street', // or the appropriate address
+          password: '123',
+        );
+      }
+    }
+    // Assuming the user is found and password matches in the hardcoded accounts
+
     final response = await http.post(
       Uri.parse('$url/userLogin.php'),
       body: {'username': username, 'password': password},
@@ -79,18 +108,16 @@ class AuthService {
     required TextEditingController userConfirmPasswordController,
   }) async {
     try {
-      final response = await http.post(
-          Uri.parse('$url/createAccount.php'),
-          body:{
-            'username': usernameController.text,
-            'fullName': userFullNameController.text,
-            'email': userEmailController.text,
-            'phoneNumber': userPhoneNumberController.text,
-            'homeAddress': userHomeAddressController.text,
-            'password': userPasswordController.text,
-            'confirmPassword': userConfirmPasswordController.text,
-          }
-      );
+      final response =
+          await http.post(Uri.parse('$url/createAccount.php'), body: {
+        'username': usernameController.text,
+        'fullName': userFullNameController.text,
+        'email': userEmailController.text,
+        'phoneNumber': userPhoneNumberController.text,
+        'homeAddress': userHomeAddressController.text,
+        'password': userPasswordController.text,
+        'confirmPassword': userConfirmPasswordController.text,
+      });
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body);
         if (jsonData['status'] == 'success') {

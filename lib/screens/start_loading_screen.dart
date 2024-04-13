@@ -1,8 +1,9 @@
 import 'package:courts_ecommerce/screens/login_screen.dart';
+import 'package:courts_ecommerce/screens/home.dart';
+
 import 'package:flutter/material.dart';
 
 class StartLoadingScreen extends StatefulWidget {
-
   const StartLoadingScreen({Key? key}) : super(key: key);
 
   @override
@@ -10,7 +11,6 @@ class StartLoadingScreen extends StatefulWidget {
 }
 
 class _startLoadingScreenState extends State<StartLoadingScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -19,7 +19,7 @@ class _startLoadingScreenState extends State<StartLoadingScreen> {
         context,
         PageRouteBuilder(
           transitionDuration: Duration(milliseconds: 1000),
-          pageBuilder: (_, __, ___) => LoginScreen(),
+          pageBuilder: (_, __, ___) => HomePageWidget(),
           transitionsBuilder: (_, animation, __, child) {
             return FadeTransition(
               opacity: animation,

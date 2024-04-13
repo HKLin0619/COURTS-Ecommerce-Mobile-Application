@@ -30,8 +30,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   fluttertoast: ^8.0.8
+  carousel_slider: ^4.0.0
+  video_player: ^2.2.15
+  chewie: ^1.0.0
+  share: ^2.0.4
+  google_mobile_ads: ^5.0.0
+  google_maps_flutter: ^2.6.0
+  flutter_polyline_points: ^2.0.0
+  flutter_rating_bar: ^4.0.0
+  intl: ^0.18.1
+
+  # dependency: transitive
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -43,6 +53,14 @@ dependencies:
   flutter_dotenv: ^5.1.0
   flutter_localization: ^0.2.0
   syncfusion_flutter_charts: ^25.1.38
+  # flutter_stripe: ^10.1.1
+
+
+# dependency_overrides:   
+#   flutter_stripe: ^9.5.0+1
+
+#   stripe_android: "9.5.0+1"
+
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +92,8 @@ flutter:
 
   assets:
     - .env
+    - assets/images/logo.png
+    - assets/images/th.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddProductScreen extends StatefulWidget {
-
   const AddProductScreen({Key? key}) : super(key: key);
 
   @override
@@ -13,22 +12,27 @@ class AddProductScreen extends StatefulWidget {
 }
 
 class _addProductScreenPageState extends State<AddProductScreen> {
-
   String? _selectedValue;
   final ImagePicker _imagePicker = ImagePicker();
 
   final TextEditingController _productNameController = TextEditingController();
   final TextEditingController _productPriceController = TextEditingController();
-  final TextEditingController _productCategoryController = TextEditingController();
-  final TextEditingController _productDescriptionController = TextEditingController();
-  final TextEditingController _productLocationController = TextEditingController();
-  final TextEditingController _productImgVideoController = TextEditingController();
-  final TextEditingController _productVideoURLController = TextEditingController();
+  final TextEditingController _productCategoryController =
+      TextEditingController();
+  final TextEditingController _productDescriptionController =
+      TextEditingController();
+  final TextEditingController _productLocationController =
+      TextEditingController();
+  final TextEditingController _productImgVideoController =
+      TextEditingController();
+  final TextEditingController _productVideoURLController =
+      TextEditingController();
 
   ProductService _productService = ProductService();
 
   void _pickImage() async {
-    final XFile? pickedFile = await _imagePicker.pickImage(source: ImageSource.gallery);
+    final XFile? pickedFile =
+        await _imagePicker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       final imageBytes = await pickedFile.readAsBytes();
@@ -41,7 +45,6 @@ class _addProductScreenPageState extends State<AddProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     Locale locale = Localizations.localeOf(context);
     AppLocalizations translations = AppLocalizations();
 
@@ -84,7 +87,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: translations.translate('Product Name', locale),
+                              labelText: translations.translate(
+                                  'Product Name', locale),
                               // labelText: 'Product Name',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
@@ -122,7 +126,7 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               contentPadding:
-                              EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                                  EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
                             ),
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
@@ -144,7 +148,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: translations.translate('Product Price', locale),
+                              labelText: translations.translate(
+                                  'Product Price', locale),
                               // labelText: 'Product Price',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
@@ -181,7 +186,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              contentPadding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                              contentPadding:
+                                  EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
                               prefix: Text(
                                 'RM ',
                                 style: TextStyle(
@@ -208,7 +214,7 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                             border: Border.all(width: 1),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child:  DropdownButton<String>(
+                          child: DropdownButton<String>(
                             value: _selectedValue,
                             onChanged: (String? val) {
                               setState(() {
@@ -217,9 +223,9 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                               });
                             },
                             items: [
-                              translations.translate('Dining & Kitchen', locale),
-                              translations.translate('Home Furnishings', locale),
-                              translations.translate('Home Office', locale),
+                              translations.translate('Dining', locale),
+                              translations.translate('Home', locale),
+                              translations.translate('Office', locale),
                               translations.translate('Living Rooms', locale)
                               // 'Dining & Kitchen',
                               // 'Home Furnishings',
@@ -228,25 +234,27 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                             ]
                                 .map<DropdownMenuItem<String>>(
                                   (String value) => DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  value,
-                                  style: TextStyle(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    color: Colors.black,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
+                                    value: value,
+                                    child: Text(
+                                      value,
+                                      style: TextStyle(
+                                        fontFamily: 'Plus Jakarta Sans',
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ).toList(),
+                                )
+                                .toList(),
                             icon: Icon(
                               Icons.keyboard_arrow_down_rounded,
                               color: Colors.black,
                               size: 21,
                             ),
                             hint: Text(
-                              translations.translate('Product Category', locale),
+                              translations.translate(
+                                  'Product Category', locale),
                               // 'Product Category',
                               style: TextStyle(
                                 fontFamily: 'Readex Pro',
@@ -271,7 +279,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: translations.translate('Product Description', locale),
+                              labelText: translations.translate(
+                                  'Product Description', locale),
                               // labelText: 'Product Description',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
@@ -308,8 +317,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              contentPadding:
-                              EdgeInsetsDirectional.fromSTEB(15, 15, 10, 10),
+                              contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                  15, 15, 10, 10),
                             ),
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
@@ -332,7 +341,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: translations.translate('Product Location', locale),
+                              labelText: translations.translate(
+                                  'Product Location', locale),
                               // labelText: 'Product Location',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
@@ -369,8 +379,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              contentPadding:
-                              EdgeInsetsDirectional.fromSTEB(15, 15, 10, 10),
+                              contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                  15, 15, 10, 10),
                             ),
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
@@ -393,7 +403,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                             autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: translations.translate('Product Video URL', locale),
+                              labelText: translations.translate(
+                                  'Product Video URL', locale),
                               // labelText: 'Product Video URL',
                               labelStyle: TextStyle(
                                 fontFamily: 'Plus Jakarta Sans',
@@ -430,7 +441,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              contentPadding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                              contentPadding:
+                                  EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
                             ),
                             style: TextStyle(
                               fontFamily: 'Plus Jakarta Sans',
@@ -467,43 +479,56 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                                   children: [
                                     _productImgVideoController.text.isEmpty
                                         ? Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.add_photo_alternate,
-                                          color: Color(0xFF808080),
-                                          size: 42,
-                                        ),
-                                        Text(
-                                          translations.translate('Upload Your Image', locale),
-                                          // 'Upload Your Image',
-                                          style: TextStyle(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: Color(0xFF808080),
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons.add_photo_alternate,
+                                                color: Color(0xFF808080),
+                                                size: 42,
+                                              ),
+                                              Text(
+                                                translations.translate(
+                                                    'Upload Your Image',
+                                                    locale),
+                                                // 'Upload Your Image',
+                                                style: TextStyle(
+                                                  fontFamily:
+                                                      'Plus Jakarta Sans',
+                                                  color: Color(0xFF808080),
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        : Padding(
+                                            padding: EdgeInsets.all(1),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Image.memory(
+                                                base64Decode(
+                                                    _productImgVideoController
+                                                        .text),
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.29,
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ) : Padding(
-                                      padding: EdgeInsets.all(1),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child:
-                                        Image.memory(
-                                          base64Decode(_productImgVideoController.text),
-                                          width: MediaQuery.of(context).size.width,
-                                          height: MediaQuery.of(context).size.height * 0.29,
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                    ),
                                   ],
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                                 child: ElevatedButton(
                                   onPressed: _pickImage,
                                   style: ElevatedButton.styleFrom(
@@ -519,7 +544,8 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                                     ),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        15, 0, 0, 0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
@@ -529,9 +555,12 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                                           size: 19,
                                         ),
                                         Padding(
-                                          padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  15, 0, 0, 0),
                                           child: Text(
-                                            translations.translate('Upload', locale),
+                                            translations.translate(
+                                                'Upload', locale),
                                             // 'Upload',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
@@ -559,17 +588,20 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                       onPressed: () async {
                         try {
                           bool success = await _productService.addProduct(
-                            productNameController: _productNameController,
-                            productPriceController: _productPriceController,
-                            productCategoryController: _productCategoryController,
-                            productDescriptionController: _productDescriptionController,
-                            productLocationController: _productLocationController,
-                            productImgVideoController: _productImgVideoController,
-                            productVideoURLController: _productVideoURLController
-                          );
+                              productNameController: _productNameController,
+                              productPriceController: _productPriceController,
+                              productCategoryController:
+                                  _productCategoryController,
+                              productDescriptionController:
+                                  _productDescriptionController,
+                              productLocationController:
+                                  _productLocationController,
+                              productImgVideoController:
+                                  _productImgVideoController,
+                              productVideoURLController:
+                                  _productVideoURLController);
 
                           if (success) {
-
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -586,10 +618,12 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 0),
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            15, 10, 0, 0),
                                         child: Center(
                                           child: Text(
-                                            translations.translate('Successfully!', locale),
+                                            translations.translate(
+                                                'Successfully!', locale),
                                             // 'Successfully!',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
@@ -608,9 +642,7 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                                       child: TextButton(
                                         onPressed: () {
                                           Navigator.pushReplacementNamed(
-                                              context,
-                                              '/home'
-                                          );
+                                              context, '/home');
                                         },
                                         child: Text('OK'),
                                       ),
@@ -621,7 +653,7 @@ class _addProductScreenPageState extends State<AddProductScreen> {
                             );
                           }
                         } catch (e) {
-                            print("Error occurred: $e");
+                          print("Error occurred: $e");
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -662,18 +694,3 @@ class _addProductScreenPageState extends State<AddProductScreen> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
