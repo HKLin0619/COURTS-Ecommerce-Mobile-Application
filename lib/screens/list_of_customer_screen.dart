@@ -260,7 +260,7 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
                                                                       fontWeight: FontWeight.w600,
                                                                     ),
                                                                   ),
-                                                                  SizedBox(width: 54),
+
                                                                   Text(
                                                                     ': ${user.userID}',
                                                                     style: TextStyle(
@@ -289,7 +289,7 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
                                                                       fontWeight: FontWeight.w600,
                                                                     ),
                                                                   ),
-                                                                  SizedBox(width: 35),
+
                                                                   Text(
                                                                     ': ${user.username}',
                                                                     style: TextStyle(
@@ -347,7 +347,7 @@ class _listOfCustomerScreenPageState extends State<ListOfCustomerScreen> {
                                                                       fontWeight: FontWeight.w600,
                                                                     ),
                                                                   ),
-                                                                  SizedBox(width: 5),
+
                                                                   Text(
                                                                     ': ${user.homeAddress}',
                                                                     style: TextStyle(

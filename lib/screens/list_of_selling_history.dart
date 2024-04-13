@@ -34,11 +34,10 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
     return orderList.where((order) {
       return order.orderId.toLowerCase().contains(query.toLowerCase()) ||
              order.orderDate.toLowerCase().contains(query.toLowerCase()) ||
-             order.orderAmount.toString().contains(query.toLowerCase()) ||
+             order.productPrice.toString().contains(query.toLowerCase()) ||
              order.productName.toLowerCase().contains(query.toLowerCase()) ||
              order.fullName.toLowerCase().contains(query.toLowerCase()) ||
              order.phoneNumber.toLowerCase().contains(query.toLowerCase()) ||
-             order.homeAddress.toLowerCase().contains(query.toLowerCase()) ||
              order.homeAddress.toLowerCase().contains(query.toLowerCase());
     }).toList();
   }
@@ -207,7 +206,8 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      'Order ID: ${order.orderId}',
+                                                      translations.translate('Order ID:', locale) +  ' ${order.orderId}',
+                                                      // 'Order ID: ${order.orderId}',
                                                       style: TextStyle(
                                                         fontFamily: 'Plus Jakarta Sans',
                                                         color: Colors.black,
@@ -218,7 +218,8 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                     Padding(
                                                       padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                                       child: Text(
-                                                        'Selling Date: ${order.orderDate}',
+                                                        translations.translate('Selling Date:', locale) +  ' ${order.orderDate}',
+                                                        // 'Selling Date: ${order.orderDate}',
                                                         style: TextStyle(
                                                           fontFamily: 'Plus Jakarta Sans',
                                                           color: Colors.black,
@@ -273,7 +274,8 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [
                                                                     Text(
-                                                                      'Product Name',
+                                                                      translations.translate('Product Name', locale),
+                                                                      // 'Product Name',
                                                                       style: TextStyle(
                                                                         fontFamily: 'Plus Jakarta Sans',
                                                                         color: Colors.black,
@@ -281,7 +283,7 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                                         fontWeight: FontWeight.w600,
                                                                       ),
                                                                     ),
-                                                                    SizedBox(width: 60),
+
                                                                     Text(
                                                                       ': ${order.productName}',
                                                                       style: TextStyle(
@@ -301,7 +303,8 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [
                                                                     Text(
-                                                                      'Total Amount',
+                                                                      translations.translate('Product Price', locale),
+                                                                      // 'Product Price',
                                                                       style: TextStyle(
                                                                         fontFamily: 'Plus Jakarta Sans',
                                                                         color: Colors.black,
@@ -309,9 +312,9 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                                         fontWeight: FontWeight.w600,
                                                                       ),
                                                                     ),
-                                                                    SizedBox(width: 65),
+
                                                                     Text(
-                                                                      ': ${order.orderAmount}',
+                                                                      ': RM ${order.productPrice}',
                                                                       style: TextStyle(
                                                                         fontFamily: 'Plus Jakarta Sans',
                                                                         color: Colors.black,
@@ -329,7 +332,8 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [
                                                                     Text(
-                                                                      'Buyer',
+                                                                      translations.translate('Buyer', locale),
+                                                                      // 'Buyer',
                                                                       style: TextStyle(
                                                                         fontFamily: 'Plus Jakarta Sans',
                                                                         color: Colors.black,
@@ -337,7 +341,7 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                                         fontWeight: FontWeight.w600,
                                                                       ),
                                                                     ),
-                                                                    SizedBox(width: 115),
+
                                                                     Text(
                                                                       ': ${order.fullName}',
                                                                       style: TextStyle(
@@ -357,7 +361,8 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [
                                                                     Text(
-                                                                      'Buyer Contact Number',
+                                                                      translations.translate('Buyer Contact Number', locale),
+                                                                      //'Buyer Contact Number',
                                                                       style: TextStyle(
                                                                         fontFamily: 'Plus Jakarta Sans',
                                                                         color: Colors.black,
@@ -365,7 +370,7 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                                         fontWeight: FontWeight.w600,
                                                                       ),
                                                                     ),
-                                                                    SizedBox(width: 5),
+
                                                                     Text(
                                                                       ': ${order.phoneNumber}',
                                                                       style: TextStyle(

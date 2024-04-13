@@ -1,7 +1,7 @@
 class Order {
   final String orderId;
   final String orderDate;
-  final double orderAmount;
+  final double productPrice;
   final String productName;
   final String productImgVideo;
   final String fullName;
@@ -11,7 +11,7 @@ class Order {
   Order({
     required this.orderId,
     required this.orderDate,
-    required this.orderAmount,
+    required this.productPrice,
     required this.productName,
     required this.productImgVideo,
     required this.fullName,

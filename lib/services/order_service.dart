@@ -18,7 +18,7 @@ class OrderService {
         orderList.add(Order(
             orderId: item['orderID'],
             orderDate: item['orderDate'],
-            orderAmount: double.parse(item['orderAmount']),
+            productPrice: double.parse(item['productPrice']),
             productName: item['productName'],
             productImgVideo: item['productImgVideo'],
             fullName: item['fullName'],
