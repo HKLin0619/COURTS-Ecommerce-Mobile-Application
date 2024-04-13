@@ -6,6 +6,7 @@ import 'package:courts_ecommerce/models/yearlySalesData.dart';
 import 'package:courts_ecommerce/providers/product_provider.dart';
 import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:courts_ecommerce/screens/edit_product_screen.dart';
+import 'package:courts_ecommerce/services/analysis_service.dart';
 import 'package:courts_ecommerce/services/product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,11 +26,16 @@ class _adminScreenState extends State<AdminScreen> {
   bool _isMonthlySelected = true;
   late Future<List<Product>> _productListFuture;
   final ProductService _productService = ProductService();
+  late Future<List<Yearly>> _yearlyDataFuture;
+  late Future<List<Monthly>> _monthlyDataFuture;
+  final AnalysisService _analysisService = AnalysisService();
 
   @override
   void initState() {
     super.initState();
     _productListFuture = _productService.fetchData();
+    _yearlyDataFuture = _analysisService.yearlyData();
+    _monthlyDataFuture = _analysisService.monthlyData();
   }
 
   @override
@@ -442,9 +448,24 @@ class _adminScreenState extends State<AdminScreen> {
                                             decoration: BoxDecoration(
                                               color: Colors.white,
                                             ),
-                                            child: _isMonthlySelected
-                                                ? MonthlySalesChart(data: [])
-                                                : YearlySalesChart(data: []),
+                                            child: FutureBuilder(
+                                              future: _isMonthlySelected ? _analysisService.monthlyData() : _analysisService.yearlyData(),
+                                              builder: (context, snapshot) {
+                                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                                  return Center(child: CircularProgressIndicator());
+                                                } else if (snapshot.hasError) {
+                                                  return Center(child: Text('Error: ${snapshot.error}'));
+                                                } else {
+                                                  if (_isMonthlySelected) {
+                                                    List<Monthly> monthlyData = snapshot.data as List<Monthly>;
+                                                    return MonthlySalesChart(data: monthlyData);
+                                                  } else {
+                                                    List<Yearly> yearlyData = snapshot.data as List<Yearly>;
+                                                    return YearlySalesChart(data: yearlyData);
+                                                  }
+                                                }
+                                              },
+                                            ),
                                           ),
                                         ),
                                         Expanded(
@@ -573,12 +594,15 @@ class MonthlySalesChart extends StatelessWidget {
                 // Enable tooltip
                 tooltipBehavior: TooltipBehavior(enable: true),
                 // Set the chart title
-                title: ChartTitle(text: translations.translate('Sales Report by Monthly', locale)),
+                title: ChartTitle(
+                    text: translations.translate('Sales Report by Monthly in 2024', locale),
+                    textStyle: TextStyle(fontSize: 14),
+                ),
                 // title: ChartTitle(text: 'Sales Report by Monthly'),
                 series: data.map((monthly) {
                   return BarSeries<Monthly, String>(
                     dataSource: [monthly],
-                    xValueMapper: (Monthly sales, _) => sales.monthly,
+                    xValueMapper: (Monthly sales, _) => sales.month,
                     yValueMapper: (Monthly sales, _) => sales.totalSales,
                     // Enable data label
                     dataLabelSettings: DataLabelSettings(isVisible: true),
@@ -617,7 +641,10 @@ class YearlySalesChart extends StatelessWidget {
                 // Enable tooltip
                 tooltipBehavior: TooltipBehavior(enable: true),
                 // Set the chart title
-                title: ChartTitle(text: translations.translate('Sales Report by Yearly', locale)),
+                title: ChartTitle(
+                    text: translations.translate('Sales Report by Yearly', locale),
+                    textStyle: TextStyle(fontSize: 14),
+                ),
                 // title: ChartTitle(text: 'Sales Report by Yearly'),
                 series: data.map((yearly) {
                   return BarSeries<Yearly, String>(
@@ -625,7 +652,9 @@ class YearlySalesChart extends StatelessWidget {
                     xValueMapper: (Yearly sales, _) => sales.year,
                     yValueMapper: (Yearly sales, _) => sales.totalSales,
                     // Enable data label
-                    dataLabelSettings: DataLabelSettings(isVisible: true),
+                    dataLabelSettings: DataLabelSettings(
+                        isVisible: true,
+                    ),
                   );
                 }).toList(),
               ),
@@ -636,85 +665,6 @@ class YearlySalesChart extends StatelessWidget {
     );
   }
 }
-
-
-// class MonthlySalesChart extends StatelessWidget {
-//   final List<Monthly> data;
-//
-//   MonthlySalesChart({required this.data});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     List<charts.Series<Monthly, String>> series = [
-//       charts.Series(
-//           id: "Monthly",
-//           data: data,
-//           domainFn: (Monthly series, _) => series.monthly,
-//           measureFn: (Monthly series, _) => series.totalSales,
-//       )
-//     ];
-//
-//     return Container(
-//       child: Card(
-//         child: Padding(
-//           padding: const EdgeInsets.all(5),
-//           child: Column(
-//             children: <Widget>[
-//               Text(
-//                 "Sales Report by Monthly",
-//               ),
-//               Expanded(
-//                 child: charts.BarChart(series, animate: true),
-//               )
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-// class YearlySalesChart extends StatelessWidget {
-//   final List<Yearly> data;
-//
-//   YearlySalesChart({required this.data});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     List<charts.Series<Yearly, String>> series = [
-//       charts.Series(
-//           id: "Yearly",
-//           data: data,
-//           domainFn: (Yearly series, _) => series.year,
-//           measureFn: (Yearly series, _) => series.totalSales,
-//           colorFn: (Yearly series, _) => series.barColor
-//       )
-//     ];
-//
-//     return Container(
-//       child: Card(
-//         child: Padding(
-//           padding: const EdgeInsets.all(5),
-//           child: Column(
-//             children: <Widget>[
-//               Text(
-//                 "Sales Report by Year",
-//                 //style: Theme.of(context).textTheme.bodyText2,
-//               ),
-//               Expanded(
-//                 child: charts.BarChart(series, animate: true),
-//               )
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-
-
-
 
 
 

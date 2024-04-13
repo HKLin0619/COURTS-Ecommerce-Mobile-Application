@@ -1,10 +1,10 @@
 class Monthly {
-  final String monthly;
+  final String month;
   final int totalSales;
 
   Monthly(
       {
-        required this.monthly,
+        required this.month,
         required this.totalSales,
       }
   );
