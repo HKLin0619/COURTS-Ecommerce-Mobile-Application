@@ -439,7 +439,7 @@ class _adminProfileScreenPageState extends State<AdminProfileScreen> {
                                 padding: EdgeInsetsDirectional.fromSTEB(14, 12, 14, 14),
                                 child: InkWell(
                                   onTap: () {
-                                    Navigator.pushReplacementNamed(context, '/');
+                                    Navigator.pushReplacementNamed(context, '/login');
                                   },
                                   child: Container(
                                     width: double.infinity,

@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:courts_ecommerce/locales/language.dart';
+import 'package:courts_ecommerce/models/order.dart';
 import 'package:courts_ecommerce/models/user.dart';
+import 'package:courts_ecommerce/services/order_service.dart';
 import 'package:courts_ecommerce/services/user_service.dart';
 import 'package:flutter/material.dart';
 
@@ -13,34 +17,37 @@ class ListOfSellingHistoryScreen extends StatefulWidget {
 
 class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScreen> {
 
-  late Future<List<User>> _userListFuture;
-  final UserService _userService = UserService();
+  late Future<List<Order>> _orderListFuture;
+  final OrderService _orderService = OrderService();
 
   TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _userListFuture = _userService.fetchData();
-    _filterUserList(_searchController.text);
+    _orderListFuture = _orderService.orderData();
+    _filterOrderList(_searchController.text);
   }
 
-  Future<List<User>> _filteredUserList(String query) async {
-    List<User> userList = await _userListFuture;
-    return userList.where((user) {
-      return user.fullName.toLowerCase().contains(query.toLowerCase()) ||
-          user.email.toLowerCase().contains(query.toLowerCase()) ||
-          user.phoneNumber.toLowerCase().contains(query.toLowerCase()) ||
-          user.homeAddress.toLowerCase().contains(query.toLowerCase());
+  Future<List<Order>> _filteredOrderList(String query) async {
+    List<Order> orderList = await _orderListFuture;
+    return orderList.where((order) {
+      return order.orderId.toLowerCase().contains(query.toLowerCase()) ||
+             order.orderDate.toLowerCase().contains(query.toLowerCase()) ||
+             order.productPrice.toString().contains(query.toLowerCase()) ||
+             order.productName.toLowerCase().contains(query.toLowerCase()) ||
+             order.fullName.toLowerCase().contains(query.toLowerCase()) ||
+             order.phoneNumber.toLowerCase().contains(query.toLowerCase()) ||
+             order.homeAddress.toLowerCase().contains(query.toLowerCase());
     }).toList();
   }
 
-  void _filterUserList(String query) {
+  void _filterOrderList(String query) {
     setState(() {
       if (query.isEmpty) {
-        _userListFuture = _userService.fetchData();
+        _orderListFuture = _orderService.orderData();
       } else {
-        _userListFuture = _filteredUserList(query);
+        _orderListFuture = _filteredOrderList(query);
       }
     });
   }
@@ -81,7 +88,7 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                       controller: _searchController,
                       onChanged: (String value) {
                         if (value.isEmpty) {
-                          _filterUserList("");
+                          _filterOrderList("");
                         }
                       },
                       autofocus: false,
@@ -143,7 +150,7 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                         size: 24,
                       ),
                       onPressed: () {
-                        _filterUserList(_searchController.text);
+                        _filterOrderList(_searchController.text);
                       },
                     ),
                   ),
@@ -151,19 +158,19 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
               ),
             ),
             Expanded(
-              child: FutureBuilder <List<User>> (
-                future: _userListFuture,
+              child: FutureBuilder <List<Order>> (
+                future: _orderListFuture,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    List<User> userList = snapshot.data!;
+                    List<Order> orderList = snapshot.data!;
                     return
                       ListView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
-                          itemCount: userList?.length,
+                          itemCount: orderList?.length,
                           itemBuilder: (context, index) {
-                            User user = userList[index];
+                            Order order = orderList[index];
                             return Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(10, 5, 10, 5),
                               child: SingleChildScrollView(
@@ -199,7 +206,8 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      '${user.fullName}',
+                                                      translations.translate('Order ID:', locale) +  ' ${order.orderId}',
+                                                      // 'Order ID: ${order.orderId}',
                                                       style: TextStyle(
                                                         fontFamily: 'Plus Jakarta Sans',
                                                         color: Colors.black,
@@ -210,10 +218,11 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                     Padding(
                                                       padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                                       child: Text(
-                                                        '${user.email}',
+                                                        translations.translate('Selling Date:', locale) +  ' ${order.orderDate}',
+                                                        // 'Selling Date: ${order.orderDate}',
                                                         style: TextStyle(
                                                           fontFamily: 'Plus Jakarta Sans',
-                                                          color: Colors.grey,
+                                                          color: Colors.black,
                                                           fontSize: 12,
                                                           fontWeight: FontWeight.w500,
                                                         ),
@@ -231,19 +240,42 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                         height: 500,
                                                         width: MediaQuery.sizeOf(context).width,
                                                         child: Padding(
-                                                          padding: EdgeInsets.all(30),
+                                                          padding: EdgeInsets.all(20),
                                                           child: Column(
                                                             mainAxisSize: MainAxisSize.max,
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: [
+                                                              Container(
+                                                                height: 5,
+                                                                decoration: BoxDecoration(
+                                                                  color: Colors.black,
+                                                                  borderRadius: BorderRadius.circular(3),
+                                                                ),
+                                                              ),
                                                               Padding(
-                                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                                                child: Column(
+                                                                padding: EdgeInsetsDirectional.fromSTEB(90, 20, 0, 20),
+                                                                child: Container(
+                                                                  width: 100,
+                                                                  height: 100,
+                                                                  child: ClipRRect(
+                                                                    borderRadius:
+                                                                    BorderRadius.circular(8),
+                                                                    child:Image.memory(
+                                                                      base64Decode('${order.productImgVideo}'),
+                                                                      fit: BoxFit.cover,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 5),
+                                                                child: Row(
                                                                   mainAxisSize: MainAxisSize.max,
                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [
                                                                     Text(
-                                                                      'User ID:',
+                                                                      translations.translate('Product Name', locale),
+                                                                      // 'Product Name',
                                                                       style: TextStyle(
                                                                         fontFamily: 'Plus Jakarta Sans',
                                                                         color: Colors.black,
@@ -251,12 +283,13 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                                         fontWeight: FontWeight.w600,
                                                                       ),
                                                                     ),
+
                                                                     Text(
-                                                                      '${user.userID}',
+                                                                      ': ${order.productName}',
                                                                       style: TextStyle(
                                                                         fontFamily: 'Plus Jakarta Sans',
                                                                         color: Colors.black,
-                                                                        fontSize: 12,
+                                                                        fontSize: 14,
                                                                         fontWeight: FontWeight.normal,
                                                                       ),
                                                                     ),
@@ -264,13 +297,14 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                                 ),
                                                               ),
                                                               Padding(
-                                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                                                child: Column(
+                                                                padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 5),
+                                                                child: Row(
                                                                   mainAxisSize: MainAxisSize.max,
                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [
                                                                     Text(
-                                                                      'Username:',
+                                                                      translations.translate('Product Price', locale),
+                                                                      // 'Product Price',
                                                                       style: TextStyle(
                                                                         fontFamily: 'Plus Jakarta Sans',
                                                                         color: Colors.black,
@@ -278,12 +312,13 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                                         fontWeight: FontWeight.w600,
                                                                       ),
                                                                     ),
+
                                                                     Text(
-                                                                      '${user.username}',
+                                                                      ': RM ${order.productPrice}',
                                                                       style: TextStyle(
                                                                         fontFamily: 'Plus Jakarta Sans',
                                                                         color: Colors.black,
-                                                                        fontSize: 12,
+                                                                        fontSize: 14,
                                                                         fontWeight: FontWeight.normal,
                                                                       ),
                                                                     ),
@@ -291,13 +326,14 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                                 ),
                                                               ),
                                                               Padding(
-                                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                                                child: Column(
+                                                                padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 5),
+                                                                child: Row(
                                                                   mainAxisSize: MainAxisSize.max,
                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [
                                                                     Text(
-                                                                      'Phone Number:',
+                                                                      translations.translate('Buyer', locale),
+                                                                      // 'Buyer',
                                                                       style: TextStyle(
                                                                         fontFamily: 'Plus Jakarta Sans',
                                                                         color: Colors.black,
@@ -305,12 +341,13 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                                         fontWeight: FontWeight.w600,
                                                                       ),
                                                                     ),
+
                                                                     Text(
-                                                                      '${user.phoneNumber}',
+                                                                      ': ${order.fullName}',
                                                                       style: TextStyle(
                                                                         fontFamily: 'Plus Jakarta Sans',
                                                                         color: Colors.black,
-                                                                        fontSize: 12,
+                                                                        fontSize: 14,
                                                                         fontWeight: FontWeight.normal,
                                                                       ),
                                                                     ),
@@ -318,13 +355,14 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                                 ),
                                                               ),
                                                               Padding(
-                                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                                                child: Column(
+                                                                padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 5),
+                                                                child: Row(
                                                                   mainAxisSize: MainAxisSize.max,
                                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [
                                                                     Text(
-                                                                      'Home Address:',
+                                                                      translations.translate('Buyer Contact Number', locale),
+                                                                      //'Buyer Contact Number',
                                                                       style: TextStyle(
                                                                         fontFamily: 'Plus Jakarta Sans',
                                                                         color: Colors.black,
@@ -332,12 +370,13 @@ class _listOfSellingHistoryScreenPageState extends State<ListOfSellingHistoryScr
                                                                         fontWeight: FontWeight.w600,
                                                                       ),
                                                                     ),
+
                                                                     Text(
-                                                                      '${user.homeAddress}',
+                                                                      ': ${order.phoneNumber}',
                                                                       style: TextStyle(
                                                                         fontFamily: 'Plus Jakarta Sans',
                                                                         color: Colors.black,
-                                                                        fontSize: 12,
+                                                                        fontSize: 14,
                                                                         fontWeight: FontWeight.normal,
                                                                       ),
                                                                     ),

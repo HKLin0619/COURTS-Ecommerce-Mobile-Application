@@ -65,8 +65,14 @@ class AppLocalizations {
       'User ID': 'User ID',
       'View': 'View',
       'Search history...': 'Search history...',
-      'Sales Report by Monthly': 'Sales Report by Monthly',
-      'Sales Report by Yearly': 'Sales Report by Yearly'
+      'Sales Report by Monthly in 2024': 'Sales Report by Monthly in 2024',
+      'Sales Report by Yearly': 'Sales Report by Yearly',
+
+      'Order ID:': 'Order ID:',
+      'Selling Date:': 'Selling Date:',
+      'Buyer': 'Buyer',
+      'Buyer Contact Number': 'Buyer Contact Number'
+
     },
     'zh': {
       'Welcome Back': '欢迎回来',
@@ -131,8 +137,12 @@ class AppLocalizations {
       'User ID': '用户ID',
       'View': '查看',
       'Search history...': '搜索历史记录...',
-      'Sales Report by Monthly': '每月销售报告',
-      'Sales Report by Yearly': '每年销售报告'
+      'Sales Report by Monthly in 2024': '2024年每月销售报告',
+      'Sales Report by Yearly': '每年销售报告',
+      'Order ID:': '订单编号：',
+      'Selling Date:': '销售日期：',
+      'Buyer': '买家',
+      'Buyer Contact Number': '买家联系电话'
     },
     'ms': {
       'Welcome Back': 'Selamat Datang Kembali',
@@ -197,8 +207,12 @@ class AppLocalizations {
       'User ID': 'ID Pengguna',
       'View': 'Lihat',
       'Search history...': 'Cari sejarah...',
-      'Sales Report by Monthly': 'Laporan Jualan Bulanan',
-      'Sales Report by Yearly': 'Laporan Jualan Tahunan'
+      'Sales Report by Monthly in 2024': 'Laporan Jualan Bulanan 2024',
+      'Sales Report by Yearly': 'Laporan Jualan Tahunan',
+      'Order ID:': 'ID Pesanan:',
+      'Selling Date:': 'Tarikh Jualan:',
+      'Buyer': 'Pembeli',
+      'Buyer Contact Number': 'Nombor Hubungi Pembeli'
     },
   };
 
