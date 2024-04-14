@@ -1,5 +1,6 @@
 import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:courts_ecommerce/services/order_service.dart';
+import 'package:courts_ecommerce/services/review_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -32,37 +33,40 @@ class ProductDetailsWidget extends StatelessWidget {
     // required this.totalRating,
     // required this.avgRating,
   });
+  final ReviewService _reviews = ReviewService();
 
   final OrderService _orderService = OrderService();
+
+  get filteredReviews => null;
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user!;
-    List<Review> reviewslist = [
-      Review(
-        reviewId: '1',
-        orderId: '1',
-        productId: '1',
-        comment: 'Great product, highly recommended!',
-        rating: 4.5,
-      ),
-      Review(
-        reviewId: '2',
-        orderId: '1002',
-        productId: '1',
-        comment: ' service and !',
-        rating: 5.0,
-      ),
-      Review(
-        reviewId: '2',
-        orderId: '1003',
-        productId: '2',
-        comment: 'Excellent service and quality!',
-        rating: 5.0,
-      ),
-    ];
-    List<Review> filteredReviews =
-        reviewslist.where((review) => review.productId == productId).toList();
+    // List<Review> reviewslist = [
+    //   Review(
+    //     reviewId: '1',
+    //     orderId: '1',
+    //     productId: '1',
+    //     comment: 'Great product, highly recommended!',
+    //     rating: 4.5,
+    //   ),
+    //   Review(
+    //     reviewId: '2',
+    //     orderId: '1002',
+    //     productId: '1',
+    //     comment: ' service and !',
+    //     rating: 5.0,
+    //   ),
+    //   Review(
+    //     reviewId: '2',
+    //     orderId: '1003',
+    //     productId: '2',
+    //     comment: 'Excellent service and quality!',
+    //     rating: 5.0,
+    //   ),
+    // ];
+    // List<Review> filteredReviews =
+    //     reviewslist.where((review) => review.productId == productId).toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -272,6 +276,42 @@ class ProductDetailsWidget extends StatelessWidget {
                           ],
                         ),
                       ),
+                    ),
+                    FutureBuilder<List<Review>>(
+                      future: _reviews.fetchReviews(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          return Center(
+                              child: Text('Error: ${snapshot.error}'));
+                        } else {
+                          final reviews = snapshot.data ?? [];
+
+                          final filteredReviews = reviews
+                              .where((review) => review.productId == productId)
+                              .toList();
+
+                          return Expanded(
+                            child: ListView.builder(
+                              itemCount: filteredReviews.length,
+                              itemBuilder: (context, index) {
+                                final review = filteredReviews[index];
+                                return ListTile(
+                                  title: Text(review.comment),
+                                  subtitle: Row(
+                                    children: [
+                                      Icon(Icons.star, color: Colors.amber),
+                                      Text('${review.rating}'),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        }
+                      },
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(16, 8, 16, 8),

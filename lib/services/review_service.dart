@@ -10,6 +10,29 @@ import 'dart:convert';
 class ReviewService {
   var url = '${dotenv.env['URL']}';
 
+  Future<List<Review>> fetchReviews() async {
+    final response = await http.get(Uri.parse('$url/getReviewbyID.php'));
+
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      List<Review> reviewList = [];
+
+      for (var item in jsonData) {
+        reviewList.add(Review(
+          reviewId: item['reviewID'],
+          orderId: item['orderID'],
+          productId: item['productID'],
+          comment: item['comment'],
+          rating: item['rating'],
+        ));
+      }
+
+      return reviewList;
+    } else {
+      throw Exception('Failed to load reviews');
+    }
+  }
+
   Future<bool> addReview({
     required int orderID,
     required int productID,

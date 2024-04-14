@@ -9,22 +9,20 @@ class OrderService {
   var url = '${dotenv.env['URL']}';
 
   Future<List<Order>> orderData() async {
-    final response = await http.get(
-        Uri.parse('$url/listOrder.php')
-    );
+    final response = await http.get(Uri.parse('$url/listOrder.php'));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
       List<Order> orderList = [];
       for (var item in jsonData) {
         orderList.add(Order(
-            orderId: item['orderID'],
-            orderDate: item['orderDate'],
-            productPrice: double.parse(item['productPrice']),
-            productName: item['productName'],
-            productImgVideo: item['productImgVideo'],
-            fullName: item['fullName'],
-            phoneNumber: item['phoneNumber'],
-            homeAddress: item['homeAddress'],
+          orderId: item['orderID'],
+          orderDate: item['orderDate'],
+          productPrice: double.parse(item['productPrice']),
+          productName: item['productName'],
+          productImgVideo: item['productImgVideo'],
+          fullName: item['fullName'],
+          phoneNumber: item['phoneNumber'],
+          homeAddress: item['homeAddress'],
         ));
       }
       return orderList;
@@ -85,7 +83,7 @@ class OrderService {
 
   Future<List<Order>> fetchData(String userId) async {
     final response =
-    await http.get(Uri.parse('$url/listOrder.php?userID=$userId'));
+        await http.get(Uri.parse('$url/listOrder.php?userID=$userId'));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
       List<Order> orderList = [];
@@ -113,7 +111,7 @@ class OrderService {
   Future<Map<String, dynamic>> getOrderForm(String orderID) async {
     try {
       final response =
-      await http.get(Uri.parse('$url/getOrderForm.php?orderID=$orderID'));
+          await http.get(Uri.parse('$url/getOrderForm.php?orderID=$orderID'));
 
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body);
@@ -137,5 +135,4 @@ class OrderService {
           'An unexpected error occurred while fetching product details: $error');
     }
   }
-
 }
