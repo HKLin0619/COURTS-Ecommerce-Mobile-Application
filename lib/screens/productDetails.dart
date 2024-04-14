@@ -163,7 +163,7 @@ class ProductDetailsWidget extends StatelessWidget {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                       child: Text(
-                        '\$$productPrice',
+                        'RM $productPrice',
                         style: TextStyle(
                           fontFamily: 'Readex Pro',
                           letterSpacing: 0,
@@ -244,7 +244,7 @@ class ProductDetailsWidget extends StatelessWidget {
                                     Padding(
                                       padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                                       child: Text(
-                                        "1",
+                                        "Rating",
                                         // '$avgRating',
                                         style: TextStyle(
                                           fontFamily: 'Outfit',
@@ -265,7 +265,7 @@ class ProductDetailsWidget extends StatelessWidget {
                                   ],
                                 ),
                                 Text(
-                                  'Avg. Rating',
+                                  'review',
                                   style: TextStyle(
                                     fontFamily: 'Readex Pro',
                                     fontSize: 12,
