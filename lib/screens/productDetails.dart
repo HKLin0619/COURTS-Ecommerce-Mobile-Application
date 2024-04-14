@@ -20,8 +20,6 @@ class ProductDetailsWidget extends StatelessWidget {
   final double productPrice;
   final String productImageURL;
   final String productVideoURL;
-  // final int totalRating;
-  // final double avgRating;
 
   ProductDetailsWidget({
     required this.productId,
@@ -30,36 +28,19 @@ class ProductDetailsWidget extends StatelessWidget {
     required this.productPrice,
     required this.productImageURL,
     required this.productVideoURL,
-    // required this.totalRating,
-    // required this.avgRating,
   });
-  final ReviewService _reviews = ReviewService();
 
   final OrderService _orderService = OrderService();
+  final ReviewService _reviewService = ReviewService();
 
-  // get filteredReviews => null;
+  Future<List<Review>> fetchReviews() async {
+    var reviews = await _reviewService.fetchReviews();
+    return reviews.where((review) => review.productId == productId).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user!;
-    List<Review> reviewslist = [
-      Review(
-        reviewId: '1',
-        orderId: '1',
-        productId: '21',
-        comment: 'Great product, highly recommended!',
-        rating: 3,
-      ),
-      Review(
-        reviewId: '2',
-        orderId: '1002',
-        productId: '21',
-        comment: ' hello world',
-        rating: 3,
-      ),
-    ];
-    List<Review> filteredReviews =
-        reviewslist.where((review) => review.productId == productId).toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -210,7 +191,7 @@ class ProductDetailsWidget extends StatelessWidget {
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                                   child: Text(
-                                    "2",
+                                    "1",
                                     // '$totalRating',
                                     style: TextStyle(
                                       fontFamily: 'Outfit',
@@ -236,7 +217,7 @@ class ProductDetailsWidget extends StatelessWidget {
                                     Padding(
                                       padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                                       child: Text(
-                                        "3",
+                                        "1",
                                         // '$avgRating',
                                         style: TextStyle(
                                           fontFamily: 'Outfit',
@@ -270,44 +251,6 @@ class ProductDetailsWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                    //
-                    // FutureBuilder<List<Review>>(
-                    //   future: _reviews.fetchReviews(),
-                    //   builder: (context, snapshot) {
-                    //     if (snapshot.connectionState ==
-                    //         ConnectionState.waiting) {
-                    //       return Center(child: CircularProgressIndicator());
-                    //     } else if (snapshot.hasError) {
-                    //       return Center(
-                    //           child: Text('Error: ${snapshot.error}'));
-                    //     } else {
-                    //       final reviews = snapshot.data ?? [];
-                    //
-                    //       final filteredReviews = reviews
-                    //           .where((review) => review.productId == productId)
-                    //           .toList();
-                    //
-                    //       return Expanded(
-                    //         child: ListView.builder(
-                    //           itemCount: filteredReviews.length,
-                    //           itemBuilder: (context, index) {
-                    //             final review = filteredReviews[index];
-                    //             return ListTile(
-                    //               title: Text(review.comment),
-                    //               subtitle: Row(
-                    //                 children: [
-                    //                   Icon(Icons.star, color: Colors.amber),
-                    //                   Text('${review.rating.toStringAsFixed()}'),
-                    //                 ],
-                    //               ),
-                    //             );
-                    //           },
-                    //         ),
-                    //       );
-                    //     }
-                    //   },
-                    // ),
-
                     Padding(
                       padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                       child: Container(
@@ -324,76 +267,91 @@ class ProductDetailsWidget extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.all(2),
                           child: SingleChildScrollView(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: filteredReviews.map((review) {
-                                return Padding(
-                                  padding: EdgeInsets.all(4),
-                                  child: Container(
-                                    width: 400,
-                                    height: 130,
-                                    color: Theme.of(context).backgroundColor,
-                                    child: Column(
+                            child: FutureBuilder<List<Review>>(
+                                future: fetchReviews(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasError) {
+                                    return Text("${snapshot.error}");
+                                  } else if (snapshot.hasData) {
+                                    List<Review> reviews = snapshot.data!;
+                                    return Column(
                                       mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text(
-                                            '',
-                                            style: TextStyle(
-                                              fontFamily: 'Outfit',
-                                              fontSize: 1,
-                                              letterSpacing: 0,
-                                              fontWeight: FontWeight.normal,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: reviews.map((review) {
+                                        return Padding(
+                                          padding: EdgeInsets.all(4),
+                                          child: Container(
+                                            width: 400,
+                                            height: 130,
+                                            color: Theme.of(context)
+                                                .backgroundColor,
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Align(
+                                                  alignment: Alignment.topLeft,
+                                                  child: Text(
+                                                    review.reviewId,
+                                                    style: TextStyle(
+                                                      fontFamily: 'Outfit',
+                                                      fontSize: 18,
+                                                      letterSpacing: 0,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 4),
+                                                  child: Align(
+                                                    alignment:
+                                                        AlignmentDirectional
+                                                            .centerStart,
+                                                    child: RatingBarIndicator(
+                                                      itemBuilder:
+                                                          (context, index) =>
+                                                              Icon(
+                                                        Icons.star_rounded,
+                                                        color: Colors.amber,
+                                                      ),
+                                                      direction:
+                                                          Axis.horizontal,
+                                                      rating: review
+                                                          .rating, // Use review's rating here
+                                                      unratedColor:
+                                                          Color(0xFF95A1AC),
+                                                      itemCount: 5,
+                                                      itemSize: 24,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Align(
+                                                  alignment: Alignment.topLeft,
+                                                  child: Text(
+                                                    review.comment,
+                                                    maxLines: 3,
+                                                    style: TextStyle(
+                                                      fontFamily: 'Readex Pro',
+                                                      fontSize: 14,
+                                                      letterSpacing: 0,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsets.symmetric(vertical: 4),
-                                          child: Align(
-                                            alignment: AlignmentDirectional
-                                                .centerStart,
-                                            child: RatingBarIndicator(
-                                              itemBuilder: (context, index) =>
-                                                  Icon(
-                                                Icons.star_rounded,
-                                                color: Colors.amber,
-                                              ),
-                                              direction: Axis.horizontal,
-                                              rating: review
-                                                  .rating, // Use review's rating here
-                                              unratedColor: Color(0xFF95A1AC),
-                                              itemCount: 5,
-                                              itemSize: 24,
-                                            ),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text(
-                                            review.comment,
-                                            maxLines: 3,
-                                            style: TextStyle(
-                                              fontFamily: 'Readex Pro',
-                                              fontSize: 14,
-                                              letterSpacing: 0,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-
-                            ),
+                                        );
+                                      }).toList(),
+                                    );
+                                  }
+                                  return CircularProgressIndicator();
+                                }),
                           ),
                         ),
                       ),
                     ),
-                  
                   ],
                 ),
               ),
@@ -409,8 +367,6 @@ class ProductDetailsWidget extends StatelessWidget {
                     String formattedDate =
                         DateFormat('yyyy-MM-dd').format(DateTime.now());
                     try {
-                      // print(widget.userID);
-                      // return;
                       bool success = await _orderService.addOrder(
                         orderDate: formattedDate,
                         orderAmount: productPrice.toString(),
@@ -419,30 +375,22 @@ class ProductDetailsWidget extends StatelessWidget {
                       );
 
                       if (success) {
+                        // Handle successful order addition
                         print('Order added successfully!');
-                        // Show a Snackbar with success message and order details
+                        // Add further actions or UI updates here
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Order placed successfully!\n'
-                                  'Date: $formattedDate\n'
-                                  'Amount: ${productPrice.toString()}\n'
-                                  'User ID: ${user.userID}\n'
-                                  'Product ID: $productId',
-                            ),
-                            backgroundColor: Colors.black, // Customize color if needed
+                          const SnackBar(
+                            content: Text('Succesfully purchased product!'),
                           ),
                         );
-                        // Add further actions or UI updates here
                       } else {
                         // Handle unsuccessful order addition
                         print('Failed to add order.');
                         // Add error handling or UI feedback
                       }
-                    } catch (error) {
-                      // Handle unexpected errors
-                      print('Error adding order: $error');
-                      // Display a generic error message or perform additional error handling
+                    } catch (e) {
+                      // Fluttertoast.showToast(msg: 'Unforeseen error: ${e}');
+                      print(e);
                     }
                   },
                   style: ButtonStyle(
