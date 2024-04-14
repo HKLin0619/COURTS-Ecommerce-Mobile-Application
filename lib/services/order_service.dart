@@ -83,7 +83,7 @@ class OrderService {
 
   Future<List<Order>> fetchData(String userId) async {
     final response =
-        await http.get(Uri.parse('$url/listOrder.php?userID=$userId'));
+        await http.get(Uri.parse('$url/listOrderByUserID.php?userID=$userId'));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
       List<Order> orderList = [];

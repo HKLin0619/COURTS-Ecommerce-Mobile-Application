@@ -180,7 +180,7 @@ class _OrderPageState extends State<OrderPage> {
                                                         style: TextStyle(
                                                           fontFamily: 'Outfit',
                                                           letterSpacing: 0,
-                                                          fontSize: 18,
+                                                          fontSize: 22,
                                                         ),
                                                       ),
                                                     ),
@@ -200,7 +200,7 @@ class _OrderPageState extends State<OrderPage> {
                                                   Padding(
                                                     padding:
                                                         EdgeInsets.fromLTRB(
-                                                            0, 0, 0, 0),
+                                                            0, 20, 0, 0),
                                                     child: ElevatedButton(
                                                       onPressed: () {
                                                         String orderID =
@@ -254,41 +254,7 @@ class _OrderPageState extends State<OrderPage> {
                                                       ),
                                                     ),
                                                   ),
-                                                  ElevatedButton(
-                                                    onPressed: () {
-                                                      print(
-                                                          'Button pressed ...');
-                                                    },
-                                                    child: Text(
-                                                      'Receipt',
-                                                      style: TextStyle(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        color: Colors.white,
-                                                        fontSize: 14,
-                                                        letterSpacing: 0,
-                                                      ),
-                                                    ),
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      backgroundColor:
-                                                          Colors.blue[700],
-                                                      minimumSize: Size(70, 35),
-                                                      padding: EdgeInsets.zero,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                      elevation: 3,
-                                                      side: BorderSide(
-                                                        color:
-                                                            Colors.transparent,
-                                                        width: 1,
-                                                      ),
-                                                    ),
-                                                  ),
+
                                                 ],
                                               ),
                                             ),

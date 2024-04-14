@@ -64,10 +64,7 @@ class _HomeState extends State<Home> {
       'address':
           'No. 2-1-3, Jalan Setia Prima (S), U13/S, Setia Alam, 40170 Shah Alam, Selangor',
     },
-    {
-      'name': 'Courts Sri Petaling',
-      'address': 'No. 29, Jalan Radin Anum 1, Sri Petaling, 57000 Kuala Lumpur',
-    },
+
     // Add more Courts locations with accurate addresses here
   ];
 

@@ -37,36 +37,29 @@ class ProductDetailsWidget extends StatelessWidget {
 
   final OrderService _orderService = OrderService();
 
-  get filteredReviews => null;
+  // get filteredReviews => null;
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user!;
-    // List<Review> reviewslist = [
-    //   Review(
-    //     reviewId: '1',
-    //     orderId: '1',
-    //     productId: '1',
-    //     comment: 'Great product, highly recommended!',
-    //     rating: 4.5,
-    //   ),
-    //   Review(
-    //     reviewId: '2',
-    //     orderId: '1002',
-    //     productId: '1',
-    //     comment: ' service and !',
-    //     rating: 5.0,
-    //   ),
-    //   Review(
-    //     reviewId: '2',
-    //     orderId: '1003',
-    //     productId: '2',
-    //     comment: 'Excellent service and quality!',
-    //     rating: 5.0,
-    //   ),
-    // ];
-    // List<Review> filteredReviews =
-    //     reviewslist.where((review) => review.productId == productId).toList();
+    List<Review> reviewslist = [
+      Review(
+        reviewId: '1',
+        orderId: '1',
+        productId: '21',
+        comment: 'Great product, highly recommended!',
+        rating: 3,
+      ),
+      Review(
+        reviewId: '2',
+        orderId: '1002',
+        productId: '21',
+        comment: ' hello world',
+        rating: 3,
+      ),
+    ];
+    List<Review> filteredReviews =
+        reviewslist.where((review) => review.productId == productId).toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -217,7 +210,7 @@ class ProductDetailsWidget extends StatelessWidget {
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                                   child: Text(
-                                    "1",
+                                    "2",
                                     // '$totalRating',
                                     style: TextStyle(
                                       fontFamily: 'Outfit',
@@ -243,7 +236,7 @@ class ProductDetailsWidget extends StatelessWidget {
                                     Padding(
                                       padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                                       child: Text(
-                                        "1",
+                                        "3",
                                         // '$avgRating',
                                         style: TextStyle(
                                           fontFamily: 'Outfit',
@@ -277,42 +270,44 @@ class ProductDetailsWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                    FutureBuilder<List<Review>>(
-                      future: _reviews.fetchReviews(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
-                        } else if (snapshot.hasError) {
-                          return Center(
-                              child: Text('Error: ${snapshot.error}'));
-                        } else {
-                          final reviews = snapshot.data ?? [];
+                    //
+                    // FutureBuilder<List<Review>>(
+                    //   future: _reviews.fetchReviews(),
+                    //   builder: (context, snapshot) {
+                    //     if (snapshot.connectionState ==
+                    //         ConnectionState.waiting) {
+                    //       return Center(child: CircularProgressIndicator());
+                    //     } else if (snapshot.hasError) {
+                    //       return Center(
+                    //           child: Text('Error: ${snapshot.error}'));
+                    //     } else {
+                    //       final reviews = snapshot.data ?? [];
+                    //
+                    //       final filteredReviews = reviews
+                    //           .where((review) => review.productId == productId)
+                    //           .toList();
+                    //
+                    //       return Expanded(
+                    //         child: ListView.builder(
+                    //           itemCount: filteredReviews.length,
+                    //           itemBuilder: (context, index) {
+                    //             final review = filteredReviews[index];
+                    //             return ListTile(
+                    //               title: Text(review.comment),
+                    //               subtitle: Row(
+                    //                 children: [
+                    //                   Icon(Icons.star, color: Colors.amber),
+                    //                   Text('${review.rating.toStringAsFixed()}'),
+                    //                 ],
+                    //               ),
+                    //             );
+                    //           },
+                    //         ),
+                    //       );
+                    //     }
+                    //   },
+                    // ),
 
-                          final filteredReviews = reviews
-                              .where((review) => review.productId == productId)
-                              .toList();
-
-                          return Expanded(
-                            child: ListView.builder(
-                              itemCount: filteredReviews.length,
-                              itemBuilder: (context, index) {
-                                final review = filteredReviews[index];
-                                return ListTile(
-                                  title: Text(review.comment),
-                                  subtitle: Row(
-                                    children: [
-                                      Icon(Icons.star, color: Colors.amber),
-                                      Text('${review.rating}'),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
-                          );
-                        }
-                      },
-                    ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                       child: Container(
@@ -345,10 +340,10 @@ class ProductDetailsWidget extends StatelessWidget {
                                         Align(
                                           alignment: Alignment.topLeft,
                                           child: Text(
-                                            review.reviewId,
+                                            '',
                                             style: TextStyle(
                                               fontFamily: 'Outfit',
-                                              fontSize: 18,
+                                              fontSize: 1,
                                               letterSpacing: 0,
                                               fontWeight: FontWeight.normal,
                                             ),
@@ -392,11 +387,13 @@ class ProductDetailsWidget extends StatelessWidget {
                                   ),
                                 );
                               }).toList(),
+
                             ),
                           ),
                         ),
                       ),
                     ),
+                  
                   ],
                 ),
               ),
@@ -422,8 +419,20 @@ class ProductDetailsWidget extends StatelessWidget {
                       );
 
                       if (success) {
-                        // Handle successful order addition
                         print('Order added successfully!');
+                        // Show a Snackbar with success message and order details
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Order placed successfully!\n'
+                                  'Date: $formattedDate\n'
+                                  'Amount: ${productPrice.toString()}\n'
+                                  'User ID: ${user.userID}\n'
+                                  'Product ID: $productId',
+                            ),
+                            backgroundColor: Colors.black, // Customize color if needed
+                          ),
+                        );
                         // Add further actions or UI updates here
                       } else {
                         // Handle unsuccessful order addition
