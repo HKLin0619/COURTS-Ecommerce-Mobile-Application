@@ -1,9 +1,11 @@
 import 'package:courts_ecommerce/providers/user_provider.dart';
 import 'package:courts_ecommerce/services/order_service.dart';
 import 'package:courts_ecommerce/services/review_service.dart';
+import 'package:courts_ecommerce/services/stripe_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'dart:convert';
@@ -31,6 +33,7 @@ class ProductDetailsWidget extends StatelessWidget {
   });
 
   final OrderService _orderService = OrderService();
+  final StripeService _stripeService = StripeService();
   final ReviewService _reviewService = ReviewService();
 
   Future<List<Review>> fetchReviews() async {
@@ -41,6 +44,30 @@ class ProductDetailsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user!;
+    // List<Review> reviewslist = [
+    //   Review(
+    //     reviewId: '1',
+    //     orderId: '1',
+    //     productId: '21',
+    //     comment: 'Great product, highly recommended!',
+    //     rating: 4.5,
+    //   ),
+    //   Review(
+    //     reviewId: '2',
+    //     orderId: '1002',
+    //     productId: '1',
+    //     comment: ' service and !',
+    //     rating: 5.0,
+    //   ),
+    //   Review(
+    //     reviewId: '2',
+    //     orderId: '1003',
+    //     productId: '2',
+    //     comment: 'Excellent service and quality!',
+    //     rating: 5.0,
+    //   ),
+    // ];
+    // List<Review> filteredReviews = reviewslist.where((review) => review.productId == productId).toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -367,6 +394,10 @@ class ProductDetailsWidget extends StatelessWidget {
                     String formattedDate =
                         DateFormat('yyyy-MM-dd').format(DateTime.now());
                     try {
+                      await _stripeService.stripeMakePayment(
+                          double.parse(productPrice.toString()));
+                      await _stripeService.displayPaymentSheet();
+
                       bool success = await _orderService.addOrder(
                         orderDate: formattedDate,
                         orderAmount: productPrice.toString(),
@@ -388,9 +419,15 @@ class ProductDetailsWidget extends StatelessWidget {
                         print('Failed to add order.');
                         // Add error handling or UI feedback
                       }
-                    } catch (e) {
-                      // Fluttertoast.showToast(msg: 'Unforeseen error: ${e}');
-                      print(e);
+                    } on Exception catch (e) {
+                      if (e is StripeException) {
+                        // Fluttertoast.showToast(
+                        // msg: 'Error from Stripe: ${e.error.localizedMessage}');
+                        print(e.error.localizedMessage);
+                      } else {
+                        // Fluttertoast.showToast(msg: 'Unforeseen error: ${e}');
+                        print(e);
+                      }
                     }
                   },
                   style: ButtonStyle(

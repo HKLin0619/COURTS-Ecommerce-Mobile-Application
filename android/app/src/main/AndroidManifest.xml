@@ -2,7 +2,8 @@
     <application
         android:label="Courts"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher_2">
+        android:icon="@mipmap/ic_launcher_2"
+        android:enableOnBackInvokedCallback="true">
         <activity
             android:name=".MainActivity"
             android:exported="true"
