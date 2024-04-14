@@ -23,7 +23,7 @@ class ReviewService {
           orderId: item['orderID'],
           productId: item['productID'],
           comment: item['comment'],
-          rating: item['rating'],
+          rating: double.parse(item['rating']),
         ));
       }
 
