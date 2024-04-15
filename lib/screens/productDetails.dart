@@ -229,68 +229,6 @@ class ProductDetailsWidget extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            // Column(
-                            //   mainAxisAlignment: MainAxisAlignment.center,
-                            //   children: [
-                            //     Padding(
-                            //       padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            //       child: Text(
-                            //         "3.5",
-                            //         // '$totalRating',
-                            //         style: TextStyle(
-                            //           fontFamily: 'Outfit',
-                            //           fontSize: 28,
-                            //           letterSpacing: 0,
-                            //         ),
-                            //       ),
-                            //     ),
-                            //     Text(
-                            //       ' of Ratings',
-                            //       style: TextStyle(
-                            //         fontFamily: 'Readex Pro',
-                            //         letterSpacing: 0,
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
-                            // Column(
-                            //   mainAxisAlignment: MainAxisAlignment.center,
-                            //   children: [
-                            //     Row(
-                            //       children: [
-                            //         Padding(
-                            //           padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            //           child: Text(
-                            //             "Rating",
-                            //             // '$avgRating',
-                            //             style: TextStyle(
-                            //               fontFamily: 'Outfit',
-                            //               fontSize: 28,
-                            //               letterSpacing: 0,
-                            //             ),
-                            //           ),
-                            //         ),
-                            //         Padding(
-                            //           padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
-                            //           child: Icon(
-                            //             Icons.star_rounded,
-                            //             color: Colors
-                            //                 .yellow, // Change color here if needed
-                            //             size: 28,
-                            //           ),
-                            //         ),
-                            //       ],
-                            //     ),
-                            //     Text(
-                            //       'review',
-                            //       style: TextStyle(
-                            //         fontFamily: 'Readex Pro',
-                            //         fontSize: 12,
-                            //         letterSpacing: 0,
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
                           ],
                         ),
                       ),
